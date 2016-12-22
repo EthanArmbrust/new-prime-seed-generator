@@ -9,7 +9,7 @@
 #include <iomanip>
 #include <algorithm>
 #include "apvector.h"
-#include "logCheckerNoApstring.h"
+#include "logChecker.h"
 #include "windows.h"
 #include "randomizerTime.h"
 
