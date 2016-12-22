@@ -8,7 +8,7 @@ There are huge improvements over the old version.  The Seed Generator is able to
 
 Average Time to find a Normal Seed with No Exceptions:
 
-i3-6100u @	2.3GHz - 3.1 seconds
+i3-6100u @	2.3GHz - 3.1 seconds  
 i7-4970 @ 3.60 GHz - 1.1 seconds
 
 A great improvement over the hours the old generator used to take.
@@ -35,8 +35,12 @@ This software requires a version of MinG-w64 with POSIX threads.  It will not co
 #Credits
 
 Metroid Prime Randomizer created by Claris
+
 Metroid Prime Randomizer Script by rekameohs
+
 Portions of the checker written by Sjorec
+
 Help with higher difficulty checker from Tomlube
+
 Inspiration from A. Ziccardi
 
