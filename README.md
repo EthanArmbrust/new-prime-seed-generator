@@ -4,7 +4,7 @@ This repo comes with a compiled version of the software.
 
 New version of the Metroid Prime Seed Generator
 
-There are huge improvements over the old version.  The Seed Generator is able to look through seeds without even running the Randomizer anymore.  This means that the Randomizer.exe is no longer required to find seeds, your paks will not become corrupted by cancelling the program, and most importantly, there are HUGE speed improvements.
+There are huge improvements over the old version.  The Seed Generator is able to look through seeds without even running the Randomizer anymore.  This means that the Randomizer.exe is no longer required to find seeds, you don't need to keep the program in focus, your paks will not become corrupted by cancelling the program, and most importantly, there are HUGE speed improvements.
 
 Average Time to find a Normal Seed with No Exceptions:
 
@@ -44,4 +44,3 @@ Portions of the checker written by Sjorec
 Help with higher difficulty checker from Tomlube
 
 Inspiration from A. Ziccardi
-

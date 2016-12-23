@@ -131,6 +131,10 @@ void processOption(){
 		printMenu();
 	}
 
+  if(option == "trial"){
+
+  }
+
 	if(option == "$2" || option == "$ 2"){
 		newNormalOnly(false);
 	}
@@ -241,6 +245,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -335,6 +341,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -435,6 +443,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -535,6 +545,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -631,6 +643,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -733,6 +747,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -833,6 +849,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
     system("cls");
     loadScript(randoSeed, apNumbers);
+    system("cls");
+    system("\"Metroid Prime Randomizer.bat\"");
   }
   }
 }
@@ -1026,14 +1044,17 @@ void loadScript(int settingSeed, apvector <int> settingException){
   apvector <string> settingsLines(18, "");
 
 
-  ifstream myfile(".\\tools\\settings.txt");
+  ifstream myfile;
+  myfile.open(".\\tools\\settings.txt");
 
 if(myfile.is_open()){
   int x = 0;
   while(getline(myfile,settingsLines[x])){
     x++;
 	}
+  myfile.close();
 }
+
 else {cout << "Couldn't find settings file.";}
 
 
@@ -1067,13 +1088,14 @@ if(popup){
 }
 
 settingsLines[3] = line;
-ofstream settingsFile(".\\tools\\settings.txt");
+ofstream settingsFile;
+settingsFile.open(".\\tools\\settings.txt");
+
 
 for(int ziccardo = 0; ziccardo < settingsLines.length()-1; ziccardo++){
     settingsFile << settingsLines[ziccardo] << endl;
 
   }
+  settingsFile.close();
 
-  system("cls");
-  system("\"Metroid Prime Randomizer.bat\"");
 }
