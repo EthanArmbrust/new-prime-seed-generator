@@ -29,6 +29,7 @@ void newNormalOnly(bool);
 void newVeteranOnly(bool);
 void newHypermodeOnly(bool);
 void loadScript(int, apvector <int>);
+string simplifyString(string);
 
 
 using namespace std;
@@ -68,6 +69,7 @@ string versionNumber = "v0.9.5";
 string currentVersion = "v0.9.5";
 string bottomHelp1 = "Type $# to give a seed of ONLY a difficulty. Type HELP $ for more info.";
 string bottomHelp2 = "Type \"HELP #\" for more information on an option.";
+//string pretzels = "these pretzels are making me thirsty!";
 
 
 const char * charCommand;
@@ -99,6 +101,7 @@ void mainMenu(){
 	cout << "5 - Generate a \"Why\" difficulty seed (Coming soon) \n \n";
 	cout << "6 - Check a seed \n \n";
 	cout << "7 - Export seeds to text file \n \n";
+  //cout << simplifyString(pretzels) << endl;
 	cout << bottomHelp1 << endl;
 	cout << bottomHelp2 << "\n"  << endl;
 	cout << "> ";
@@ -108,6 +111,8 @@ void mainMenu(){
 
 void processOption(){
 	system("cls");
+  string temp = simplifyString(option);
+  option = temp;
 	if(option == "1" || option == "$1"){
 		newTestEasy(false);
 	}
@@ -145,41 +150,41 @@ void processOption(){
 	if(option == "$4" || option == "$ 4"){
 		newHypermodeOnly(false);
 	}
-	if(option == "HELP 1" || option == "help 1" || option == "Help 1"|| option == "HELP1" || option == "help1" || option == "Help1"){
+	if(option == "HELP1"){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
 		system("pause");
 
 	}
-	if(option == "HELP 2" || option == "help 2" || option == "Help 2"|| option == "HELP2" || option == "help2" || option == "Help2"){
+	if(option == "HELP2"){
 		cout << "This is the original rendition of the seed generator.  This difficulty will NOT require the player to do any Hyper Bomb Jumps or Uber Bomb Jumps, do a Suitless Magmoor run (except from the Tallon elevator to South Magmoor), do the Chozo floaty glitch without Space Jump, or any other stupid tricks.  Good for beginner speedrunners with moderate knowledge of sequence breaking.  A full list of item requirements can be found here: http://bombch.us/BNcL" << endl;
 		system("pause");
 	}
-	if(option == "HELP 3" || option == "help 3" || option == "Help 3"|| option == "HELP3" || option == "help3" || option == "Help3"){
+	if(option == "HELP3"){
 		cout << "This is a step up from the previous difficulty.  Players will be expected to be able to do all 22% tricks, as well as some of the easier 21% tricks.  A full list of item requirements can be found here: http://bombch.us/BNcM " << endl;
 		system("pause");
 	}
-	if(option == "HELP 4" || option == "help 4" || option == "Help 4"|| option == "HELP4" || option == "help4" || option == "Help4"){
+	if(option == "HELP4"){
 		cout << "This difficulty requires the player to do pretty much everything, minus some very difficult tricks such as Life Grove 21%, Root Cave without Space Jump, and other tricks that you wish were never discovered. " << endl;
 		system("pause");
 	}
-	if(option == "HELP 5" || option == "help 5" || option == "Help 5"|| option == "HELP5" || option == "help5" || option == "Help5"){
+	if(option == "HELP5"){
 		cout << "If it is possible, you might have to do it.  To be added soon." << endl;
 		system("pause");
 	}
 
-	if(option == "HELP 6" || option == "help 6" || option == "Help 6"|| option == "HELP6" || option == "help6" || option == "Help6"){
+	if(option == "HELP6"){
 		cout << "Allows you to manually check a seed.  Enter the exceptions and the seed when prompted.  Will return the lowest possible difficulty that it is completable on." << endl;
 		system("pause");
 	}
-	if(option == "HELP $" || option == "help $" || option == "Help $"|| option == "HELP$" || option == "help$" || option == "Help$"){
+	if(option == "HELP$"){
 		cout << "Gives you a seed that is completable only by a player of desired skill level. For example, $5 will generate a seed that is completable by a \"Veteran Player\", but not a \"Normal\" player \n \n" << endl;
 		system("pause");
 	}
-	if(option == "HELP 7" || option == "help 7" || option == "Help 7"|| option == "HELP7" || option == "help7" || option == "Help7"){
+	if(option == "HELP7"){
 		cout << "Allows you to pick a difficulty and run the generator indefinatly while dumping completable seeds into a text file.  Lists are located in the CompletableSeeds folder." << endl;
 		system("pause");
 	}
-	if(option == "df" || option == "DF" || option == "Df" || option == "dF"){
+	if(option == "DF"){
 		cout << "df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df \n Here's your seed: 69696969 \n Exceptions: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99 \n  df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df" << endl;
 		system("pause");
 	}
@@ -190,12 +195,16 @@ void processOption(){
 
 
 void newTest(bool print){
+bool validSelection = false;
+
+	apvector<int> apNumbers(0);
+  while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
 
 
-	vector<int> numbers;
+  vector<int> numbers;
 	string str;
 	int x;
 
@@ -205,12 +214,21 @@ void newTest(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
-
-	apvector<int> apNumbers(numbers.size());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -242,7 +260,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -286,6 +305,10 @@ else{
 }
 
 void newTestVeteran(bool print){
+  bool validSelection = false;
+
+  apvector<int> apNumbers(0);
+  while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
@@ -301,12 +324,21 @@ void newTestVeteran(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
-
-	apvector<int> apNumbers(numbers.size());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -338,7 +370,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+  if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -380,14 +413,15 @@ else{
 
   }
 
-
-
-
 }
 
 }
 
 void newTestEasy(bool print){
+  bool validSelection = false;
+
+  	apvector<int> apNumbers(0);
+    while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
@@ -403,12 +437,21 @@ void newTestEasy(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
-
-	apvector<int> apNumbers(numbers.size());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -440,7 +483,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -481,15 +525,13 @@ else{
   }
 
   }
-
-
-
-
-}
-
+ }
 }
 
 void newTestHypermode(bool print){
+  bool validSelection = false;
+  apvector<int> apNumbers(0);
+    while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
@@ -505,12 +547,21 @@ void newTestHypermode(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
-
-	apvector<int> apNumbers(numbers.size());
+  bool tooLarge = false;
+	apNumbers.resize(numbers.size());
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -542,7 +593,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -586,6 +638,10 @@ else{
 }
 
 void newNormalOnly(bool print){
+  bool validSelection = false;
+
+  	apvector<int> apNumbers(0);
+    while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
@@ -601,12 +657,21 @@ void newNormalOnly(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
-
-	apvector<int> apNumbers(numbers.size());
+  bool tooLarge = false;
+	apNumbers.resize(numbers.size());
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -617,16 +682,19 @@ if(!print){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishNormalNew(randoSeed, apNumbers);
-  CheckFinishEasyNew(randoSeed, apNumbers);
-	seedCounter++;
-	while(!(returnCompletableNormal() && !returnCompletableEasy())){
-		cout << "Current Seed: " << randoSeed << '\r' << flush;
-		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishNormalNew(randoSeed, apNumbers);
+  bool seedGood = false;
+  while(!seedGood){
+  randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+  seedCounter++;
+  cout << "Current Seed: " << randoSeed << '\r' << flush;
+  CheckFinishNormalNew(randoSeed, apNumbers);
+  if(returnCompletableNormal()){
     CheckFinishEasyNew(randoSeed, apNumbers);
-		seedCounter++;
-}
+    if(!returnCompletableEasy()){
+      seedGood = true;
+    }
+   }
+  }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
@@ -640,7 +708,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -690,6 +759,10 @@ else{
 
 
 void newVeteranOnly(bool print){
+  bool validSelection = false;
+
+  	apvector<int> apNumbers(0);
+    while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
@@ -705,12 +778,21 @@ void newVeteranOnly(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
-
-	apvector<int> apNumbers(numbers.size());
+  bool tooLarge = false;
+	apNumbers.resize(numbers.size());
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -721,16 +803,19 @@ if(!print){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishVeteranNew(randoSeed, apNumbers);
-  CheckFinishNormalNew(randoSeed, apNumbers);
-	seedCounter++;
-	while(!(returnCompletableVeteran() && !returnCompletableNormal())){
-		cout << "Current Seed: " << randoSeed << '\r' << flush;
-		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishVeteranNew(randoSeed, apNumbers);
+  bool seedGood = false;
+  while(!seedGood){
+  randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+  seedCounter++;
+  cout << "Current Seed: " << randoSeed << '\r' << flush;
+  CheckFinishVeteranNew(randoSeed, apNumbers);
+  if(returnCompletableVeteran()){
     CheckFinishNormalNew(randoSeed, apNumbers);
-		seedCounter++;
-}
+    if(!returnCompletableNormal()){
+      seedGood = true;
+    }
+   }
+  }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
@@ -744,7 +829,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -792,6 +878,11 @@ else{
 
 
 void newHypermodeOnly(bool print){
+  bool validSelection = false;
+
+  	apvector<int> apNumbers(0);
+    while(!validSelection){
+
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
@@ -807,12 +898,23 @@ void newHypermodeOnly(bool print){
 		numbers.push_back(x);
 
 	sort(numbers.begin(), numbers.end());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
 
-	apvector<int> apNumbers(numbers.size());
+
 
 	for(int tran = 0; tran < apNumbers.length(); tran++){
 		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
 	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("cls");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+}
 CurrentTime current_time;
 int seedCounter = 0;
 if(!print){
@@ -823,16 +925,19 @@ if(!print){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishHypermodeNew(randoSeed, apNumbers);
-  CheckFinishVeteranNew(randoSeed, apNumbers);
-	seedCounter++;
-	while(!(returnCompletableHypermode() && !returnCompletableVeteran())){
-		cout << "Current Seed: " << randoSeed << '\r' << flush;
-		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishHypermodeNew(randoSeed, apNumbers);
+  bool seedGood = false;
+  while(!seedGood){
+  randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+  seedCounter++;
+  cout << "Current Seed: " << randoSeed << '\r' << flush;
+  CheckFinishHypermodeNew(randoSeed, apNumbers);
+  if(returnCompletableHypermode()){
     CheckFinishVeteranNew(randoSeed, apNumbers);
-		seedCounter++;
-}
+    if(!returnCompletableVeteran()){
+      seedGood = true;
+    }
+   }
+  }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
@@ -846,7 +951,8 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
   string runScript;
   getline(cin, runScript);
 
-  if(runScript == "Y" || runScript == "Yes" || runScript == "y" || runScript == "yes"){
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
     system("cls");
     loadScript(randoSeed, apNumbers);
     system("cls");
@@ -1069,7 +1175,7 @@ string popupSetting;
 getline(cin, popupSetting);
 bool popup = false;
 
-popup = (popupSetting == "Y" || popupSetting == "Yes" || popupSetting == "y" || popupSetting == "yes");
+popup = (simplifyString(popupSetting) == "Y" || simplifyString(popupSetting) == "YES");
 
 for(int bob = 0; bob < settingException.length(); bob++){
   if(bob == settingException.length() - 1){
@@ -1097,5 +1203,14 @@ for(int ziccardo = 0; ziccardo < settingsLines.length()-1; ziccardo++){
 
   }
   settingsFile.close();
+
+}
+
+string simplifyString(string inString){
+string str = inString;
+transform(str.begin(), str.end(), str.begin(), ::toupper);
+str.erase(remove(str.begin(), str.end(), ' '), str.end());
+
+return str;
 
 }
