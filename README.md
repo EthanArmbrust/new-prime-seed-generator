@@ -8,12 +8,12 @@ There are huge improvements over the old version.  The Seed Generator is able to
 
 Average Time to find a Normal Seed with No Exceptions:
 
-Windows:
+Windows:  
 i3-6100u @ 2.3 GHz - 3.1 seconds  
 i5-3350p @ 3.1 GHz - 1.6 seconds  
 i7-4970 @ 3.60 GHz - 1.1 seconds
 
-Linux:
+Linux:  
 i3-6100u @ 2.3 GHz - 1.02 seconds  
 i5-3350p @ 3.1 GHz - 0.87 seconds  
 i7-4970 @ 3.60 GHz - 0.45 seconds
