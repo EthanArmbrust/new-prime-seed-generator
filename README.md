@@ -8,9 +8,15 @@ There are huge improvements over the old version.  The Seed Generator is able to
 
 Average Time to find a Normal Seed with No Exceptions:
 
-i3-6100u @	2.3 GHz - 3.1 seconds  
+Windows:
+i3-6100u @ 2.3 GHz - 3.1 seconds  
 i5-3350p @ 3.1 GHz - 1.6 seconds  
 i7-4970 @ 3.60 GHz - 1.1 seconds
+
+Linux:
+i3-6100u @ 2.3 GHz - 1.02 seconds  
+i5-3350p @ 3.1 GHz - 0.87 seconds  
+i7-4970 @ 3.60 GHz - 0.45 seconds
 
 A great improvement over the hours the old generator used to take.
 
@@ -25,11 +31,15 @@ Place the Generator in the same folder as the Randomizer Script.  After the Gene
 
 #Compiling Instructions
 
-Requires Mingw-w64
+Building Windows version requires mingw with g++.
 
-Run the build.sh script.
+Building Linux version requires g++.
 
-This software requires a version of MinGW-w64 with POSIX threads.  It will not compile properly with win32 threads.
+Run the build.bat to build for Windows for Windows.
+
+Run the buildForWindows.sh to build for Windows on Linux.
+
+Run the buildForLinux.sh to build for Linux on Linux.
 
 ---------------
 

@@ -10,7 +10,9 @@
 #include <algorithm>
 #include "apvector.h"
 #include "logChecker.h"
-#include "windows.h"
+//#include "windows.h"
+#include <linux/kernel.h>
+#include <sys/syscall.h>
 #include "randomizerTime.h"
 
 void mainMenu();
@@ -91,7 +93,7 @@ return 0;
 
 void mainMenu(){
 
-	system("cls");
+	system("clear");
 	cout << header1 << endl;
 	cout << header2 << endl << endl;
 	cout << "1 - Generate an \"Easy\" difficulty seed \n \n";
@@ -110,7 +112,7 @@ void mainMenu(){
 }
 
 void processOption(){
-	system("cls");
+	system("clear");
   string temp = simplifyString(option);
   option = temp;
 	if(option == "1" || option == "$1"){
@@ -127,7 +129,7 @@ void processOption(){
 	}
 	if(option == "5"){
     cout << "This will be added sometime in the future" << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "6"){
 		manualChecker();
@@ -152,41 +154,41 @@ void processOption(){
 	}
 	if(option == "HELP1"){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
-		system("pause");
+		cin.get();
 
 	}
 	if(option == "HELP2"){
 		cout << "This is the original rendition of the seed generator.  This difficulty will NOT require the player to do any Hyper Bomb Jumps or Uber Bomb Jumps, do a Suitless Magmoor run (except from the Tallon elevator to South Magmoor), do the Chozo floaty glitch without Space Jump, or any other stupid tricks.  Good for beginner speedrunners with moderate knowledge of sequence breaking.  A full list of item requirements can be found here: http://bombch.us/BNcL" << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "HELP3"){
 		cout << "This is a step up from the previous difficulty.  Players will be expected to be able to do all 22% tricks, as well as some of the easier 21% tricks.  A full list of item requirements can be found here: http://bombch.us/BNcM " << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "HELP4"){
 		cout << "This difficulty requires the player to do pretty much everything, minus some very difficult tricks such as Life Grove 21%, Root Cave without Space Jump, and other tricks that you wish were never discovered. " << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "HELP5"){
 		cout << "If it is possible, you might have to do it.  To be added soon." << endl;
-		system("pause");
+		cin.get();
 	}
 
 	if(option == "HELP6"){
 		cout << "Allows you to manually check a seed.  Enter the exceptions and the seed when prompted.  Will return the lowest possible difficulty that it is completable on." << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "HELP$"){
 		cout << "Gives you a seed that is completable only by a player of desired skill level. For example, $5 will generate a seed that is completable by a \"Veteran Player\", but not a \"Normal\" player \n \n" << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "HELP7"){
 		cout << "Allows you to pick a difficulty and run the generator indefinatly while dumping completable seeds into a text file.  Lists are located in the CompletableSeeds folder." << endl;
-		system("pause");
+		cin.get();
 	}
 	if(option == "DF"){
 		cout << "df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df \n Here's your seed: 69696969 \n Exceptions: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99 \n  df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df df" << endl;
-		system("pause");
+		cin.get();
 	}
 
 
@@ -225,7 +227,7 @@ bool validSelection = false;
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -235,7 +237,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -252,8 +254,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -262,18 +264,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+} */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Normal_Seed_List.txt", ios::app);
 
@@ -335,7 +337,7 @@ void newTestVeteran(bool print){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -345,7 +347,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -362,8 +364,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -372,18 +374,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
   if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+} */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Veteran_Seed_List.txt", ios::app);
 
@@ -448,7 +450,7 @@ void newTestEasy(bool print){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -458,7 +460,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -475,8 +477,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -485,18 +487,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+} */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Easy_Seed_List.txt", ios::app);
 
@@ -558,7 +560,7 @@ void newTestHypermode(bool print){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -568,7 +570,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -585,8 +587,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -595,18 +597,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+ } */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Hypermode_Seed_List.txt", ios::app);
 
@@ -668,7 +670,7 @@ void newNormalOnly(bool print){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -678,7 +680,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -700,8 +702,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -710,18 +712,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+} */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Normal_Only_Seed_List.txt", ios::app);
 
@@ -789,7 +791,7 @@ void newVeteranOnly(bool print){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -799,7 +801,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -821,8 +823,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -831,18 +833,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+} */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Veteran_Only_Seed_List.txt", ios::app);
 
@@ -911,7 +913,7 @@ void newHypermodeOnly(bool print){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    system("clear");
     cout << "Invalid Selection.  Please try again" << endl;
   }
 }
@@ -921,7 +923,7 @@ if(!print){
 
 	clock_t begin = clock();
 
-  system("cls");
+  system("clear");
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -943,8 +945,8 @@ double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 header1 = returnSeed();
 header2 = returnExceptions();
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -953,18 +955,18 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
+    system("clear");
     loadScript(randoSeed, apNumbers);
-    system("cls");
+    system("clear");
     system("\"Metroid Prime Randomizer.bat\"");
   }
-  }
+} */
 }
 
 else{
   int prevSeed = -1;
-  system("md CompletableSeeds");
-  system("cls");
+  system("mkdir CompletableSeeds");
+  system("clear");
   ofstream seedList;
   seedList.open(".\\CompletableSeeds\\Hypermode_Only_Seed_List.txt", ios::app);
 
@@ -1048,26 +1050,26 @@ void manualChecker(){
 	CheckFinishEasyNew(inputSeed, apNumbers);
 		if(returnCompletableEasy()){
 			cout << "Seed is completable (Easy Difficulty)" << endl;
-			system("pause");
+			cin.get();
 		}
 		else{CheckFinishNormalNew(inputSeed, apNumbers);
 			if(returnCompletableNormal()){
 				cout << "Seed is completable (Normal Difficulty)" << endl;
-				system("pause");
+				cin.get();
 			}
 			else{CheckFinishVeteranNew(inputSeed, apNumbers);
 				if(returnCompletableVeteran()){
 					cout << "Seed is completable (Veteren Difficulty)" << endl;
-					system("pause");
+					cin.get();
 				}
 				else{CheckFinishHypermodeNew(inputSeed, apNumbers);
 					if(returnCompletableHypermode()){
 						cout << "Seed is completable (Hypermode Difficulty)" << endl;
-						system("pause");
+						cin.get();
 					}
 					else{
 						cout << "This seed is NOT completable (Easy through Hypermode)" << endl;
-						system("pause");
+						cin.get();
 					}
 				}
 			}
