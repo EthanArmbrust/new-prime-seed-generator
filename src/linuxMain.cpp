@@ -32,6 +32,10 @@ void newVeteranOnly(bool);
 void newHypermodeOnly(bool);
 void loadScript(int, apvector <int>);
 string simplifyString(string);
+void performBenchmark();
+void performApBenchmark();
+
+
 
 
 using namespace std;
@@ -138,8 +142,11 @@ void processOption(){
 		printMenu();
 	}
 
-  if(option == "trial"){
-
+  if(option == "9"){
+    performBenchmark();
+  }
+  if(option == "8"){
+    performApBenchmark();
   }
 
 	if(option == "$2" || option == "$ 2"){
@@ -179,7 +186,7 @@ void processOption(){
 		cin.get();
 	}
 	if(option == "HELP$"){
-		cout << "Gives you a seed that is completable only by a player of desired skill level. For example, $5 will generate a seed that is completable by a \"Veteran Player\", but not a \"Normal\" player \n \n" << endl;
+		cout << "Gives you a seed that is completable only by a player of desired skill level. For example, $5 will generate a seed that is completable by a \"Veteran\" player, but not a \"Normal\" player \n \n" << endl;
 		cin.get();
 	}
 	if(option == "HELP7"){
@@ -191,8 +198,46 @@ void processOption(){
 		cin.get();
 	}
 
-
+  if(option != "EXIT"){
 	mainMenu();
+  }
+}
+
+void performBenchmark(){
+  int benchmarkCount = 10000;
+  CurrentTime current_time;
+	cout << "Looking for a seed..." << endl;
+  clock_t begin = clock();
+  benchmark(benchmarkCount);
+  clock_t end = clock();
+  double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
+
+  stringstream stream;
+  stream << setprecision(3) << elapsed_secs/100.0;
+  bottomHelp1 = "Total time: ";
+  bottomHelp2 = "Number of seeds created: ";
+  bottomHelp1 += stream.str();
+  bottomHelp1 += " seconds";
+  bottomHelp2 +=  to_string(benchmarkCount);
+
+}
+void performApBenchmark(){
+  int benchmarkCount = 10000;
+  CurrentTime current_time;
+	cout << "Looking for a seed..." << endl;
+  clock_t begin = clock();
+  apvectorBenchmark(benchmarkCount);
+  clock_t end = clock();
+  double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
+
+  stringstream stream;
+  stream << setprecision(3) << elapsed_secs/100.0;
+  bottomHelp1 = "Total time: ";
+  bottomHelp2 = "Number of seeds created: ";
+  bottomHelp1 += stream.str();
+  bottomHelp1 += " seconds";
+  bottomHelp2 +=  to_string(benchmarkCount);
+
 }
 
 

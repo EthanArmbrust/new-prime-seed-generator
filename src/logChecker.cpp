@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "apvector.h"
 #include "Random.h"
 using namespace std;
@@ -95,6 +96,27 @@ apvector <string> randomize(apvector <string> originalList, apvector <int> exclu
 	bool deepPhenGravity = false;
 	bool deepPhenGrapple = false;
 	bool deepPhenPB = false;
+
+
+void benchmark(int randomizeCount){
+
+	apvector <int> noExceptions(0);
+	apvector <string> itemInput(100, "");
+	itemInput = getItemNames();
+	for(int i = 0; i < randomizeCount; i++){
+		apvector <string> randoVector = randomize(itemInput, noExceptions, 42069 + i);
+
+	}
+}
+
+void apvectorBenchmark(int count){
+	for(int i = 0; i < count; i++){
+		vector<string> test(100, "");
+		for(int z = 0; z < 100; z++){
+			test[z] = to_string(z);
+		}
+	}
+}
 
 
 void CheckFinishNormalNew(int seed, apvector <int> inExceptions){

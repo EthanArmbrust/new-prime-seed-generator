@@ -2,6 +2,8 @@ void CheckFinishNormalNew(int seed, apvector <int> inExceptions);
 void CheckFinishVeteranNew(int seed, apvector <int> inExceptions);
 void CheckFinishEasyNew(int seed, apvector <int> inExceptions);
 void CheckFinishHypermodeNew(int seed, apvector <int> inExceptions);
+void benchmark(int randomizeCount);
+void apvectorBenchmark(int count);
 void resetFlags();
 void printList();
 bool returnCompletableVeteran();
