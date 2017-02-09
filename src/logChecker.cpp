@@ -2,114 +2,46 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "apvector.h"
 #include "Random.h"
+#include "logChecker.h"
 using namespace std;
 
-bool checkObtainedItems();
-void checkEarlyMines();
-void checkDeepMines();
-void checkFrigate();
-void checkDeepPhen();
-void countArtifacts();
-void resetFlags();
-bool isHundo();
-bool returnCompletableNormal();
-bool returnCompletableVeteran();
-bool returnCompletableEasy();
-bool returnCompletableHypermode();
-string returnSeed();
-string returnExceptions();
-apvector <string> getItemNames();
-apvector <string> getAreaNames();
-apvector <int> shrinkIntVector(apvector <int> inVector);
-apvector <int> removeIntElement(apvector <int> inVector, int element);
-apvector <string> shrinkStringVector(apvector <string> inVector);
-apvector <string> removeStringElement(apvector <string> inVector, int element);
-apvector <string> randomize(apvector <string> originalList, apvector <int> excludedItems, int seed);
+LogChecker::LogChecker(){
+	vector<bool> temp1(400, false);
+	isAdded = temp1;
+	vector<bool> temp2(7, false);
+  earlyMinesIsAdded = temp2;
+	vector<bool> temp3(9, false);
+  deepMinesIsAdded = temp3;
+	vector<bool> temp4(4, false);
+  deepPhenIsAdded = temp4;
+	vector<string> temp5(400, "");
+  obItems = temp5;
+	vector<string> temp6(7, "");
+  earlyMinesItems = temp6;
+	vector<string> temp7(9, "");
+  deepMinesItems = temp7;
+	vector<string> temp8(4,"");
+  deepPhenItems = temp8;
 
+}
 
-	  //This is a vector of the first 5 characters of the item lifted right off of the log.  First two elements are empty.
-	apvector <bool> isAdded(400, false);	//This is a vector of boolean values that correspond to item spot
-	apvector <bool> earlyMinesIsAdded(7, false);
-	apvector <bool> deepMinesIsAdded(9, false);
-	apvector <bool> deepPhenIsAdded(4, false);
-	apvector <string> obItems(400, "");
-	apvector <string> earlyMinesItems(7, "");
-	apvector <string> deepMinesItems(9, "");
-	apvector <string> deepPhenItems(4,"");
-	string seedString;
-	string seedExceptions;
-	int a = 0; //artifact counter //must stay public
-	int e = 0; //etank counter //must stay public
-	int art = 0;
-	int lineLength;
-	bool isCompletableEasy = false;
-	bool isCompletableNormal = false;
-	bool isCompletableVeteran = false;
-	bool isCompletableHypermode = false;
-	bool firstCheck = true;
-	//Can you get these items?
-	//Main Checker's flags
-	bool hasMissiles = false;
-	bool hasMorph = false;
-	bool hasBombs = false;
-	bool hasSuit = false;
-	bool hasBoost = false;
-	bool hasSJ = false;
-	bool hasGrapple = false;
-	bool hasVaria = false;
-	bool hasPhazon = false;
-	bool hasGravity = false;
-	bool hasPB = false;
-	bool hasWave = false;
-	bool hasIce = false;
-	bool hasPlasma = false;
-	bool hasSpider = false;
-	bool hasXray = false;
-	bool hasCharge = false;
-	bool hasSuper = false;
-	bool hasThermal = false;
+void LogChecker::checkerSetup(){
+	
+}
 
-	bool earlyMinesSJ = false;
-	bool earlyMinesSpider = false;
-	bool earlyMinesPB = false;
-	bool earlyMinesPlasma = false;
-	bool earlyMinesGravity = false;
-	bool earlyMinesBoost = false;
+void LogChecker::benchmark(int randomizeCount){
 
-	bool deepMinesSJ = false;
-	bool deepMinesSpider = false;
-	bool deepMinesPB = false;
-	bool deepMinesXray = false;
-	bool deepMinesPlasma = false;
-	bool deepMinesCharge = false;
-	bool deepMinesSuper = false;
-	bool deepMinesPhazon = false;
-	bool deepMinesGrapple = false;
-	bool deepMinesBoost = false;
-	bool deepMinesGravity = false;
-
-	bool deepPhenBombs = false;
-	bool deepPhenPlasma = false;
-	bool deepPhenSJ = false;
-	bool deepPhenGravity = false;
-	bool deepPhenGrapple = false;
-	bool deepPhenPB = false;
-
-
-void benchmark(int randomizeCount){
-
-	apvector <int> noExceptions(0);
-	apvector <string> itemInput(100, "");
+	vector <int> noExceptions(0);
+	vector <string> itemInput(100, "");
 	itemInput = getItemNames();
 	for(int i = 0; i < randomizeCount; i++){
-		apvector <string> randoVector = randomize(itemInput, noExceptions, 42069 + i);
+		vector <string> randoVector = randomize(itemInput, noExceptions, 42069 + i);
 
 	}
 }
 
-void apvectorBenchmark(int count){
+void LogChecker::apvectorBenchmark(int count){
 	for(int i = 0; i < count; i++){
 		vector<string> test(100, "");
 		for(int z = 0; z < 100; z++){
@@ -119,15 +51,15 @@ void apvectorBenchmark(int count){
 }
 
 
-void CheckFinishNormalNew(int seed, apvector <int> inExceptions){
+void LogChecker::CheckFinishNormalNew(int seed, vector <int> inExceptions){
 
 
 bool newRando = true;
-apvector <string> items(104, "");
-apvector <string> logline(104, "");
-apvector <string> itemInput(100, "");
-apvector <string> areaInput(100, "");
-apvector <int> exceptions(inExceptions);
+vector <string> items(104, "");
+vector <string> logline(104, "");
+vector <string> itemInput(100, "");
+vector <string> areaInput(100, "");
+vector <int> exceptions(inExceptions);
 isCompletableNormal = false;
 
 int k = 0; //for adding items to obtained list
@@ -184,13 +116,13 @@ while(resetter < 105){
 
 	areaInput = getAreaNames();
 
-  apvector <string> newItems = randomize(itemInput, exceptions, seed);
+  vector <string> newItems = randomize(itemInput, exceptions, seed);
 
 
 
-	for(int zorro = 2; zorro < logline.length()-2; zorro++){
+	for(int zorro = 2; zorro < logline.size()-2; zorro++){
 		 logline[zorro] = areaInput[zorro-2] + newItems[zorro-2];
-		 lineLength = logline[zorro].length() - 51;
+		 lineLength = logline[zorro].size() - 51;
 		 items[zorro] = logline[zorro].substr(51,lineLength);}
 
 
@@ -930,14 +862,14 @@ while(resetter < 105){
 	seedString = "Seed: " + newSeed;
 
 	string listOfExceptions = "";
-	for(int zork = 0; zork < exceptions.length(); zork++){
+	for(int zork = 0; zork < exceptions.size(); zork++){
 	    listOfExceptions += to_string(exceptions[zork]);
 			listOfExceptions += " ";
 	}
 
 
 	seedExceptions = "Exceptions: " + listOfExceptions;
-	if(exceptions.length() == 0){
+	if(exceptions.size() == 0){
 		seedExceptions = "Exceptions: None";
 	}
 
@@ -950,15 +882,15 @@ while(resetter < 105){
 
 }
 
-void CheckFinishVeteranNew(int seed, apvector <int> inExceptions){
+void LogChecker::CheckFinishVeteranNew(int seed, vector <int> inExceptions){
 
 
 
-apvector <string> items(104, "");
-apvector <string> logline(104, "");
-apvector <string> itemInput(100, "");
-apvector <string> areaInput(100, "");
-apvector <int> exceptions(inExceptions);
+vector <string> items(104, "");
+vector <string> logline(104, "");
+vector <string> itemInput(100, "");
+vector <string> areaInput(100, "");
+vector <int> exceptions(inExceptions);
 isCompletableVeteran = false;
 
 int k = 0; //for adding items to obtained list
@@ -1056,13 +988,13 @@ resetter = 0;
 
 	areaInput = getAreaNames();
 
-	apvector <string> newItems = randomize(itemInput, exceptions, seed);
+	vector <string> newItems = randomize(itemInput, exceptions, seed);
 
 
 
-	for(int zorro = 2; zorro < logline.length()-2; zorro++){
+	for(int zorro = 2; zorro < logline.size()-2; zorro++){
 		 logline[zorro] = areaInput[zorro-2] + newItems[zorro-2];
-		 lineLength = logline[zorro].length() - 51;
+		 lineLength = logline[zorro].size() - 51;
 		 items[zorro] = logline[zorro].substr(51,lineLength);}
 
 
@@ -2041,14 +1973,14 @@ resetter = 0;
 	seedString = "Seed: " + newSeed;
 
 	string listOfExceptions = "";
-	for(int zork = 0; zork < exceptions.length(); zork++){
+	for(int zork = 0; zork < exceptions.size(); zork++){
 	    listOfExceptions += to_string(exceptions[zork]);
 			listOfExceptions += " ";
 	}
 
 
 	seedExceptions = "Exceptions: " + listOfExceptions;
-	if(exceptions.length() == 0){
+	if(exceptions.size() == 0){
 		seedExceptions = "Exceptions: None";
 	}
 
@@ -2059,13 +1991,13 @@ resetter = 0;
 
 }
 
-void CheckFinishEasyNew(int seed, apvector <int> inExceptions){
+void LogChecker::CheckFinishEasyNew(int seed, vector <int> inExceptions){
 
-apvector <string> items(104, "");
-apvector <string> logline(104, "");
-apvector <string> itemInput(100, "");
-apvector <string> areaInput(100, "");
-apvector <int> exceptions(inExceptions);
+vector <string> items(104, "");
+vector <string> logline(104, "");
+vector <string> itemInput(100, "");
+vector <string> areaInput(100, "");
+vector <int> exceptions(inExceptions);
 isCompletableEasy = false;
 
 int k = 0; //for adding items to obtained list
@@ -2121,13 +2053,13 @@ while(resetter < 105){
 
 	areaInput = getAreaNames();
 
-  apvector <string> newItems = randomize(itemInput, exceptions, seed);
+  vector <string> newItems = randomize(itemInput, exceptions, seed);
 
 
 
-	for(int zorro = 2; zorro < logline.length()-2; zorro++){
+	for(int zorro = 2; zorro < logline.size()-2; zorro++){
 		 logline[zorro] = areaInput[zorro-2] + newItems[zorro-2];
-		 lineLength = logline[zorro].length() - 51;
+		 lineLength = logline[zorro].size() - 51;
 		 items[zorro] = logline[zorro].substr(51,lineLength);}
 
 
@@ -2830,14 +2762,14 @@ while(resetter < 105){
 	seedString = "Seed: " + newSeed;
 
 	string listOfExceptions = "";
-	for(int zork = 0; zork < exceptions.length(); zork++){
+	for(int zork = 0; zork < exceptions.size(); zork++){
 	    listOfExceptions += to_string(exceptions[zork]);
 			listOfExceptions += " ";
 	}
 
 
 	seedExceptions = "Exceptions: " + listOfExceptions;
-	if(exceptions.length() == 0){
+	if(exceptions.size() == 0){
 		seedExceptions = "Exceptions: None";
 	}
 
@@ -2852,13 +2784,13 @@ while(resetter < 105){
 
 }
 
-void CheckFinishHypermodeNew(int seed, apvector <int> inExceptions){
+void LogChecker::CheckFinishHypermodeNew(int seed, vector <int> inExceptions){
 
-apvector <string> items(104, "");
-apvector <string> logline(104, "");
-apvector <string> itemInput(100, "");
-apvector <string> areaInput(100, "");
-apvector <int> exceptions(inExceptions);
+vector <string> items(104, "");
+vector <string> logline(104, "");
+vector <string> itemInput(100, "");
+vector <string> areaInput(100, "");
+vector <int> exceptions(inExceptions);
 isCompletableHypermode = false;
 
 int k = 0; //for adding items to obtained list
@@ -2981,13 +2913,13 @@ resetter = 0;
 
 	areaInput = getAreaNames();
 
-	apvector <string> newItems = randomize(itemInput, exceptions, seed);
+	vector <string> newItems = randomize(itemInput, exceptions, seed);
 
 
 
-	for(int zorro = 2; zorro < logline.length()-2; zorro++){
+	for(int zorro = 2; zorro < logline.size()-2; zorro++){
 		 logline[zorro] = areaInput[zorro-2] + newItems[zorro-2];
-		 lineLength = logline[zorro].length() - 51;
+		 lineLength = logline[zorro].size() - 51;
 		 items[zorro] = logline[zorro].substr(51,lineLength);}
 
 
@@ -4051,21 +3983,21 @@ resetter = 0;
 	seedString = "Seed: " + newSeed;
 
 	string listOfExceptions = "";
-	for(int zork = 0; zork < exceptions.length(); zork++){
+	for(int zork = 0; zork < exceptions.size(); zork++){
 	    listOfExceptions += to_string(exceptions[zork]);
 			listOfExceptions += " ";
 	}
 
 
 	seedExceptions = "Exceptions: " + listOfExceptions;
-	if(exceptions.length() == 0){
+	if(exceptions.size() == 0){
 		seedExceptions = "Exceptions: None";
 	}
 
 
 }
 
-bool checkObtainedItems(){
+bool LogChecker::checkObtainedItems(){
 int prevEtankCount = e;
 int prevArt = art;
 art = 0;
@@ -4153,7 +4085,7 @@ while (q < 105){
 	return foundItems;
 }
 
-void checkEarlyMines(){
+void LogChecker::checkEarlyMines(){
 int fry = 0;
 
 while(fry < 7){
@@ -4180,7 +4112,7 @@ while(fry < 7){
 
 }
 
-void checkDeepMines(){
+void LogChecker::checkDeepMines(){
 int cletus = 0;
 
 while(cletus < 9){
@@ -4221,7 +4153,7 @@ while(cletus < 9){
 }
 }
 
-void checkDeepPhen(){
+void LogChecker::checkDeepPhen(){
 int deluxor = 0;
 
 while(deluxor < 4){
@@ -4247,7 +4179,7 @@ while(deluxor < 4){
 }
 }
 
-void countArtifacts(){
+void LogChecker::countArtifacts(){
  	int d = 0;
 	while(d < 200){
 	if(obItems[d] == "Artif" || obItems[d].substr(0,8) == "Artifact"){				//need to add a substring thingy when I add the full name
@@ -4256,7 +4188,7 @@ void countArtifacts(){
 }
 }
 
-bool isHundo(){
+bool LogChecker::isHundo(){
 int g = 0;
  while ( g < 101 )
     {
@@ -4274,42 +4206,42 @@ int g = 0;
 return true;
 }
 
-bool returnCompletableNormal(){
+bool LogChecker::returnCompletableNormal(){
 
 return isCompletableNormal;
 }
 
 
-bool returnCompletableVeteran(){
+bool LogChecker::returnCompletableVeteran(){
 	return isCompletableVeteran;
 }
 
-bool returnCompletableEasy(){
+bool LogChecker::returnCompletableEasy(){
 	return isCompletableEasy;
 }
 
-bool returnCompletableHypermode(){
+bool LogChecker::returnCompletableHypermode(){
 	return isCompletableHypermode;
 }
 
-string returnSeed(){
+string LogChecker::returnSeed(){
 	return seedString;
 }
 
-string returnExceptions(){
+string LogChecker::returnExceptions(){
 	return seedExceptions;
 }
 
-void printList(){
+void LogChecker::printList(){
 
-	apvector <string> items(103, "");
-apvector <string> logline(103, "");
+	vector <string> items(103, "");
+vector <string> logline(103, "");
 	ifstream myfile ("cuck.txt");
 	int x = 0;
 	bool skip = false;
 	while(getline(myfile,logline[x])){
 		if(x>1){
-		lineLength = logline[x].length() - 51;
+		lineLength = logline[x].size() - 51;
 		items[x] = logline[x].substr(51,lineLength);}
 		if(!skip)
 			skip = true;
@@ -4328,73 +4260,46 @@ apvector <string> logline(103, "");
 
 }
 
-void resetFlags(){
+void LogChecker::resetFlags(){
 	isCompletableNormal = false;
 	isCompletableEasy = false;
 	isCompletableVeteran = false;
 	isCompletableHypermode = false;
 }
 
-apvector <string> getItemNames(){
-  apvector <string> itemNames(100, "");
+vector <string> LogChecker::getItemNames(){
+  vector <string> itemNames(100, "");
     static const string items[] = {"Missile Expansion 1", "Missile Expansion 2", "Missile Expansion 3", "Energy Tank 1", "Missile Expansion 4", "Morph Ball", "Missile Expansion 5", "Missile Expansion 6", "Missile Expansion 7", "Energy Tank 2", "Missile Expansion 8", "Missile Expansion 9", "Power Bomb Expansion 1", "Wavebuster", "Artifact of Lifegiver", "Missile Expansion 10", "Missile Expansion 11", "Energy Tank 3", "Missile Expansion 12", "Missile Launcher", "Varia Suit", "Artifact of Wild", "Missile Expansion 13", "Charge Beam", "Missile Expansion 14", "Missile Expansion 15", "Missile Expansion 16", "Missile Expansion 17", "Morph Ball Bomb", "Missile Expansion 18", "Energy Tank 4", "Energy Tank 5", "Missile Expansion 19", "Artifact of World", "Ice Beam", "Missile Expansion 20", "Missile Expansion 21", "Artifact of Sun", "Power Bomb Expansion 2", "Missile Expansion 22", "Missile Expansion 23", "Wave Beam", "Energy Tank 6", "Boost Ball", "Spider Ball", "Missile Expansion 24", "Missile Expansion 25", "Super Missile", "Energy Tank 7", "Artifact of Elder", "Thermal Visor", "Missile Expansion 26", "Energy Tank 8", "Missile Expansion 27", "Gravity Suit", "Missile Expansion 28", "Artifact of Spirit", "Power Bomb Expansion 3", "Missile Expansion 29", "Space Jump Boots", "Missile Expansion 30", "Missile Expansion 31", "Missile Expansion 32", "Artifact of Truth", "Missile Expansion 33", "Missile Expansion 34", "Energy Tank 9", "Missile Expansion 35", "Energy Tank 10", "Missile Expansion 36", "Missile Expansion 37", "X-Ray Visor", "Artifact of Chozo", "Missile Expansion 38", "Missile Expansion 39", "Grapple Beam", "Flamethrower", "Artifact of Warrior", "Missile Expansion 40", "Missile Expansion 41", "Energy Tank 11", "Missile Expansion 42", "Energy Tank 12", "Phazon Suit", "Power Bomb", "Missile Expansion 43", "Missile Expansion 44", "Missile Expansion 45", "Artifact of Newborn", "Missile Expansion 46", "Artifact of Nature", "Missile Expansion 47", "Missile Expansion 48", "Energy Tank 13", "Artifact of Strength", "Ice Spreader", "Missile Expansion 49", "Power Bomb Expansion 4", "Plasma Beam", "Energy Tank 14"};
-    for(int k = 0; k < itemNames.length(); k++){
+    for(int k = 0; k < itemNames.size(); k++){
       itemNames[k] = items[k];
     }
     return itemNames;
 }
 
-apvector <string> getAreaNames(){
-  apvector <string> worldAndRoomNames(100,"");
+vector <string> LogChecker::getAreaNames(){
+  vector <string> worldAndRoomNames(100,"");
   static const string room[] = {"Chozo - - - Main Plaza (Half-Pipe) - - - - - - - - ", "Chozo - - - Main Plaza (Grapple Ledge) - - - - - - ", "Chozo - - - Main Plaza (Tree)  - - - - - - - - - - ", "Chozo - - - Main Plaza (Locked Door) - - - - - - - ", "Chozo - - - Ruined Fountain  - - - - - - - - - - - ", "Chozo - - - Ruined Shrine (\"Beetle Battle\")  - - - ", "Chozo - - - Ruined Shrine (Half-Pipe)  - - - - - - ", "Chozo - - - Ruined Shrine (Lower Tunnel) - - - - - ", "Chozo - - - Vault  - - - - - - - - - - - - - - - - ", "Chozo - - - Training Chamber - - - - - - - - - - - ", "Chozo - - - Ruined Nursery - - - - - - - - - - - - ", "Chozo - - - Training Chamber Access  - - - - - - - ", "Chozo - - - Magma Pool - - - - - - - - - - - - - - ", "Chozo - - - Tower of Light - - - - - - - - - - - - ", "Chozo - - - Tower Chamber  - - - - - - - - - - - - ", "Chozo - - - Ruined Gallery (Missile Wall)  - - - - ", "Chozo - - - Ruined Gallery (Tunnel)  - - - - - - - ", "Chozo - - - Transport Access North - - - - - - - - ", "Chozo - - - Gathering Hall - - - - - - - - - - - - ", "Chozo - - - Hive Totem - - - - - - - - - - - - - - ", "Chozo - - - Sunchamber (Flaahgra)  - - - - - - - - ", "Chozo - - - Sunchamber (Ghosts)  - - - - - - - - - ", "Chozo - - - Watery Hall Access - - - - - - - - - - ", "Chozo - - - Watery Hall (Scan Puzzle)  - - - - - - ", "Chozo - - - Watery Hall (Underwater) - - - - - - - ", "Chozo - - - Dynamo (Lower) - - - - - - - - - - - - ", "Chozo - - - Dynamo (Spider Track)  - - - - - - - - ", "Chozo - - - Burn Dome (Missile)  - - - - - - - - - ", "Chozo - - - Burn Dome (I. Drone) - - - - - - - - - ", "Chozo - - - Furnace (Spider Tracks)  - - - - - - - ", "Chozo - - - Furnace (Inside Furnace) - - - - - - - ", "Chozo - - - Hall of the Elders - - - - - - - - - - ", "Chozo - - - Crossway - - - - - - - - - - - - - - - ", "Chozo - - - Elder Chamber  - - - - - - - - - - - - ", "Chozo - - - Antechamber  - - - - - - - - - - - - - ", "Phendrana - Phendrana Shorelines (Behind Ice)  - - ", "Phendrana - Phendrana Shorelines (Spider Track)  - ", "Phendrana - Chozo Ice Temple - - - - - - - - - - - ", "Phendrana - Ice Ruins West - - - - - - - - - - - - ", "Phendrana - Ice Ruins East (Behind Ice)  - - - - - ", "Phendrana - Ice Ruins East (Spider Track)  - - - - ", "Phendrana - Chapel of the Elders - - - - - - - - - ", "Phendrana - Ruined Courtyard - - - - - - - - - - - ", "Phendrana - Phendrana Canyon - - - - - - - - - - - ", "Phendrana - Quarantine Cave  - - - - - - - - - - - ", "Phendrana - Research Lab Hydra - - - - - - - - - - ", "Phendrana - Quarantine Monitor - - - - - - - - - - ", "Phendrana - Observatory  - - - - - - - - - - - - - ", "Phendrana - Transport Access - - - - - - - - - - - ", "Phendrana - Control Tower  - - - - - - - - - - - - ", "Phendrana - Research Core  - - - - - - - - - - - - ", "Phendrana - Frost Cave - - - - - - - - - - - - - - ", "Phendrana - Research Lab Aether (Tank) - - - - - - ", "Phendrana - Research Lab Aether (Morph Track)  - - ", "Phendrana - Gravity Chamber (Underwater) - - - - - ", "Phendrana - Gravity Chamber (Grapple Ledge)  - - - ", "Phendrana - Storage Cave - - - - - - - - - - - - - ", "Phendrana - Security Cave  - - - - - - - - - - - - ", "Tallon  - - Landing Site - - - - - - - - - - - - - ", "Tallon  - - Alcove - - - - - - - - - - - - - - - - ", "Tallon  - - Frigate Crash Site - - - - - - - - - - ", "Tallon  - - Overgrown Cavern - - - - - - - - - - - ", "Tallon  - - Root Cave  - - - - - - - - - - - - - - ", "Tallon  - - Artifact Temple  - - - - - - - - - - - ", "Tallon  - - Transport Tunnel B - - - - - - - - - - ", "Tallon  - - Arbor Chamber  - - - - - - - - - - - - ", "Tallon  - - Cargo Freight Lift to Deck Gamma - - - ", "Tallon  - - Biohazard Containment  - - - - - - - - ", "Tallon  - - Hydro Access Tunnel  - - - - - - - - - ", "Tallon  - - Great Tree Chamber - - - - - - - - - - ", "Tallon  - - Life Grove Tunnel  - - - - - - - - - - ", "Tallon  - - Life Grove (Start) - - - - - - - - - - ", "Tallon  - - Life Grove (Underwater Spinner)  - - - ", "Mines - - - Main Quarry  - - - - - - - - - - - - - ", "Mines - - - Security Access A  - - - - - - - - - - ", "Mines - - - Storage Depot B  - - - - - - - - - - - ", "Mines - - - Storage Depot A  - - - - - - - - - - - ", "Mines - - - Elite Research (Phazon Elite)  - - - - ", "Mines - - - Elite Research (Laser) - - - - - - - - ", "Mines - - - Elite Control Access - - - - - - - - - ", "Mines - - - Ventilation Shaft  - - - - - - - - - - ", "Mines - - - Phazon Processing Center - - - - - - - ", "Mines - - - Processing Center Access - - - - - - - ", "Mines - - - Elite Quarters - - - - - - - - - - - - ", "Mines - - - Central Dynamo - - - - - - - - - - - - ", "Mines - - - Metroid Quarantine B - - - - - - - - - ", "Mines - - - Metroid Quarantine A - - - - - - - - - ", "Mines - - - Fungal Hall B  - - - - - - - - - - - - ", "Mines - - - Phazon Mining Tunnel - - - - - - - - - ", "Mines - - - Fungal Hall Access - - - - - - - - - - ", "Magmoor - - Lava Lake  - - - - - - - - - - - - - - ", "Magmoor - - Triclops Pit - - - - - - - - - - - - - ", "Magmoor - - Storage Cavern - - - - - - - - - - - - ", "Magmoor - - Transport Tunnel A - - - - - - - - - - ", "Magmoor - - Warrior Shrine - - - - - - - - - - - - ", "Magmoor - - Shore Tunnel - - - - - - - - - - - - - ", "Magmoor - - Fiery Shores (Morph Track) - - - - - - ", "Magmoor - - Fiery Shores (Warrior Shrine Tunnel) - ", "Magmoor - - Plasma Processing  - - - - - - - - - - ", "Magmoor - - Magmoor Workstation  - - - - - - - - - "};
-  for(int k = 0; k < worldAndRoomNames.length(); k++){
+  for(int k = 0; k < worldAndRoomNames.size(); k++){
     worldAndRoomNames[k] = room[k];
   }
   return worldAndRoomNames;
 }
 
-apvector <int> shrinkIntVector(apvector <int> inVector){
-  apvector <int> newList(inVector.length()-1);
-  if(newList.length() == 0){
+vector <int> LogChecker::shrinkIntVector(vector <int> inVector){
+  vector <int> newList(inVector.size()-1);
+  if(newList.size() == 0){
     return newList;
   }
 
-  for(int i = 0; i < newList.length(); i++){
+  for(int i = 0; i < newList.size(); i++){
     newList[i] = inVector[i+1];
   }
   return newList;
 }
 
-apvector <int> removeIntElement(apvector <int> inVector, int element){
-  apvector <int> newList(inVector.length()-1);
-  if(newList.length() == 0){
-    return newList;
-  }
-
-  for(int k = 0; k < element; k++){
-    newList[k] = inVector[k];
-  }
-
-  for(int i = element; i < newList.length(); i++){
-    newList[i] = inVector[i+1];
-  }
-  return newList;
-}
-
-apvector <string> shrinkStringVector(apvector <string> inVector){
-  apvector <string> newList(inVector.length()-1);
-  if(newList.length() == 0){
-    return newList;
-  }
-
-  for(int i = 0; i < newList.length(); i++){
-    newList[i] = inVector[i+1];
-  }
-  return newList;
-}
-apvector <string> removeStringElement(apvector <string> inVector, int element){
-  apvector <string> newList(inVector.length()-1);
-  if(newList.length() == 0){
+vector <int> LogChecker::removeIntElement(vector <int> inVector, int element){
+  vector <int> newList(inVector.size()-1);
+  if(newList.size() == 0){
     return newList;
   }
 
@@ -4402,7 +4307,34 @@ apvector <string> removeStringElement(apvector <string> inVector, int element){
     newList[k] = inVector[k];
   }
 
-  for(int i = element; i < newList.length(); i++){
+  for(int i = element; i < newList.size(); i++){
+    newList[i] = inVector[i+1];
+  }
+  return newList;
+}
+
+vector <string> LogChecker::shrinkStringVector(vector <string> inVector){
+  vector <string> newList(inVector.size()-1);
+  if(newList.size() == 0){
+    return newList;
+  }
+
+  for(int i = 0; i < newList.size(); i++){
+    newList[i] = inVector[i+1];
+  }
+  return newList;
+}
+vector <string> LogChecker::removeStringElement(vector <string> inVector, int element){
+  vector <string> newList(inVector.size()-1);
+  if(newList.size() == 0){
+    return newList;
+  }
+
+  for(int k = 0; k < element; k++){
+    newList[k] = inVector[k];
+  }
+
+  for(int i = element; i < newList.size(); i++){
     newList[i] = inVector[i+1];
   }
 
@@ -4410,20 +4342,20 @@ apvector <string> removeStringElement(apvector <string> inVector, int element){
 }
 
 
-apvector <string> randomize(apvector <string> originalList, apvector <int> excludedItems, int seed){
+vector <string> LogChecker::randomize(vector <string> originalList, vector <int> excludedItems, int seed){
   //originalList must have first 3 lines removed before adding!!
 
-  apvector <string> orderedItems(originalList.length(), "");
-  apvector <int> addedItems(originalList.length());
-  apvector <string> randomizedItems(originalList.length(), "");
+  vector <string> orderedItems(originalList.size(), "");
+  vector <int> addedItems(originalList.size());
+  vector <string> randomizedItems(originalList.size(), "");
 
-  for(int imDumb = 0; imDumb < originalList.length(); imDumb++){
+  for(int imDumb = 0; imDumb < originalList.size(); imDumb++){
     orderedItems[imDumb] = originalList[imDumb];
   }
 
 
 
-  for(int z = 0; z < addedItems.length(); z++){
+  for(int z = 0; z < addedItems.size(); z++){
     addedItems[z] = z;
   }
 
@@ -4431,12 +4363,12 @@ apvector <string> randomize(apvector <string> originalList, apvector <int> exclu
  //add excludedItems
 
 
- for(int z = 0; z < excludedItems.length(); z++){
+ for(int z = 0; z < excludedItems.size(); z++){
 
    randomizedItems[excludedItems[z]] = orderedItems[excludedItems[z]];
  }
 
- for(int z = 0; z < excludedItems.length(); z++){
+ for(int z = 0; z < excludedItems.size(); z++){
    orderedItems = removeStringElement(orderedItems, excludedItems[z] - z);
    addedItems = removeIntElement(addedItems, excludedItems[z] - z);
 
@@ -4447,9 +4379,9 @@ apvector <string> randomize(apvector <string> originalList, apvector <int> exclu
 
  Random * randomizer = new Random();
  randomizer->setup(seed);
- while(orderedItems.length() > 0){
+ while(orderedItems.size() > 0){
 
-   int number = randomizer->Next(addedItems.length());
+   int number = randomizer->Next(addedItems.size());
    randomizedItems[addedItems[number]] = orderedItems[0];
    //cout << "added first orderedItem to randomizedItems" << endl;
    orderedItems = shrinkStringVector(orderedItems);

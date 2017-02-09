@@ -8,7 +8,6 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-#include "apvector.h"
 #include "logChecker.h"
 //#include "windows.h"
 #include <linux/kernel.h>
@@ -26,11 +25,11 @@ void newTestVeteran(bool);
 void newTestEasy(bool);
 void newTestHypermode(bool);
 int getASeed();
-apvector <int> getTheExceptions();
+vector <int> getTheExceptions();
 void newNormalOnly(bool);
 void newVeteranOnly(bool);
 void newHypermodeOnly(bool);
-void loadScript(int, apvector <int>);
+void loadScript(int, vector <int>);
 string simplifyString(string);
 void performBenchmark();
 void performApBenchmark();
@@ -208,7 +207,8 @@ void performBenchmark(){
   CurrentTime current_time;
 	cout << "Looking for a seed..." << endl;
   clock_t begin = clock();
-  benchmark(benchmarkCount);
+  LogChecker checker;
+  checker.benchmark(benchmarkCount);
   clock_t end = clock();
   double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 
@@ -226,7 +226,8 @@ void performApBenchmark(){
   CurrentTime current_time;
 	cout << "Looking for a seed..." << endl;
   clock_t begin = clock();
-  apvectorBenchmark(benchmarkCount);
+  LogChecker checker;
+  checker.apvectorBenchmark(benchmarkCount);
   clock_t end = clock();
   double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 
@@ -244,7 +245,7 @@ void performApBenchmark(){
 void newTest(bool print){
 bool validSelection = false;
 
-	apvector<int> apNumbers(0);
+	vector<int> apNumbers(0);
   while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
@@ -264,7 +265,7 @@ bool validSelection = false;
   bool tooLarge = false;
   apNumbers.resize(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -278,27 +279,30 @@ bool validSelection = false;
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
 
   system("clear");
 
+
+
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishNormalNew(randoSeed, apNumbers);
+	checker.CheckFinishNormalNew(randoSeed, apNumbers);
 	seedCounter++;
-	while(!returnCompletableNormal()){
+	while(!checker.returnCompletableNormal()){
 		cout << "Current Seed: " << randoSeed << '\r' << flush;
 		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishNormalNew(randoSeed, apNumbers);
+		checker.CheckFinishNormalNew(randoSeed, apNumbers);
 		seedCounter++;
 }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -331,20 +335,20 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!returnCompletableNormal()){
+  	while(!checker.returnCompletableNormal()){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishNormalNew(randoSeed, apNumbers);
+  	checker.CheckFinishNormalNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishNormalNew(randoSeed, apNumbers);
+    checker.CheckFinishNormalNew(randoSeed, apNumbers);
     seedCounter++;
       }
     }
@@ -354,7 +358,7 @@ else{
 void newTestVeteran(bool print){
   bool validSelection = false;
 
-  apvector<int> apNumbers(0);
+  vector<int> apNumbers(0);
   while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
@@ -374,7 +378,7 @@ void newTestVeteran(bool print){
   bool tooLarge = false;
   apNumbers.resize(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -388,6 +392,7 @@ void newTestVeteran(bool print){
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
@@ -396,19 +401,19 @@ if(!print){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishVeteranNew(randoSeed, apNumbers);
+	checker.CheckFinishVeteranNew(randoSeed, apNumbers);
 	seedCounter++;
-	while(!returnCompletableVeteran()){
+	while(!checker.returnCompletableVeteran()){
 		cout << "Current Seed: " << randoSeed << '\r' << flush;
 		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishVeteranNew(randoSeed, apNumbers);
+		checker.CheckFinishVeteranNew(randoSeed, apNumbers);
 		seedCounter++;
 }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -441,20 +446,20 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!returnCompletableVeteran()){
+  	while(!checker.returnCompletableVeteran()){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishVeteranNew(randoSeed, apNumbers);
+  	checker.CheckFinishVeteranNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishVeteranNew(randoSeed, apNumbers);
+    checker.CheckFinishVeteranNew(randoSeed, apNumbers);
     seedCounter++;
   }
 
@@ -467,7 +472,7 @@ else{
 void newTestEasy(bool print){
   bool validSelection = false;
 
-  	apvector<int> apNumbers(0);
+  	vector<int> apNumbers(0);
     while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
@@ -487,7 +492,7 @@ void newTestEasy(bool print){
   bool tooLarge = false;
   apNumbers.resize(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -501,6 +506,7 @@ void newTestEasy(bool print){
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
@@ -509,19 +515,19 @@ if(!print){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishEasyNew(randoSeed, apNumbers);
+	checker.CheckFinishEasyNew(randoSeed, apNumbers);
 	seedCounter++;
-	while(!returnCompletableEasy()){
+	while(!checker.returnCompletableEasy()){
 		cout << "Current Seed: " << randoSeed << '\r' << flush;
 		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishEasyNew(randoSeed, apNumbers);
+		checker.CheckFinishEasyNew(randoSeed, apNumbers);
 		seedCounter++;
 }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -554,20 +560,20 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!returnCompletableEasy()){
+  	while(!checker.returnCompletableEasy()){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishEasyNew(randoSeed, apNumbers);
+  	checker.CheckFinishEasyNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishEasyNew(randoSeed, apNumbers);
+    checker.CheckFinishEasyNew(randoSeed, apNumbers);
     seedCounter++;
   }
 
@@ -577,7 +583,7 @@ else{
 
 void newTestHypermode(bool print){
   bool validSelection = false;
-  apvector<int> apNumbers(0);
+  vector<int> apNumbers(0);
     while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
@@ -597,7 +603,7 @@ void newTestHypermode(bool print){
   bool tooLarge = false;
 	apNumbers.resize(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -611,6 +617,7 @@ void newTestHypermode(bool print){
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
@@ -619,19 +626,19 @@ if(!print){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	CheckFinishHypermodeNew(randoSeed, apNumbers);
+	checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
 	seedCounter++;
-	while(!returnCompletableHypermode()){
+	while(!checker.returnCompletableHypermode()){
 		cout << "Current Seed: " << randoSeed << '\r' << flush;
 		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		CheckFinishHypermodeNew(randoSeed, apNumbers);
+		checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
 		seedCounter++;
 }
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -664,20 +671,20 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!returnCompletableHypermode()){
+  	while(!checker.returnCompletableHypermode()){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishHypermodeNew(randoSeed, apNumbers);
+  	checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishHypermodeNew(randoSeed, apNumbers);
+    checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
     seedCounter++;
       }
     }
@@ -687,7 +694,7 @@ else{
 void newNormalOnly(bool print){
   bool validSelection = false;
 
-  	apvector<int> apNumbers(0);
+  	vector<int> apNumbers(0);
     while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
@@ -707,7 +714,7 @@ void newNormalOnly(bool print){
   bool tooLarge = false;
 	apNumbers.resize(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -721,6 +728,7 @@ void newNormalOnly(bool print){
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
@@ -734,10 +742,10 @@ if(!print){
   randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
   seedCounter++;
   cout << "Current Seed: " << randoSeed << '\r' << flush;
-  CheckFinishNormalNew(randoSeed, apNumbers);
-  if(returnCompletableNormal()){
-    CheckFinishEasyNew(randoSeed, apNumbers);
-    if(!returnCompletableEasy()){
+  checker.CheckFinishNormalNew(randoSeed, apNumbers);
+  if(checker.returnCompletableNormal()){
+    checker.CheckFinishEasyNew(randoSeed, apNumbers);
+    if(!checker.returnCompletableEasy()){
       seedGood = true;
     }
    }
@@ -745,8 +753,8 @@ if(!print){
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -779,22 +787,22 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!(returnCompletableNormal() && !returnCompletableEasy())){
+  	while(!(checker.returnCompletableNormal() && !checker.returnCompletableEasy())){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishNormalNew(randoSeed, apNumbers);
-    CheckFinishEasyNew(randoSeed, apNumbers);
+  	checker.CheckFinishNormalNew(randoSeed, apNumbers);
+    checker.CheckFinishEasyNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishNormalNew(randoSeed, apNumbers);
-    CheckFinishEasyNew(randoSeed, apNumbers);
+    checker.CheckFinishNormalNew(randoSeed, apNumbers);
+    checker.CheckFinishEasyNew(randoSeed, apNumbers);
     seedCounter++;
   }
 
@@ -808,7 +816,7 @@ else{
 void newVeteranOnly(bool print){
   bool validSelection = false;
 
-  	apvector<int> apNumbers(0);
+  	vector<int> apNumbers(0);
     while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
@@ -828,7 +836,7 @@ void newVeteranOnly(bool print){
   bool tooLarge = false;
 	apNumbers.resize(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -842,6 +850,7 @@ void newVeteranOnly(bool print){
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
@@ -855,10 +864,10 @@ if(!print){
   randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
   seedCounter++;
   cout << "Current Seed: " << randoSeed << '\r' << flush;
-  CheckFinishVeteranNew(randoSeed, apNumbers);
-  if(returnCompletableVeteran()){
-    CheckFinishNormalNew(randoSeed, apNumbers);
-    if(!returnCompletableNormal()){
+  checker.CheckFinishVeteranNew(randoSeed, apNumbers);
+  if(checker.returnCompletableVeteran()){
+    checker.CheckFinishNormalNew(randoSeed, apNumbers);
+    if(!checker.returnCompletableNormal()){
       seedGood = true;
     }
    }
@@ -866,8 +875,8 @@ if(!print){
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -900,22 +909,22 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!(returnCompletableVeteran() && !returnCompletableNormal())){
+  	while(!(checker.returnCompletableVeteran() && !checker.returnCompletableNormal())){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishVeteranNew(randoSeed, apNumbers);
-    CheckFinishNormalNew(randoSeed, apNumbers);
+  	checker.CheckFinishVeteranNew(randoSeed, apNumbers);
+    checker.CheckFinishNormalNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishVeteranNew(randoSeed, apNumbers);
-    CheckFinishNormalNew(randoSeed, apNumbers);
+    checker.CheckFinishVeteranNew(randoSeed, apNumbers);
+    checker.CheckFinishNormalNew(randoSeed, apNumbers);
     seedCounter++;
   }
 
@@ -927,7 +936,7 @@ else{
 void newHypermodeOnly(bool print){
   bool validSelection = false;
 
-  	apvector<int> apNumbers(0);
+  	vector<int> apNumbers(0);
     while(!validSelection){
 
 
@@ -950,7 +959,7 @@ void newHypermodeOnly(bool print){
 
 
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
     if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
       tooLarge = true;
@@ -964,6 +973,7 @@ void newHypermodeOnly(bool print){
 }
 CurrentTime current_time;
 int seedCounter = 0;
+LogChecker checker;
 if(!print){
 
 	clock_t begin = clock();
@@ -977,10 +987,10 @@ if(!print){
   randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
   seedCounter++;
   cout << "Current Seed: " << randoSeed << '\r' << flush;
-  CheckFinishHypermodeNew(randoSeed, apNumbers);
-  if(returnCompletableHypermode()){
-    CheckFinishVeteranNew(randoSeed, apNumbers);
-    if(!returnCompletableVeteran()){
+  checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
+  if(checker.returnCompletableHypermode()){
+    checker.CheckFinishVeteranNew(randoSeed, apNumbers);
+    if(!checker.returnCompletableVeteran()){
       seedGood = true;
     }
    }
@@ -988,8 +998,8 @@ if(!print){
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
-header1 = returnSeed();
-header2 = returnExceptions();
+header1 = checker.returnSeed();
+header2 = checker.returnExceptions();
 /*if(fileExists(".\\Metroid Prime Randomizer.bat")){
   system("clear");
   cout << "Seed found!" << endl;
@@ -1022,24 +1032,24 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   for(;;){ //infinite loop
-  	while(!(returnCompletableHypermode() && !returnCompletableVeteran())){
+  	while(!(checker.returnCompletableHypermode() && !checker.returnCompletableVeteran())){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  	CheckFinishHypermodeNew(randoSeed, apNumbers);
-    CheckFinishVeteranNew(randoSeed, apNumbers);
+  	checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
+    checker.CheckFinishVeteranNew(randoSeed, apNumbers);
     seedCounter++;
   	}
   if(prevSeed != randoSeed){
-  seedList << returnSeed() << " " << returnExceptions() << endl;
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
-  resetFlags();
+  checker.resetFlags();
     }
   else{
     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    CheckFinishHypermodeNew(randoSeed, apNumbers);
-    CheckFinishVeteranNew(randoSeed, apNumbers);
+    checker.CheckFinishHypermodeNew(randoSeed, apNumbers);
+    checker.CheckFinishVeteranNew(randoSeed, apNumbers);
     seedCounter++;
-      }
+  }
     }
   }
 }
@@ -1055,7 +1065,7 @@ int getASeed(){
   return inputSeed;
 }
 
-apvector <int> getTheExceptions(){
+vector <int> getTheExceptions(){
 
   vector<int> numbers;
 	string str;
@@ -1068,9 +1078,9 @@ apvector <int> getTheExceptions(){
 
 	sort(numbers.begin(), numbers.end());
 
-	apvector<int> apNumbers(numbers.size());
+	vector<int> apNumbers(numbers.size());
 
-	for(int tran = 0; tran < apNumbers.length(); tran++){
+	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
 	}
   return apNumbers;
@@ -1088,27 +1098,28 @@ void manualChecker(){
 
 
 
-  apvector <int> apNumbers = getTheExceptions();
+  vector <int> apNumbers = getTheExceptions();
 
   int inputSeed = getASeed();
+  LogChecker checker;
 
-	CheckFinishEasyNew(inputSeed, apNumbers);
-		if(returnCompletableEasy()){
+	checker.CheckFinishEasyNew(inputSeed, apNumbers);
+		if(checker.returnCompletableEasy()){
 			cout << "Seed is completable (Easy Difficulty)" << endl;
 			cin.get();
 		}
-		else{CheckFinishNormalNew(inputSeed, apNumbers);
-			if(returnCompletableNormal()){
+		else{checker.CheckFinishNormalNew(inputSeed, apNumbers);
+			if(checker.returnCompletableNormal()){
 				cout << "Seed is completable (Normal Difficulty)" << endl;
 				cin.get();
 			}
-			else{CheckFinishVeteranNew(inputSeed, apNumbers);
-				if(returnCompletableVeteran()){
+			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers);
+				if(checker.returnCompletableVeteran()){
 					cout << "Seed is completable (Veteren Difficulty)" << endl;
 					cin.get();
 				}
-				else{CheckFinishHypermodeNew(inputSeed, apNumbers);
-					if(returnCompletableHypermode()){
+				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers);
+					if(checker.returnCompletableHypermode()){
 						cout << "Seed is completable (Hypermode Difficulty)" << endl;
 						cin.get();
 					}
@@ -1192,9 +1203,9 @@ void getTimeAndSeedCount(double elapsedTime, int seedCount){
 
 }
 
-void loadScript(int settingSeed, apvector <int> settingException){
+void loadScript(int settingSeed, vector <int> settingException){
 
-  apvector <string> settingsLines(18, "");
+  vector <string> settingsLines(18, "");
 
 
   ifstream myfile;
@@ -1206,8 +1217,8 @@ if(myfile.is_open()){
     x++;
 	}
   myfile.close();
-}
 
+}
 else {cout << "Couldn't find settings file.";}
 
 
@@ -1224,15 +1235,15 @@ bool popup = false;
 
 popup = (simplifyString(popupSetting) == "Y" || simplifyString(popupSetting) == "YES");
 
-for(int bob = 0; bob < settingException.length(); bob++){
-  if(bob == settingException.length() - 1){
+for(int bob = 0; bob < settingException.size(); bob++){
+  if(bob == settingException.size() - 1){
     line += to_string(settingException[bob]);
   }
   else{line += to_string(settingException[bob]);
         line += ",";
       }
 }
-if(settingException.length() == 0){
+if(settingException.size() == 0){
   line += "none";
 }
 
@@ -1245,7 +1256,7 @@ ofstream settingsFile;
 settingsFile.open(".\\tools\\settings.txt");
 
 
-for(int ziccardo = 0; ziccardo < settingsLines.length()-1; ziccardo++){
+for(int ziccardo = 0; ziccardo < settingsLines.size()-1; ziccardo++){
     settingsFile << settingsLines[ziccardo] << endl;
 
   }
