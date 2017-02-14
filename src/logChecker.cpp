@@ -27,7 +27,7 @@ LogChecker::LogChecker(){
 }
 
 void LogChecker::checkerSetup(){
-	
+
 }
 
 void LogChecker::benchmark(int randomizeCount){
@@ -47,6 +47,36 @@ void LogChecker::apvectorBenchmark(int count){
 		for(int z = 0; z < 100; z++){
 			test[z] = to_string(z);
 		}
+	}
+}
+
+void LogChecker::difficultyCheck(int difficulty, int seed, vector <int> exceptions){
+	if(difficulty == 1){
+		this->CheckFinishEasyNew(seed, exceptions);
+	}
+	if(difficulty == 2){
+		this->CheckFinishNormalNew(seed, exceptions);
+	}
+	if(difficulty == 3){
+		this->CheckFinishVeteranNew(seed, exceptions);
+	}
+	if(difficulty == 4){
+		this->CheckFinishHypermodeNew(seed, exceptions);
+	}
+}
+
+bool LogChecker::returnDifficulty(int difficulty){
+	if(difficulty == 1){
+	 return	this->returnCompletableEasy();
+	}
+	if(difficulty == 2){
+		return	this->returnCompletableNormal();
+	}
+	if(difficulty == 3){
+		return	this->returnCompletableVeteran();
+	}
+	if(difficulty == 4){
+		return	this->returnCompletableHypermode();
 	}
 }
 

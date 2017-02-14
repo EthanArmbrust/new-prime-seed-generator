@@ -33,6 +33,9 @@ void loadScript(int, vector <int>);
 string simplifyString(string);
 void performBenchmark();
 void performApBenchmark();
+void multithreadTest(bool, int, bool);
+string seedListName(int difficulty, bool only);
+
 
 
 
@@ -46,7 +49,7 @@ string exceptions;
 string randomizerExe = "Prime_Randomizer.exe ";
 string fullRandomizer;
 string theE = " -e ";
-string header1 = "			    Seed Generator v1.0";
+string header1 = "			    Seed Generator v1.1";
 string header2 = "			        by Interslice";
 string copyThat = "copy ";
 string fullCopy;
@@ -75,12 +78,12 @@ string currentVersion = "v0.9.5";
 string bottomHelp1 = "Type $# to give a seed of ONLY a difficulty. Type HELP $ for more info.";
 string bottomHelp2 = "Type \"HELP #\" for more information on an option.";
 //string pretzels = "these pretzels are making me thirsty!";
-
-
-const char * charCommand;
-const char * charLog;
-const char * charRoot;
-const char * charExceptions;
+bool mainThreadDone = false;
+bool newThreadDone = false;
+int newThreadSeedCount = 0;
+int barePrintSeed = -1;
+bool enableMultithreading = true;
+string multithreadingState = "8 - Disable Multithreading \n \n";
 
 
 
@@ -106,6 +109,7 @@ void mainMenu(){
 	cout << "5 - Generate a \"Why\" difficulty seed (Coming soon) \n \n";
 	cout << "6 - Check a seed \n \n";
 	cout << "7 - Export seeds to text file \n \n";
+  cout << multithreadingState;
   //cout << simplifyString(pretzels) << endl;
 	cout << bottomHelp1 << endl;
 	cout << bottomHelp2 << "\n"  << endl;
@@ -119,16 +123,16 @@ void processOption(){
   string temp = simplifyString(option);
   option = temp;
 	if(option == "1" || option == "$1"){
-		newTestEasy(false);
+		multithreadTest(false, 1, false);
 	}
 	if(option == "2"){
-	   newTest(false);
+	   multithreadTest(false, 2, false);
 	}
-	if(option == "3" || option == "$3" || option == "$ 3"){
-	   newTestVeteran(false);
+	if(option == "3"){
+	   multithreadTest(false, 3, false);
 	}
 	if(option == "4"){
-		newTestHypermode(false);
+		multithreadTest(false, 4, false);
 	}
 	if(option == "5"){
     cout << "This will be added sometime in the future" << endl;
@@ -140,23 +144,23 @@ void processOption(){
 	if(option == "7"){
 		printMenu();
 	}
-
-  if(option == "9"){
-    performBenchmark();
-  }
   if(option == "8"){
-    performApBenchmark();
+    enableMultithreading = !enableMultithreading;
+    if(enableMultithreading){
+      multithreadingState = "8 - Disable Multithreading \n \n";
+    }
+    else multithreadingState = "8 - Enable Multithreading \n \n";
   }
 
 	if(option == "$2" || option == "$ 2"){
-		newNormalOnly(false);
+		multithreadTest(false, 2, true);
 	}
 	if(option == "$3" || option == "$ 3"){
-		newVeteranOnly(false);
+		multithreadTest(false, 3, true);
 	}
 
 	if(option == "$4" || option == "$ 4"){
-		newHypermodeOnly(false);
+		multithreadTest(false, 4, true);
 	}
 	if(option == "HELP1"){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
@@ -239,6 +243,298 @@ void performApBenchmark(){
   bottomHelp1 += " seconds";
   bottomHelp2 +=  to_string(benchmarkCount);
 
+}
+
+string seedListName(int difficulty, bool only){
+  if(difficulty == 1){
+    return "./CompletableSeeds/Easy_Seed_List.txt";
+  }
+  if(difficulty == 2){
+    if(only){
+      return "./CompletableSeeds/Normal_Only_Seed_List.txt";
+    }
+    else return "./CompletableSeeds/Normal_Seed_List.txt";
+  }
+  if(difficulty == 3){
+    if(only){
+      return "./CompletableSeeds/Veteran_Only_Seed_List.txt";
+    }
+    else return "./CompletableSeeds/Veteran_Seed_List.txt";
+  }
+  if(difficulty == 4){
+    if(only){
+      return "./CompletableSeeds/Hypermode_Only_Seed_List.txt";
+    }
+    else return "./CompletableSeeds/Hypermode_Seed_List.txt";
+  }
+}
+
+
+void barebonesSeedGen(vector<int> apNumbers, int difficulty, bool print, bool only, std::ofstream& seedList){
+  int seedCounter = 0;
+  CurrentTime current_time;
+  LogChecker checker2;
+  int randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647);
+	checker2.difficultyCheck(difficulty,randoSeed,apNumbers);
+	seedCounter++;
+
+  if(!print){
+  if(!only){
+	while(!checker2.returnDifficulty(difficulty) && !mainThreadDone){
+		randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+  	checker2.difficultyCheck(difficulty,randoSeed,apNumbers);
+		seedCounter++;
+    }
+  }
+  else{
+    bool seedGood = false;
+    while(!seedGood && !mainThreadDone){
+    randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+    seedCounter++;
+    checker2.difficultyCheck(difficulty,randoSeed, apNumbers);
+    if(checker2.returnDifficulty(difficulty)){
+      checker2.difficultyCheck(difficulty-1,randoSeed, apNumbers);
+      if(!checker2.returnDifficulty(difficulty-1)){
+        seedGood = true;
+      }
+     }
+    }
+  }
+    if(!mainThreadDone){
+      newThreadDone = true;
+      header1 = checker2.returnSeed();
+      }
+    newThreadSeedCount = seedCounter;
+  }
+  else{
+    if(!only){
+      for(;;){
+  	while(!checker2.returnDifficulty(difficulty)){
+  		randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+    	checker2.difficultyCheck(difficulty,randoSeed,apNumbers);
+  		seedCounter++;
+      }
+      seedList << checker2.returnSeed() << " " << checker2.returnExceptions()  << endl;
+      randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+      checker2.difficultyCheck(difficulty,randoSeed,apNumbers);
+     }
+    }
+    else{
+      bool seedGood = false;
+      for(;;){
+      while(!seedGood){
+      randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+      seedCounter++;
+      checker2.difficultyCheck(difficulty,randoSeed, apNumbers);
+      if(checker2.returnDifficulty(difficulty)){
+        checker2.difficultyCheck(difficulty-1,randoSeed, apNumbers);
+        if(!checker2.returnDifficulty(difficulty-1)){
+          seedGood = true;
+        }
+       }
+      }
+      seedList << checker2.returnSeed() << " " << checker2.returnExceptions() << endl;
+      seedGood = false;
+     }
+    }
+
+  }
+
+  }
+
+
+
+void multithreadTest(bool print, int difficulty, bool only){
+  bool validSelection = false;
+
+  ofstream seedList;
+	vector<int> apNumbers(0);
+  while(!validSelection){
+
+	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+	cout << "> ";
+
+  vector<int> numbers;
+	string str;
+	int x;
+
+	getline(cin, str);
+	stringstream numStream(str);
+	while (numStream >> x)
+		numbers.push_back(x);
+
+	sort(numbers.begin(), numbers.end());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
+
+	for(int tran = 0; tran < apNumbers.size(); tran++){
+		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
+	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    system("clear");
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+ }
+ CurrentTime current_time;
+ int seedCounter = 0;
+ LogChecker checker;
+ if(!print){
+
+	clock_t begin = clock();
+
+  system("clear");
+
+	cout << "Looking for a seed..." << endl;
+	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
+	checker.difficultyCheck(difficulty,randoSeed,apNumbers);
+	seedCounter++;
+  if(enableMultithreading){
+  std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, std::ref(seedList));
+  if(!only){
+	while(!checker.returnDifficulty(difficulty) && !newThreadDone){
+		cout << "Current Seed: " << randoSeed << '\r' << flush;
+		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+		checker.difficultyCheck(difficulty,randoSeed,apNumbers);
+		seedCounter++;
+  }
+ }
+ else {
+   bool seedGood = false;
+   while(!seedGood && !newThreadDone){
+   randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+   seedCounter++;
+   cout << "Current Seed: " << randoSeed << '\r' << flush;
+   checker.difficultyCheck(difficulty,randoSeed, apNumbers);
+   if(checker.returnDifficulty(difficulty)){
+     checker.difficultyCheck(difficulty-1,randoSeed, apNumbers);
+     if(!checker.returnDifficulty(difficulty-1)){
+       seedGood = true;
+     }
+    }
+   }
+ }
+if(!newThreadDone){
+  mainThreadDone = true;
+}
+t1.join();}
+
+else{
+if(!only){
+while(!checker.returnDifficulty(difficulty) && !newThreadDone){
+  cout << "Current Seed: " << randoSeed << '\r' << flush;
+  randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+  checker.difficultyCheck(difficulty,randoSeed,apNumbers);
+  seedCounter++;
+}
+}
+else {
+ bool seedGood = false;
+ while(!seedGood && !newThreadDone){
+ randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+ seedCounter++;
+ cout << "Current Seed: " << randoSeed << '\r' << flush;
+ checker.difficultyCheck(difficulty,randoSeed, apNumbers);
+ if(checker.returnDifficulty(difficulty)){
+   checker.difficultyCheck(difficulty-1,randoSeed, apNumbers);
+   if(!checker.returnDifficulty(difficulty-1)){
+     seedGood = true;
+   }
+  }
+ }
+}
+if(!newThreadDone){
+mainThreadDone = true;
+ }
+}
+
+clock_t end = clock();
+double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
+seedCounter += newThreadSeedCount;
+if(enableMultithreading){
+  getTimeAndSeedCount(elapsed_secs/200.0, seedCounter);
+}
+else getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
+if(mainThreadDone){
+  header1 = checker.returnSeed();
+}
+header2 = checker.returnExceptions();
+mainThreadDone = false;
+newThreadDone = false;
+newThreadSeedCount = 0;
+
+/*if(fileExists(".\\Metroid Prime Randomizer.bat")){
+  system("clear");
+  cout << "Seed found!" << endl;
+  cout << "Load Randomizer Script? (Y/N)" << endl;
+  cout << "> ";
+  string runScript;
+  getline(cin, runScript);
+
+  runScript = simplifyString(runScript);
+if(runScript == "Y" || runScript == "YES"){
+    system("clear");
+    loadScript(randoSeed, apNumbers);
+    system("clear");
+    system("\"Metroid Prime Randomizer.bat\"");
+  }
+} */
+}
+
+else{
+  int prevSeed = -1;
+  system("mkdir CompletableSeeds");
+  system("clear");
+  seedList.open(seedListName(difficulty, only), ios::app);
+
+  time_t now = time(0);
+  char* dt = ctime(&now);
+
+  seedList << "\nList segment started on  " << dt << endl;
+  int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
+  cout << "Looking for seeds..." << endl;
+  if(enableMultithreading){
+    std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, std::ref(seedList));
+    t1.detach();}
+  for(;;){ //infinite loop
+    if(!only){
+    while(!checker.returnDifficulty(difficulty) && !newThreadDone){
+      cout << "Current Seed: " << randoSeed << '\r' << flush;
+      randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+      checker.difficultyCheck(difficulty,randoSeed,apNumbers);
+      seedCounter++;
+    }
+    }
+    else{
+     bool seedGood = false;
+     while(!seedGood && !newThreadDone){
+     randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+     seedCounter++;
+     cout << "Current Seed: " << randoSeed << '\r' << flush;
+     checker.difficultyCheck(difficulty,randoSeed, apNumbers);
+     if(checker.returnDifficulty(difficulty)){
+       checker.difficultyCheck(difficulty-1,randoSeed, apNumbers);
+       if(!checker.returnDifficulty(difficulty-1)){
+         seedGood = true;
+       }
+      }
+     }
+    }
+  if(prevSeed != randoSeed){
+  seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
+  prevSeed = randoSeed;
+  checker.resetFlags();
+    }
+  else{
+    randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
+    checker.CheckFinishNormalNew(randoSeed, apNumbers);
+    seedCounter++;
+      }
+    }
+  }
 }
 
 
@@ -341,19 +637,14 @@ else{
   	checker.CheckFinishNormalNew(randoSeed, apNumbers);
     seedCounter++;
   	}
-  if(prevSeed != randoSeed){
+
   seedList << checker.returnSeed() << " " << checker.returnExceptions() << endl;
   prevSeed = randoSeed;
   checker.resetFlags();
     }
-  else{
-    randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-    checker.CheckFinishNormalNew(randoSeed, apNumbers);
-    seedCounter++;
-      }
     }
   }
-}
+
 
 void newTestVeteran(bool print){
   bool validSelection = false;
@@ -1106,26 +1397,31 @@ void manualChecker(){
 	checker.CheckFinishEasyNew(inputSeed, apNumbers);
 		if(checker.returnCompletableEasy()){
 			cout << "Seed is completable (Easy Difficulty)" << endl;
-			cin.get();
+      cout << "Press Enter to continue...";
+			cin.ignore().get();
 		}
 		else{checker.CheckFinishNormalNew(inputSeed, apNumbers);
 			if(checker.returnCompletableNormal()){
 				cout << "Seed is completable (Normal Difficulty)" << endl;
-				cin.get();
+        cout << "Press Enter to continue...";
+				cin.ignore().get();
 			}
 			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers);
 				if(checker.returnCompletableVeteran()){
 					cout << "Seed is completable (Veteren Difficulty)" << endl;
-					cin.get();
+          cout << "Press Enter to continue...";
+					cin.ignore().get();
 				}
 				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers);
 					if(checker.returnCompletableHypermode()){
 						cout << "Seed is completable (Hypermode Difficulty)" << endl;
-						cin.get();
+            cout << "Press Enter to continue...";
+						cin.ignore().get();
 					}
 					else{
 						cout << "This seed is NOT completable (Easy through Hypermode)" << endl;
-						cin.get();
+            cout << "Press Enter to continue...";
+						cin.ignore().get();
 					}
 				}
 			}
@@ -1147,28 +1443,29 @@ void printMenu(){
 	getline(cin, printOption);
 
 	if(printOption == "1"){
-		newTestEasy(true);
+		multithreadTest(true, 1, false);
 	}
 	if(printOption == "2"){
-		newTest(true);
+		multithreadTest(true, 2, false);
 	}
 	if(printOption == "3"){
-		newTestVeteran(true);
+		multithreadTest(true, 3, false);
 	}
 	if(printOption == "4"){
-		newTestHypermode(true);
+    multithreadTest(true, 4, false);
+
 	}
 	if(printOption == "$1"){
-		newTestEasy(true);
+		multithreadTest(true, 1, false);
 	}
 	if(printOption == "$2"){
-		newNormalOnly(true);
+		multithreadTest(true, 2, true);
 	}
 	if(printOption == "$3"){
-		newVeteranOnly(true);
+		multithreadTest(true, 3, true);
 	}
 	if(printOption == "$4"){
-		newHypermodeOnly(true);
+		multithreadTest(true, 4, true);
 	}
 	if(printOption == "EXIT" || printOption == "exit"){
 		mainMenu();

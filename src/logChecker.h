@@ -81,6 +81,7 @@ private:
 
 public:
 LogChecker();
+void difficultyCheck(int, int, vector<int>);
 void CheckFinishNormalNew(int seed, vector <int> inExceptions);
 void CheckFinishVeteranNew(int seed, vector <int> inExceptions);
 void CheckFinishEasyNew(int seed, vector <int> inExceptions);
@@ -89,6 +90,7 @@ void benchmark(int randomizeCount);
 void apvectorBenchmark(int count);
 void printList();
 void checkerSetup();
+bool returnDifficulty(int);
 bool returnCompletableVeteran();
 bool returnCompletableNormal();
 bool returnCompletableEasy();
