@@ -62,7 +62,7 @@ Removed lots of unnessecary code duplication in the main.
 Swapped out apvector for std::vector
 
 
-Version 1.2
+Version 1.2  
 Fixed bug where generator would write the wrong seed to the settings file (Thanks Bash for finding this!)  
 Merged all of the main files into a single file  
 
