@@ -8,7 +8,7 @@ There are huge improvements over the old version.  The Seed Generator is able to
 
 Average Time to find a Normal Seed with No Exceptions and multithreading on:
 
-Windows:
+Windows:  
 A10-7700K @ 3.4 GHz - 0.71 seconds  
 i7-4970 @ 3.60 GHz - 0.38 seconds
 
