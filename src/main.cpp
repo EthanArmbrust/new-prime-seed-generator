@@ -9,13 +9,26 @@
 #include <iomanip>
 #include <algorithm>
 #include "logChecker.h"
-#include "windows.h"
 #include "randomizerTime.h"
+//platform specific includes
+#ifdef __APPLE__
+#include <sys/syscall.h>
+#elif defined __linux__
+#include <sys/syscall.h>
+#include <linux/kernel.h>
+#elif defined _WIN32 || defined _WIN64
+#include "windows.h"
+#endif
+
+
+
+
 
 void mainMenu();
 void processOption();
 void manualChecker();
 void printMenu();
+void clearScreen();
 bool fileExists(const std::string& fileName);
 void getTimeAndSeedCount(double, int);
 int getASeed();
@@ -34,7 +47,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.1";
+string header1 = "			    Seed Generator v1.2";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -47,22 +60,28 @@ int newThreadSeedCount = 0;
 int barePrintSeed = -1;
 bool enableMultithreading = true;
 string multithreadingState = "8 - Disable Multithreading \n \n";
+int scriptSeed;
+string dirSeparator;
+
 
 
 
 
 int main(){
 
+  #if defined _WIN32 || defined _WIN64
+  dirSeparator = "\\";
+  #elif defined __APPLE__ || defined __linux__
+  dirSeparator = "/";
+  #endif
+
   mainMenu();
-
-
-
-return 0;
+  return 0;
 }
 
 void mainMenu(){
 
-	system("cls");
+	clearScreen();
 	cout << header1 << endl;
 	cout << header2 << endl << endl;
 	cout << "1 - Generate an \"Easy\" difficulty seed \n \n";
@@ -82,7 +101,7 @@ void mainMenu(){
 }
 
 void processOption(){
-	system("cls");
+	clearScreen();
   string temp = simplifyString(option);
   option = temp;
 	if(option == "1" || option == "$1"){
@@ -172,25 +191,25 @@ void processOption(){
 
 string seedListName(int difficulty, bool only){
   if(difficulty == 1){
-    return ".\\CompletableSeeds\\Easy_Seed_List.txt";
+    return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Easy_Seed_List.txt";
   }
   if(difficulty == 2){
     if(only){
-      return ".\\CompletableSeeds\\Normal_Only_Seed_List.txt";
+      return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Normal_Only_Seed_List.txt";
     }
-    else return ".\\CompletableSeeds\\Normal_Seed_List.txt";
+    else return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Normal_Seed_List.txt";
   }
   if(difficulty == 3){
     if(only){
-      return ".\\CompletableSeeds\\Veteran_Only_Seed_List.txt";
+      return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Veteran_Only_Seed_List.txt";
     }
-    else return ".\\CompletableSeeds\\Veteran_Seed_List.txt";
+    else return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Veteran_Seed_List.txt";
   }
   if(difficulty == 4){
     if(only){
-      return ".\\CompletableSeeds\\Hypermode_Only_Seed_List.txt";
+      return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Hypermode_Only_Seed_List.txt";
     }
-    else return ".\\CompletableSeeds\\Hypermode_Seed_List.txt";
+    else return "." + dirSeparator + "CompletableSeeds" + dirSeparator + "Hypermode_Seed_List.txt";
   }
 }
 
@@ -228,6 +247,7 @@ void barebonesSeedGen(vector<int> apNumbers, int difficulty, bool print, bool on
     if(!mainThreadDone){
       newThreadDone = true;
       header1 = checker2.returnSeed();
+      scriptSeed = randoSeed;
       }
     newThreadSeedCount = seedCounter;
   }
@@ -300,7 +320,7 @@ void multithreadTest(bool print, int difficulty, bool only){
 	}
   validSelection = !tooLarge;
   if(!validSelection){
-    system("cls");
+    clearScreen();
     cout << "Invalid Selection.  Please try again" << endl;
   }
  }
@@ -311,7 +331,7 @@ void multithreadTest(bool print, int difficulty, bool only){
 
 	clock_t begin = clock();
 
-  system("cls");
+  clearScreen();
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
@@ -382,14 +402,15 @@ seedCounter += newThreadSeedCount;
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
 if(mainThreadDone){
   header1 = checker.returnSeed();
+  scriptSeed = randoSeed;
 }
 header2 = checker.returnExceptions();
 mainThreadDone = false;
 newThreadDone = false;
 newThreadSeedCount = 0;
 
-if(fileExists(".\\Metroid Prime Randomizer.bat")){
-  system("cls");
+if(fileExists("." + dirSeparator + "Metroid Prime Randomizer.bat")){
+  clearScreen();
   cout << "Seed found!" << endl;
   cout << "Load Randomizer Script? (Y/N)" << endl;
   cout << "> ";
@@ -398,9 +419,9 @@ if(fileExists(".\\Metroid Prime Randomizer.bat")){
 
   runScript = simplifyString(runScript);
 if(runScript == "Y" || runScript == "YES"){
-    system("cls");
-    loadScript(randoSeed, apNumbers);
-    system("cls");
+    clearScreen();
+    loadScript(scriptSeed, apNumbers);
+    clearScreen();
     system("\"Metroid Prime Randomizer.bat\"");
   }
  }
@@ -409,7 +430,7 @@ if(runScript == "Y" || runScript == "YES"){
 else{
   int prevSeed = -1;
   system("mkdir CompletableSeeds");
-  system("cls");
+  clearScreen();
   seedList.open(seedListName(difficulty, only), ios::app);
 
   time_t now = time(0);
@@ -521,7 +542,7 @@ void manualChecker(){
 			}
 			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers);
 				if(checker.returnCompletableVeteran()){
-					cout << "Seed is completable (Veteren Difficulty)" << endl;
+					cout << "Seed is completable (Veteran Difficulty)" << endl;
           cout << "Press Enter to continue...";
 					cin.ignore().get();
 				}
@@ -619,7 +640,7 @@ void loadScript(int settingSeed, vector <int> settingException){
 
 
   ifstream myfile;
-  myfile.open(".\\tools\\settings.txt");
+  myfile.open("." + dirSeparator + "tools" + dirSeparator + "settings.txt");
 
 if(myfile.is_open()){
   int x = 0;
@@ -663,7 +684,7 @@ if(popup){
 
 settingsLines[3] = line;
 ofstream settingsFile;
-settingsFile.open(".\\tools\\settings.txt");
+settingsFile.open("." + dirSeparator + "tools" + dirSeparator + "settings.txt");
 
 
 for(int ziccardo = 0; ziccardo < settingsLines.size()-1; ziccardo++){
@@ -681,4 +702,12 @@ str.erase(remove(str.begin(), str.end(), ' '), str.end());
 
 return str;
 
+}
+
+void clearScreen(){
+  #if defined _WIN32 || _WIN64
+  system("cls");
+  #else
+  system("clear");
+  #endif
 }

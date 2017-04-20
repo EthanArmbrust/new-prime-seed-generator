@@ -172,6 +172,10 @@ while(resetter < 105){
 	//cout << obItems[0] << " and " << obItems[1] << endl;
 	//cout << isAdded[21] << " and " << isAdded[61] << " and " << isAdded[52] << endl;
 
+	//THE INDEX FOR EACH ITEM IN FOR items AND isAdded is EQUAL TO n + 2 WHERE n IS THE ITEM NUMBER IN THE RANDOMIZER README
+	//EX. items[2] = Main Plaza (Half-Pipe) , isAdded[61] = Alcove
+	//I know it's dumb, and I apologize
+
 
 	if(hasMorph && hasBoost || hasSJ){
 	if(!isAdded[2]){
@@ -2805,13 +2809,20 @@ while(resetter < 105){
 
 	//cout << "Number of E-Tanks: " << e << endl;
 
-
-
-
-
-
-
-
+    /*
+    items.clear();
+    items.shrink_to_fit();
+    obItems.clear();
+    obItems.shrink_to_fit();
+    logline.clear();
+    logline.shrink_to_fit();
+    areaInput.clear();
+    areaInput.shrink_to_fit();
+    itemInput.clear();
+    itemInput.shrink_to_fit();
+    newItems.clear();
+    newItems.shrink_to_fit();
+*/
 }
 
 void LogChecker::CheckFinishHypermodeNew(int seed, vector <int> inExceptions){
