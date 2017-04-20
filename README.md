@@ -31,7 +31,7 @@ Place the Generator in the same folder as the Randomizer Script.  After the Gene
 ----------------
 
 
-#Compiling Instructions
+# Compiling Instructions
 
 Building requires a C++ compiler with posix threading.
 
@@ -43,7 +43,7 @@ Run the buildForLinux.sh to build for Linux on Linux.
 
 --------------
 
-#Change Log  
+# Change Log  
 
 Version 1.0  
 Initial Release of new version.
@@ -69,7 +69,7 @@ Merged all of the main files into a single file
 
 ---------------
 
-#Credits
+# Credits
 
 Metroid Prime Randomizer created by Claris
 
