@@ -66,6 +66,11 @@ Version 1.2
 Fixed bug where generator would write the wrong seed to the settings file (Thanks Bash for finding this!)  
 Merged all of the main files into a single file  
 
+Version 1.3  
+Fixed checker bug with floaty jump  
+Checker no longer expects you to be able to pick up artifacts through walls due to the 3.2 update of the Randomizer  
+Added verbose flag for manual checker. Add a -v to option 6 from the main menu to get the checkers item order list  
+Added no floaty flag for manual checker. Add a -f to any generating option to generate a seed that will not require floaty jump. Can be used on the manual checker and the print menu.  
 
 ---------------
 

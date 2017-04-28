@@ -50,18 +50,18 @@ void LogChecker::apvectorBenchmark(int count){
 	}
 }
 
-void LogChecker::difficultyCheck(int difficulty, int seed, vector <int> exceptions){
+void LogChecker::difficultyCheck(int difficulty, int seed, vector <int> exceptions, bool verbose, bool noFloatyAllowed){
 	if(difficulty == 1){
-		this->CheckFinishEasyNew(seed, exceptions);
+		this->CheckFinishEasyNew(seed, exceptions, verbose);
 	}
 	if(difficulty == 2){
-		this->CheckFinishNormalNew(seed, exceptions);
+		this->CheckFinishNormalNew(seed, exceptions, verbose);
 	}
 	if(difficulty == 3){
-		this->CheckFinishVeteranNew(seed, exceptions);
+		this->CheckFinishVeteranNew(seed, exceptions, verbose, noFloatyAllowed);
 	}
 	if(difficulty == 4){
-		this->CheckFinishHypermodeNew(seed, exceptions);
+		this->CheckFinishHypermodeNew(seed, exceptions, verbose, noFloatyAllowed);
 	}
 }
 
@@ -81,8 +81,11 @@ bool LogChecker::returnDifficulty(int difficulty){
 }
 
 
-void LogChecker::CheckFinishNormalNew(int seed, vector <int> inExceptions){
+void LogChecker::CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose){
 
+if(verbose){
+	cout << "Item order for Normal difficulty: " << endl;
+}
 
 bool newRando = true;
 vector <string> items(104, "");
@@ -157,7 +160,7 @@ while(resetter < 105){
 
 
   firstCheck = true;
-	while (checkObtainedItems()){
+	while (checkObtainedItems(verbose)){
 
 
 	if(!isAdded[21]){
@@ -914,10 +917,17 @@ while(resetter < 105){
 		//else cout << "This seed is NOT completable with 100% items" << endl;
 		 //}
 
+		 if(verbose){
+			 cout << "\n" << endl;
+		 }
+
 }
 
-void LogChecker::CheckFinishVeteranNew(int seed, vector <int> inExceptions){
+void LogChecker::CheckFinishVeteranNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed){
 
+	if(verbose){
+		cout << "Item order for Veteran difficulty: " << endl;
+	}
 
 
 vector <string> items(104, "");
@@ -1015,6 +1025,8 @@ resetter = 0;
 	deepMinesGrapple = false;
 	deepMinesPhazon = false;
 
+	bombsWithoutGravity = false;
+
 
 
 	itemInput = getItemNames();
@@ -1033,19 +1045,19 @@ resetter = 0;
 
 
 	firstCheck = true;
-	while(checkObtainedItems()){
+	while(checkObtainedItems(verbose)){
 
 	checkEarlyMines();
 	checkDeepMines();
 
 
 	//FLOATY CHECK
-
+	if(!noFloatyAllowed){
 	if(!(items[22] == "Gravi" || items[22] == "Gravity Suit")){
 	if(items[92] == "Bombs" || items[92] == "Morph Ball Bomb" || items[93] == "Bombs" || items[93] == "Morph Ball Bomb" || items[94] == "Bombs" || items[94] == "Morph Ball Bomb" || items[96] == "Bombs" || items[96] == "Morph Ball Bomb" || items[97] == "Bombs" || items[97] == "Morph Ball Bomb" || items[98] == "Bombs" || items[98] == "Morph Ball Bomb" || items[99] == "Bombs" || items[99] == "Morph Ball Bomb" || items[101] == "Bombs" || items[101] == "Morph Ball Bomb" || items[96] == "Morph" || items[96] == "Morph Ball" || items[98] == "Morph" || items[98] == "Morph Ball"){
 			if(hasVaria || hasPhazon){
 				if(!((items[29] == "Bombs" || items[29] == "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
-					if(hasMissiles && hasMorph && hasBombs){
+					if(hasMissiles && hasMorph && hasBombs && bombsWithoutGravity){
 						hasFloaty = true;
 					}
 					else hasFloaty = false;
@@ -1056,7 +1068,7 @@ resetter = 0;
 
 		}
 		else if(!((items[29] == "Bombs" || "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
-					if(hasMissiles && hasMorph && hasBombs){
+					if(hasMissiles && hasMorph && hasBombs && bombsWithoutGravity){
 						hasFloaty = true;
 					}
 					else hasFloaty = false;
@@ -1064,6 +1076,7 @@ resetter = 0;
 				else hasFloaty = false;
 	}
 	else hasFloaty = false;
+}
 
 	//EARLY MINES ESCAPE CHECK
 
@@ -2019,13 +2032,19 @@ resetter = 0;
 	}
 
 
-
+	if(verbose){
+		cout << "\n" << endl;
+	}
 
 
 
 }
 
-void LogChecker::CheckFinishEasyNew(int seed, vector <int> inExceptions){
+void LogChecker::CheckFinishEasyNew(int seed, vector <int> inExceptions, bool verbose){
+
+	if(verbose){
+		cout << "Item order for Easy difficulty: " << endl;
+	}
 
 vector <string> items(104, "");
 vector <string> logline(104, "");
@@ -2098,7 +2117,7 @@ while(resetter < 105){
 
 
 	firstCheck = true;
-	while(checkObtainedItems()){
+	while(checkObtainedItems(verbose)){
 
 
 	if(!isAdded[21]){
@@ -2823,9 +2842,16 @@ while(resetter < 105){
     newItems.clear();
     newItems.shrink_to_fit();
 */
+if(verbose){
+	cout << "\n" << endl;
+}
 }
 
-void LogChecker::CheckFinishHypermodeNew(int seed, vector <int> inExceptions){
+void LogChecker::CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed){
+
+	if(verbose){
+		cout << "Item order for Hypermode difficulty: " << endl;
+	}
 
 vector <string> items(104, "");
 vector <string> logline(104, "");
@@ -2949,6 +2975,8 @@ resetter = 0;
 	deepPhenGrapple = false;
 	deepPhenPB = false;
 
+	bombsWithoutGravity = false;
+
 	itemInput = getItemNames();
 
 
@@ -2966,19 +2994,19 @@ resetter = 0;
 
 	firstCheck = true;
 
-	while (checkObtainedItems()){
+	while (checkObtainedItems(verbose)){
 
 	checkEarlyMines();
 	checkDeepMines();
 	checkDeepPhen();
 
 	//FLOATY CHECK
-
+	if(!noFloatyAllowed){
 	if(!(items[22] == "Gravi" || items[22] == "Gravity Suit")){
 	if(items[92] == "Bombs" || items[92] == "Morph Ball Bomb" || items[93] == "Bombs" || items[93] == "Morph Ball Bomb" || items[94] == "Bombs" || items[94] == "Morph Ball Bomb" || items[96] == "Bombs" || items[96] == "Morph Ball Bomb" || items[97] == "Bombs" || items[97] == "Morph Ball Bomb" || items[98] == "Bombs" || items[98] == "Morph Ball Bomb" || items[99] == "Bombs" || items[99] == "Morph Ball Bomb" || items[101] == "Bombs" || items[101] == "Morph Ball Bomb" || items[96] == "Morph" || items[96] == "Morph Ball" || items[98] == "Morph" || items[98] == "Morph Ball"){
 			if(hasVaria || hasPhazon){
 				if(!((items[29] == "Bombs" || items[29] == "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
-					if(hasMissiles && hasMorph && hasBombs){
+					if(hasMissiles && hasMorph && hasBombs && bombsWithoutGravity){
 						hasFloaty = true;
 					}
 					else hasFloaty = false;
@@ -2989,7 +3017,7 @@ resetter = 0;
 
 		}
 		else if(!((items[29] == "Bombs" || "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
-					if(hasMissiles && hasMorph && hasBombs){
+					if(hasMissiles && hasMorph && hasBombs && bombsWithoutGravity){
 						hasFloaty = true;
 					}
 					else hasFloaty = false;
@@ -2997,6 +3025,7 @@ resetter = 0;
 				else hasFloaty = false;
 	}
 	else hasFloaty = false;
+}
 
 	//EARLY MINES ESCAPE CHECK
 
@@ -3220,14 +3249,7 @@ resetter = 0;
 		isAdded[4] = true;
 		k++;}
 	}
-	if(logline[4] == "Chozo - - - Main Plaza (Tree) - - - - - - - - - -  Artifact of Chozo" || logline[4] == "Chozo - - - Main Plaza (Tree) - - - - - - - - - -  Artifact of Warrior" || logline[4] == "Chozo - - - Main Plaza (Tree) - - - - - - - - - -  Artifact of Nature" || logline[4] == "Chozo - - - Main Plaza (Tree) - - - - - - - - - -  Artifact of Elder" || logline[4] == "Chozo - - - Main Plaza (Tree) - - - - - - - - - -  Artifact of Spirit" || logline[4] == "Chozo - - - Main Plaza (Tree) - - - - - - - - - -  Artifact of Livegiver"){ //done
-	if(hasSJ && hasFloaty){
-	if(!isAdded[4]){
-		obItems[k] = items[4];
-		isAdded[4] = true;
-		k++;}
-	}
-	}
+
 
 	if((hasMorph && hasMissiles) || hasSJ){ //done
 	if(!isAdded[5]){
@@ -3460,14 +3482,7 @@ resetter = 0;
 		isAdded[37] = true;
 		k++;}
 	}
-	if(logline[37] == "Phendrana - Phendrana Shorelines (Behind ice) - -  Artifact of Chozo" || logline[37] == "Phendrana - Phendrana Shorelines (Behind ice) - -  Artifact of Warrior" || logline[37] == "Phendrana - Phendrana Shorelines (Behind ice) - -  Artifact of Nature" || logline[37] == "Phendrana - Phendrana Shorelines (Behind ice) - -  Artifact of Elder" || logline[37] == "Phendrana - Phendrana Shorelines (Behind ice) - -  Artifact of Spirit" || logline[37] == "Phendrana - Phendrana Shorelines (Behind ice) - -  Artifact of Livegiver" || logline[37] == "Phendrana - Phendrana Shorelines (Behind Ice) - -  Artifact of Chozo" || logline[37] == "Phendrana - Phendrana Shorelines (Behind Ice) - -  Artifact of Warrior" || logline[37] == "Phendrana - Phendrana Shorelines (Behind Ice) - -  Artifact of Nature" || logline[37] == "Phendrana - Phendrana Shorelines (Behind Ice) - -  Artifact of Elder" || logline[37] == "Phendrana - Phendrana Shorelines (Behind Ice) - -  Artifact of Spirit" || logline[37] == "Phendrana - Phendrana Shorelines (Behind Ice) - -  Artifact of Livegiver"){
-	if((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))){ //done
-	if(!isAdded[37]){
-		obItems[k] = items[37];
-		isAdded[37] = true;
-		k++;}
-	}
-	}
+
 
 
 	if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && (hasSuper && hasCharge && hasSpider)){ //done
@@ -3497,15 +3512,6 @@ resetter = 0;
 		k++;}
 	}
 
-	if(logline[41] == "Phendrana - Ice Ruins East (Behind ice) - - - - -  Artifact of Chozo" || logline[41] == "Phendrana - Ice Ruins East (Behind ice) - - - - -  Artifact of Warrior" || logline[41] == "Phendrana - Ice Ruins East (Behind ice) - - - - -  Artifact of Nature" || logline[41] == "Phendrana - Ice Ruins East (Behind ice) - - - - -  Artifact of Elder" || logline[41] == "Phendrana - Ice Ruins East (Behind ice) - - - - -  Artifact of Spirit" || logline[41] == "Phendrana - Ice Ruins East (Behind ice) - - - - -  Artifact of Livegiver"){
-	if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && ((hasBoost && hasBombs) || hasPlasma || hasSJ)){ //done
-	if(!isAdded[41]){ //done
-		obItems[k] = items[41];
-		isAdded[41] = true;
-		k++;}
-	}
-
-	}
 
 	if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider))) && (hasBombs || hasSpider)){ //done
 	if(!isAdded[42]){ //done
@@ -3550,14 +3556,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if(logline[47] == "Phendrana - Research Lab Hydra - - - - - - - - - - Artifact of Chozo" || logline[47] == "Phendrana - Research Lab Hydra - - - - - - - - - - Artifact of Warrior" || logline[47] == "Phendrana - Research Lab Hydra - - - - - - - - - - Artifact of Nature" || logline[47] == "Phendrana - Research Lab Hydra - - - - - - - - - - Artifact of Elder" || logline[47] == "Phendrana - Research Lab Hydra - - - - - - - - - - Artifact of Spirit" || logline[47] == "Phendrana - Research Lab Hydra - - - - - - - - - - Artifact of Livegiver"){
-	if((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))){
-	if(!isAdded[47]){ //done
-		obItems[k] = items[47];
-		isAdded[47] = true;
-		k++;}
-	}
-	}
+
 
 	if((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider)) && (hasCharge && hasSuper)){
 	if(!isAdded[47]){ //done
@@ -3631,14 +3630,6 @@ resetter = 0;
 			k++;}
 	}
 
-	if(logline[87] == "Mines - - - Metroid Quarantine B - - - - - - - - - Artifact of Chozo" || logline[87] == "Mines - - - Metroid Quarantine B - - - - - - - - - Artifact of Warrior" || logline[87] == "Mines - - - Metroid Quarantine B - - - - - - - - - Artifact of Nature" || logline[87] == "Mines - - - Metroid Quarantine B - - - - - - - - - Artifact of Elder" || logline[87] == "Mines - - - Metroid Quarantine B - - - - - - - - - Artifact of Spirit" || logline[87] == "Mines - - - Metroid Quarantine B - - - - - - - - - Artifact of Livegiver"){
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && deepMinesEscape){ //done
-	if(!isAdded[87]){
-			obItems[k] = items[87];
-			isAdded[87] = true;
-			k++;}
-	}
-	}
 
 	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && hasCharge && hasSuper && deepMinesEscape){
 		if(!isAdded[87]){
@@ -4035,10 +4026,13 @@ resetter = 0;
 		seedExceptions = "Exceptions: None";
 	}
 
+	if(verbose){
+		cout << "\n" << endl;
+	}
 
 }
 
-bool LogChecker::checkObtainedItems(){
+bool LogChecker::checkObtainedItems(bool verbose){
 int prevEtankCount = e;
 int prevArt = art;
 art = 0;
@@ -4048,62 +4042,123 @@ bool foundItems = false;
 
 while (q < 105){
 	if((obItems[q] == "Missi" || obItems[q].substr(0,7) == "Missile") && !hasMissiles){
+		if(verbose){
+		cout << "Missiles" << endl;
+	  }
 		hasMissiles = true;
 		foundItems = true;}
 	if((obItems[q] == "Morph" || obItems[q] == "Morph Ball") && !hasMorph){
+		if(verbose){
+		cout << "Morph Ball" << endl;
+		}
 		hasMorph = true;
 		foundItems = true;}
 	if((obItems[q] == "Bombs" || obItems[q] == "Morph Ball Bomb") && !hasBombs){
+		if(verbose){
+		cout << "Morph Ball Bombs" << endl;
+		}
+		if(hasGravity && !(hasVaria || hasPhazon)){
+			bombsWithoutGravity = false;
+		}
+		else bombsWithoutGravity = true;
 		hasBombs = true;
 		foundItems = true;}
 	if((obItems[q] == "Varia" || obItems[q] == "Varia Suit") && !hasVaria){
+		if(verbose){
+		cout << "Varia Suit" << endl;
+		}
 		hasSuit = true;
 		hasVaria = true;
 		foundItems = true;}
 	if((obItems[q] == "Gravi" || obItems[q] == "Gravity Suit") && !hasGravity)
-		{hasSuit = true;
+		{
+		if(verbose){
+		cout << "Gravity Suit" << endl;
+		}
+		hasSuit = true;
 		hasGravity = true;
 		foundItems = true;}
 	if((obItems[q] == "Phazo" || obItems[q] == "Phazon Suit") && !hasPhazon)
-		{hasSuit = true;
+		{
+			if(verbose){
+			cout << "Phazon Suit" << endl;
+			}
+		hasSuit = true;
 		hasPhazon = true;
 		foundItems = true;}
 	if((obItems[q] == "Boost" || obItems[q] == "Boost Ball") && !hasBoost){
+		if(verbose){
+		cout << "Boost Ball" << endl;
+		}
 		hasBoost = true;
 		foundItems = true;}
 	if((obItems[q] == "Space" || obItems[q] == "Space Jump Boots") && !hasSJ){
+		if(verbose){
+		cout << "Space Jump Boots" << endl;
+		}
 		hasSJ = true;
 		foundItems = true;}
 	if((obItems[q] == "Grapp" || obItems[q] == "Grapple Beam") && !hasGrapple){
+		if(verbose){
+		cout << "Grapple Beam" << endl;
+		}
 		hasGrapple = true;
 		foundItems = true;}
 	if((obItems[q] == "Power" || obItems[q].substr(0,5) == "Power") && !hasPB){
+		if(verbose){
+		cout << "Power Bombs" << endl;
+		}
 		hasPB = true;
 		foundItems = true;}
 	if((obItems[q] == "Wave " || obItems[q] == "Wave Beam") && !hasWave){
+		if(verbose){
+		cout << "Wave Beam" << endl;
+		}
 		hasWave = true;
 		foundItems = true;}
 	if((obItems[q] == "Ice B" || obItems[q] == "Ice Beam") && !hasIce){
+		if(verbose){
+		cout << "Ice Beam" << endl;
+		}
 		hasIce = true;
 		foundItems = true;}
 	if((obItems[q] == "Plasm" || obItems[q] == "Plasma Beam") && !hasPlasma){
+		if(verbose){
+		cout << "Plasma Beam" << endl;
+		}
 		hasPlasma = true;
 		foundItems = true;}
 	if((obItems[q] == "Spide" || obItems[q] == "Spider Ball") && !hasSpider){
+		if(verbose){
+		cout << "Spider Ball" << endl;
+		}
 		hasSpider = true;
 		foundItems = true;}
 	if((obItems[q] == "X-Ray" || obItems[q] == "X-Ray Visor") && !hasXray){
+		if(verbose){
+		cout << "X-Ray Visor" << endl;
+		}
 		hasXray = true;
 		foundItems = true;}
 	if((obItems[q] == "Charg" || obItems[q] == "Charge Beam") && !hasCharge){
+		if(verbose){
+		cout << "Charge Beam" << endl;
+		}
 		hasCharge = true;
 		foundItems = true;}
 	if((obItems[q] == "Super" || obItems[q] == "Super Missile") && !hasSuper){
+		if(verbose){
+		cout << "Super Missiles" << endl;
+		}
 		hasSuper = true;
 		foundItems = true;}
 	if(obItems[q] == "Energ" || obItems[q].substr(0,6) == "Energy"){
+
 		e++;}
 	if((obItems[q] == "Therm" || obItems[q] == "Thermal Visor") && !hasThermal){
+		if(verbose){
+		cout << "Thermal Visor" << endl;
+		}
 		hasThermal = true;
 		foundItems = true;}
 	if(obItems[q] == "Artif" || obItems[q].substr(0,8) == "Artifact"){				//need to add a substring thingy when I add the full name

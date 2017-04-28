@@ -69,8 +69,9 @@ private:
   bool deepPhenGravity = false;
   bool deepPhenGrapple = false;
   bool deepPhenPB = false;
+  bool bombsWithoutGravity = false;
 
-  bool checkObtainedItems();
+  bool checkObtainedItems(bool verbose);
   void checkEarlyMines();
   void checkDeepMines();
   void checkFrigate();
@@ -81,11 +82,11 @@ private:
 
 public:
 LogChecker();
-void difficultyCheck(int, int, vector<int>);
-void CheckFinishNormalNew(int seed, vector <int> inExceptions);
-void CheckFinishVeteranNew(int seed, vector <int> inExceptions);
-void CheckFinishEasyNew(int seed, vector <int> inExceptions);
-void CheckFinishHypermodeNew(int seed, vector <int> inExceptions);
+void difficultyCheck(int, int, vector<int>, bool, bool);
+void CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose);
+void CheckFinishVeteranNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
+void CheckFinishEasyNew(int seed, vector <int> inExceptions, bool verbose);
+void CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
 void benchmark(int randomizeCount);
 void apvectorBenchmark(int count);
 void printList();
