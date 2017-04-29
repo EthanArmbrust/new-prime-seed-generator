@@ -71,18 +71,20 @@ private:
   bool deepPhenPB = false;
   bool bombsWithoutGravity = false;
 
-  bool checkObtainedItems(bool verbose);
+  bool checkObtainedItems(bool verbose, vector<string> logline);
   void checkEarlyMines();
   void checkDeepMines();
   void checkFrigate();
   void checkDeepPhen();
   void countArtifacts();
   bool isHundo();
+  string getItemLocation(vector<string>, string);
 
 
 public:
 LogChecker();
 void difficultyCheck(int, int, vector<int>, bool, bool);
+vector <string> generateLog(vector<int>, int);
 void CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose);
 void CheckFinishVeteranNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
 void CheckFinishEasyNew(int seed, vector <int> inExceptions, bool verbose);

@@ -32,6 +32,7 @@ void clearScreen();
 bool fileExists(const std::string& fileName);
 void getTimeAndSeedCount(double, int);
 int getASeed();
+void createLogFile();
 vector <int> getTheExceptions();
 void loadScript(int, vector <int>);
 string simplifyString(string);
@@ -104,6 +105,13 @@ void processOption(){
 	clearScreen();
   string temp = simplifyString(option);
   option = temp;
+
+  if(option == "L"){
+    system("mkdir SeedGenLogs");
+    clearScreen();
+    createLogFile();
+  }
+
 	if(option == "1" || option == "$1" || option == "$1-F" || option == "1-F"){
 		multithreadTest(false, 1, false, false);
 	}
@@ -749,4 +757,96 @@ void clearScreen(){
   #else
   system("clear");
   #endif
+}
+
+void createLogFile(){
+  bool validSelection = false;
+	vector<int> apNumbers(0);
+  while(!validSelection){
+
+	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+	cout << "> ";
+
+  vector<int> numbers;
+	string str;
+	int x;
+
+	getline(cin, str);
+	stringstream numStream(str);
+	while (numStream >> x)
+		numbers.push_back(x);
+
+	sort(numbers.begin(), numbers.end());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
+
+	for(int tran = 0; tran < apNumbers.size(); tran++){
+		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
+	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    clearScreen();
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+ }
+
+ int seed = -1;
+
+ cout << "Enter seed number (leave blank for random)" << endl;
+ cout << "> ";
+
+ string str;
+
+ getline(cin, str);
+
+ if(simplifyString(str) != ""){
+   stringstream seedString(str);
+   seedString >> seed;
+ }
+ else{
+   CurrentTime current_time;
+   seed = (int)(current_time.microseconds() % (long) 2147483647);
+ }
+ LogChecker logGen;
+ vector<string> gameLog = logGen.generateLog(apNumbers, seed);
+
+
+ ofstream logWriter;
+ time_t t = time(0);
+ struct tm * now = localtime(&t);
+
+ char buffer [80];
+ strftime(buffer,80,"%Y-%m-%d_%I-%M-%S-%p.",now);
+
+ string logPath =  "SeedGenLogs" + dirSeparator;
+ logPath += "Prime_Randomizer_Log-";
+ logPath += buffer;
+ logPath += "txt";
+
+ logWriter.open(logPath);
+
+ logWriter << "Seed Generator" << endl;
+ logWriter << "Seed: " << seed << endl;
+ logWriter << "Excluded Pickups: ";
+
+ if(apNumbers.size() == 0){
+   logWriter << "None" << endl;
+ }
+ else{
+   for(int m = 0; m < apNumbers.size(); m++){
+     logWriter << apNumbers[m] << " ";
+   }
+    logWriter << "\n";
+ }
+
+ for(int n = 2; n < gameLog.size()-2; n++){
+   logWriter << gameLog[n] << endl;
+ }
+  logWriter.close();
+  cout << "Log file created!" <<endl;
+  cout << "Press Enter to continue...";
+  cin.ignore().get();
 }

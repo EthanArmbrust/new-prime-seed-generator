@@ -80,6 +80,30 @@ bool LogChecker::returnDifficulty(int difficulty){
 	}
 }
 
+vector <string> LogChecker::generateLog(vector <int> exceptions, int seed){
+
+	vector <string> itemInput(100, "");
+	vector <string> areaInput(100, "");
+
+	vector <string> logline(104, "");
+	itemInput = getItemNames();
+
+
+	areaInput = getAreaNames();
+
+  vector <string> newItems = randomize(itemInput, exceptions, seed);
+
+
+
+	for(int zorro = 2; zorro < logline.size()-2; zorro++){
+		 logline[zorro] = areaInput[zorro-2] + newItems[zorro-2];
+		// lineLength = logline[zorro].size() - 51;
+		 //items[zorro] = logline[zorro].substr(51,lineLength);
+	 }
+
+		 return logline;
+}
+
 
 void LogChecker::CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose){
 
@@ -160,7 +184,7 @@ while(resetter < 105){
 
 
   firstCheck = true;
-	while (checkObtainedItems(verbose)){
+	while (checkObtainedItems(verbose, logline)){
 
 
 	if(!isAdded[21]){
@@ -1045,7 +1069,7 @@ resetter = 0;
 
 
 	firstCheck = true;
-	while(checkObtainedItems(verbose)){
+	while(checkObtainedItems(verbose, logline)){
 
 	checkEarlyMines();
 	checkDeepMines();
@@ -2117,7 +2141,7 @@ while(resetter < 105){
 
 
 	firstCheck = true;
-	while(checkObtainedItems(verbose)){
+	while(checkObtainedItems(verbose, logline)){
 
 
 	if(!isAdded[21]){
@@ -2994,7 +3018,7 @@ resetter = 0;
 
 	firstCheck = true;
 
-	while (checkObtainedItems(verbose)){
+	while (checkObtainedItems(verbose, logline)){
 
 	checkEarlyMines();
 	checkDeepMines();
@@ -3558,7 +3582,7 @@ resetter = 0;
 
 
 
-	if((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider)) && (hasCharge && hasSuper)){
+	if((hasMissiles && hasMorph && hasBombs && hasWave && hasSuit) || (hasMissiles && hasWave && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider)) && (hasCharge && hasSuper)){
 	if(!isAdded[47]){ //done
 		obItems[k] = items[47];
 		isAdded[47] = true;
@@ -4032,7 +4056,7 @@ resetter = 0;
 
 }
 
-bool LogChecker::checkObtainedItems(bool verbose){
+bool LogChecker::checkObtainedItems(bool verbose, vector<string> logs){
 int prevEtankCount = e;
 int prevArt = art;
 art = 0;
@@ -4043,19 +4067,20 @@ bool foundItems = false;
 while (q < 105){
 	if((obItems[q] == "Missi" || obItems[q].substr(0,7) == "Missile") && !hasMissiles){
 		if(verbose){
-		cout << "Missiles" << endl;
+
+		cout << getItemLocation(logs, obItems[q]) << endl;
 	  }
 		hasMissiles = true;
 		foundItems = true;}
 	if((obItems[q] == "Morph" || obItems[q] == "Morph Ball") && !hasMorph){
 		if(verbose){
-		cout << "Morph Ball" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasMorph = true;
 		foundItems = true;}
 	if((obItems[q] == "Bombs" || obItems[q] == "Morph Ball Bomb") && !hasBombs){
 		if(verbose){
-		cout << "Morph Ball Bombs" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		if(hasGravity && !(hasVaria || hasPhazon)){
 			bombsWithoutGravity = false;
@@ -4065,7 +4090,7 @@ while (q < 105){
 		foundItems = true;}
 	if((obItems[q] == "Varia" || obItems[q] == "Varia Suit") && !hasVaria){
 		if(verbose){
-		cout << "Varia Suit" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasSuit = true;
 		hasVaria = true;
@@ -4073,7 +4098,7 @@ while (q < 105){
 	if((obItems[q] == "Gravi" || obItems[q] == "Gravity Suit") && !hasGravity)
 		{
 		if(verbose){
-		cout << "Gravity Suit" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasSuit = true;
 		hasGravity = true;
@@ -4081,74 +4106,74 @@ while (q < 105){
 	if((obItems[q] == "Phazo" || obItems[q] == "Phazon Suit") && !hasPhazon)
 		{
 			if(verbose){
-			cout << "Phazon Suit" << endl;
+			cout << getItemLocation(logs, obItems[q]) << endl;
 			}
 		hasSuit = true;
 		hasPhazon = true;
 		foundItems = true;}
 	if((obItems[q] == "Boost" || obItems[q] == "Boost Ball") && !hasBoost){
 		if(verbose){
-		cout << "Boost Ball" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasBoost = true;
 		foundItems = true;}
 	if((obItems[q] == "Space" || obItems[q] == "Space Jump Boots") && !hasSJ){
 		if(verbose){
-		cout << "Space Jump Boots" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasSJ = true;
 		foundItems = true;}
 	if((obItems[q] == "Grapp" || obItems[q] == "Grapple Beam") && !hasGrapple){
 		if(verbose){
-		cout << "Grapple Beam" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasGrapple = true;
 		foundItems = true;}
 	if((obItems[q] == "Power" || obItems[q].substr(0,5) == "Power") && !hasPB){
 		if(verbose){
-		cout << "Power Bombs" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasPB = true;
 		foundItems = true;}
 	if((obItems[q] == "Wave " || obItems[q] == "Wave Beam") && !hasWave){
 		if(verbose){
-		cout << "Wave Beam" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasWave = true;
 		foundItems = true;}
 	if((obItems[q] == "Ice B" || obItems[q] == "Ice Beam") && !hasIce){
 		if(verbose){
-		cout << "Ice Beam" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasIce = true;
 		foundItems = true;}
 	if((obItems[q] == "Plasm" || obItems[q] == "Plasma Beam") && !hasPlasma){
 		if(verbose){
-		cout << "Plasma Beam" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasPlasma = true;
 		foundItems = true;}
 	if((obItems[q] == "Spide" || obItems[q] == "Spider Ball") && !hasSpider){
 		if(verbose){
-		cout << "Spider Ball" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasSpider = true;
 		foundItems = true;}
 	if((obItems[q] == "X-Ray" || obItems[q] == "X-Ray Visor") && !hasXray){
 		if(verbose){
-		cout << "X-Ray Visor" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasXray = true;
 		foundItems = true;}
 	if((obItems[q] == "Charg" || obItems[q] == "Charge Beam") && !hasCharge){
 		if(verbose){
-		cout << "Charge Beam" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasCharge = true;
 		foundItems = true;}
 	if((obItems[q] == "Super" || obItems[q] == "Super Missile") && !hasSuper){
 		if(verbose){
-		cout << "Super Missiles" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasSuper = true;
 		foundItems = true;}
@@ -4157,7 +4182,7 @@ while (q < 105){
 		e++;}
 	if((obItems[q] == "Therm" || obItems[q] == "Thermal Visor") && !hasThermal){
 		if(verbose){
-		cout << "Thermal Visor" << endl;
+		cout << getItemLocation(logs, obItems[q]) << endl;
 		}
 		hasThermal = true;
 		foundItems = true;}
@@ -4179,6 +4204,19 @@ while (q < 105){
 	}
 
 	return foundItems;
+}
+
+string LogChecker::getItemLocation(vector<string> logLines, string item){
+	int n = 2;
+  //cout << n << endl;
+	//cout << logLines[n] << endl;
+	//cout << logLines[n].substr(51, logLines[n].length() - 51) << endl;
+  //cout << logLines[19].substr(51, logLines[19].length() - 51) << endl;
+	while(logLines[n].substr(51, logLines[n].length() - 51) != item){
+
+		n++;
+	}
+	return logLines[n];
 }
 
 void LogChecker::checkEarlyMines(){
