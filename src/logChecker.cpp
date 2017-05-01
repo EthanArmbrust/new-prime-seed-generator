@@ -258,7 +258,7 @@ while(resetter < 105){
 		isAdded[10] = true;
 		k++;}
 	}
-	if(items[11] == "Boost" || "Wave " || "Boost Ball" || "Wave Beam"){
+	if(items[11] ==  "Boost Ball" || items[11] == "Wave Beam"){
 	if(hasMorph && hasBombs && hasSJ){
 	if(!isAdded[11]){
 		obItems[k] = items[11];
@@ -480,7 +480,7 @@ while(resetter < 105){
 		k++;}
 	}
 
-	if(items[46] == "Space" || "Spide" || "Grapp" || "Space Jump Boots" || "Spider Ball" || "Grapple Beam"){
+	if(items[46] ==  "Space Jump Boots" || items[46] == "Spider Ball" || items[46] == "Grapple Beam"){
 	if(hasMissiles && hasMorph && (hasSuit || e >= 1) && hasWave){
 	if(!isAdded[46]){
 		obItems[k] = items[46];
@@ -835,13 +835,17 @@ while(resetter < 105){
 		obItems[k] = items[92];
 		isAdded[92] = true;
 		k++;}
-	if(!isAdded[93]){
-		obItems[k] = items[93];
-		isAdded[93] = true;
-		k++;}
+
 	if(!isAdded[94]){
 		obItems[k] = items[94];
 		isAdded[94] = true;
+		k++;}
+	}
+
+if(hasMissiles && hasSuit){
+	if(!isAdded[93]){
+		obItems[k] = items[93];
+		isAdded[93] = true;
 		k++;}
 	}
 
@@ -1091,7 +1095,7 @@ resetter = 0;
 			else hasFloaty = false;
 
 		}
-		else if(!((items[29] == "Bombs" || "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
+		else if(!((items[29] == "Bombs" || items[29] == "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
 					if(hasMissiles && hasMorph && hasBombs && bombsWithoutGravity){
 						hasFloaty = true;
 					}
@@ -1300,16 +1304,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if(items[7] == "Morph" || "Space" || "Morph Ball" || "Space Jump Boots"){
 	if(hasMissiles){
-	if(!isAdded[7]){
-		obItems[k] = items[7];
-		isAdded[7] = true;
-		k++;}
-	}
-	}
-
-	if(hasMissiles && (hasSJ || hasMorph)){
 	if(!isAdded[7]){
 		obItems[k] = items[7];
 		isAdded[7] = true;
@@ -1359,7 +1354,7 @@ resetter = 0;
 		isAdded[14] = true;
 		k++;}
 	}
-	if(items[15] == "Wave " || "Wave Beam"){
+	if(items[15] == "Wave Beam"){
 	if(hasMissiles && hasMorph && hasBombs){
 	if(!isAdded[15]){
 		obItems[k] = items[15];
@@ -1376,7 +1371,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if(items[16] == "Wave " || "Wave Beam"){
+	if(items[16] == "Wave Beam"){
 	if(hasMorph && hasBombs && hasBoost && (hasSJ || hasMissiles)){
 	if(!isAdded[16]){
 		obItems[k] = items[16];
@@ -1564,7 +1559,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if(items[46] == "Space" || "Spide" || "Grapp" || "Space Jump Boots" || "Spider Ball" || "Grapple Beam"){
+	if(items[46] ==  "Space Jump Boots" || items[46] == "Spider Ball" || items[46] == "Grapple Beam"){
 	if(hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave){
 	if(!isAdded[46]){
 		obItems[k] = items[46];
@@ -1780,7 +1775,7 @@ resetter = 0;
 			k++;}
 	}
 
-	if(items[69] == "Wave " || "Wave Beam")
+	if(items[69] == "Wave Beam")
 	if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity || items[68] == "Boost" || items[68] == "Gravi" || items[68] == "Boost Ball" || items[68] == "Gravity Suit")){
 		if(!isAdded[69]){
 			obItems[k] = items[69];
@@ -1788,7 +1783,7 @@ resetter = 0;
 			k++;}
 	}
 
-	if(items[68] == "Wave " || "Wave Beam")
+	if(items[68] == "Wave Beam")
 	if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity)){
 		if(!isAdded[69]){
 			obItems[k] = items[69];
@@ -1823,8 +1818,8 @@ resetter = 0;
 	}
 
 
-	if(items[68] == "Wave " || "Wave Beam"){
-	if(hasMissiles && hasMorph && hasBombs && hasIce && (hasBoost || ((items[69] == "Boost" || items[69] == "Boost Ball") && hasSuper && hasCharge) || ((hasGravity || ((items[69] == "Gravi" || "Gravity Suit") && hasSuper && hasCharge)) && (hasSJ || ((items[69] == "Space" || "Space Jump Boots") && hasCharge && hasSuper))))){
+	if(items[68] == "Wave Beam"){
+	if(hasMissiles && hasMorph && hasBombs && hasIce && (hasBoost || ((items[69] == "Boost" || items[69] == "Boost Ball") && hasSuper && hasCharge) || ((hasGravity || ((items[69] == "Gravity Suit") && hasSuper && hasCharge)) && (hasSJ || ((items[69] == "Space Jump Boots") && hasCharge && hasSuper))))){
 		if(!isAdded[68]){
 			obItems[k] = items[68];
 			isAdded[68] = true;
@@ -1900,7 +1895,7 @@ resetter = 0;
 			k++;}
 	}
 
-	if(hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && (hasSJ || (hasSpider && (items[56] == "Space" || "Space Jump Boots")))){
+	if(hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && (hasSJ || (hasSpider && (items[56] == "Space Jump Boots")))){
 		if(!isAdded[56]){
 			obItems[k] = items[56];
 			isAdded[56] = true;
@@ -1933,13 +1928,17 @@ resetter = 0;
 		obItems[k] = items[92];
 		isAdded[92] = true;
 		k++;}
-	if(!isAdded[93]){
-		obItems[k] = items[93];
-		isAdded[93] = true;
-		k++;}
+
 	if(!isAdded[94]){
 		obItems[k] = items[94];
 		isAdded[94] = true;
+		k++;}
+	}
+
+if(hasMissiles && hasSuit){
+	if(!isAdded[93]){
+		obItems[k] = items[93];
+		isAdded[93] = true;
 		k++;}
 	}
 
@@ -1976,14 +1975,14 @@ resetter = 0;
 		k++;}
 	}
 
-	 if((hasMissiles && hasSuit && hasMorph && hasBombs && hasPB) || (hasMissiles && hasSuit && hasSJ && (items[99] == "Bombs" || "Morph Ball Bomb") && hasMorph && hasPB)){
+	 if((hasMissiles && hasSuit && hasMorph && hasBombs && hasPB) || (hasMissiles && hasSuit && hasSJ && (items[99] == "Morph Ball Bomb") && hasMorph && hasPB)){
 	if(!isAdded[99]){
 		obItems[k] = items[99];
 		isAdded[99] = true;
 		k++;}
 	}
 
-	if(items[100] == "Plasm" || "Plasma Beam"){
+	if(items[100] == "Plasma Beam"){
 	if(hasMissiles && hasMorph && hasBombs && hasSJ && hasBoost && (hasSuit || e >= 1) && hasWave && hasIce){
 	if(!isAdded[100]){
 		obItems[k] = items[100];
@@ -2738,13 +2737,16 @@ while(resetter < 105){
 		obItems[k] = items[92];
 		isAdded[92] = true;
 		k++;}
-	if(!isAdded[93]){
-		obItems[k] = items[93];
-		isAdded[93] = true;
-		k++;}
 	if(!isAdded[94]){
 		obItems[k] = items[94];
 		isAdded[94] = true;
+		k++;}
+	}
+
+	if(hasMissiles && hasSuit && hasSJ){
+	if(!isAdded[93]){
+		obItems[k] = items[93];
+		isAdded[93] = true;
 		k++;}
 	}
 
@@ -3040,7 +3042,7 @@ resetter = 0;
 			else hasFloaty = false;
 
 		}
-		else if(!((items[29] == "Bombs" || "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
+		else if(!((items[29] == "Morph Ball Bomb") && (items[30] == "Gravi" || items[30] == "Gravity Suit"))){
 					if(hasMissiles && hasMorph && hasBombs && bombsWithoutGravity){
 						hasFloaty = true;
 					}
@@ -3206,7 +3208,7 @@ resetter = 0;
 		deepMinesEscape = true;
 	}
 
-	if(hasSJ || deepPhenSJ || (items[53] == "Space" || "Space Jump Boots") || hasGravity || deepPhenGravity || (items[53] == "Gravi" || "Gravity Suit")){
+	if(hasSJ || deepPhenSJ || (items[53] == "Space Jump Boots") || hasGravity || deepPhenGravity || (items[53] == "Gravity Suit")){
 		if(!deepPhenIsAdded[0]){
 		deepPhenItems[skinner] = items[53];
 		deepPhenIsAdded[0] = true;
@@ -3214,7 +3216,7 @@ resetter = 0;
 		}
 	}
 
-	if(hasSJ || deepPhenSJ || (items[56] == "Space" || "Space Jump Boots") || hasGravity || deepPhenGravity || (items[56] == "Gravi" || "Gravity Suit")){
+	if(hasSJ || deepPhenSJ || (items[56] ==  "Space Jump Boots") || hasGravity || deepPhenGravity || (items[56] == "Gravity Suit")){
 		if(!deepPhenIsAdded[1]){
 		deepPhenItems[skinner] = items[56];
 		deepPhenIsAdded[1] = true;
@@ -3340,7 +3342,7 @@ resetter = 0;
 		isAdded[14] = true;
 		k++;}
 	}
-	if(items[15] == "Wave " || "Wave Beam"){ //done
+	if(items[15] == "Wave Beam"){ //done
 	if(hasMissiles && hasMorph && hasBombs){
 	if(!isAdded[15]){
 		obItems[k] = items[15];
@@ -3357,7 +3359,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if(items[16] == "Wave " || "Wave Beam"){
+	if(items[16] == "Wave Beam"){
 	if(hasMorph && hasBombs && hasBoost && (hasSJ || hasMissiles)){ //done
 	if(!isAdded[16]){
 		obItems[k] = items[16];
@@ -3386,15 +3388,15 @@ resetter = 0;
 		k++;}
 	}
 
-	if(items[18].substr(0,5) == "Morph" || "Boost" || "Spide" ||"Artif" || "Varia" || "Gravi" ||"Phazo"){ //done
+
 	if(hasSJ){
 	if(!isAdded[18]){
 		obItems[k] = items[18];
 		isAdded[18] = true;
 		k++;
+		}
 	}
-	}
-	}
+
 
 	if(hasMissiles){ //done
 	if(!isAdded[19]){
@@ -3564,7 +3566,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if(items[46].substr(0,5) == "Space" || "Spide" || "Grapp"){
+	if(items[46].substr(0,5) == "Space" ||items[46].substr(0,5) == "Spide" || items[46].substr(0,5) == "Grapp"){
 	if(hasMissiles && hasMorph && hasWave){
 	if(!isAdded[46]){ //done
 		obItems[k] = items[46];
@@ -3581,8 +3583,8 @@ resetter = 0;
 	}
 
 
-
-	if((hasMissiles && hasMorph && hasBombs && hasWave && hasSuit) || (hasMissiles && hasWave && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider)) && (hasCharge && hasSuper)){
+				//approaching from West Magmoor																																										//approaching from Magmoor South
+	if(((hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || ((e >= 4 && (hasSJ || hasCharge)) || e >= 5))) || (hasMissiles && hasMorph && hasWave && hasIce && (hasSJ || hasSpider))) && (hasCharge && hasSuper)){
 	if(!isAdded[47]){ //done
 		obItems[k] = items[47];
 		isAdded[47] = true;
@@ -3816,7 +3818,7 @@ resetter = 0;
 	}
 
 
-	if(items[68].substr(0,5) == "Gravi" || "Space" || "Boost"){
+	if(items[68].substr(0,5) == "Gravi" || items[68].substr(0,5) == "Space" || items[68].substr(0,5) == "Boost"){
 	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave){
 		if(!isAdded[68]){ //done
 			obItems[k] = items[68];
