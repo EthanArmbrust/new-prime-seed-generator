@@ -302,12 +302,14 @@ while(resetter < 105){
 		isAdded[16] = true;
 		k++;}
 	}
+
 	if(hasMissiles){
 	if(!isAdded[17]){
 		obItems[k] = items[17];
 		isAdded[17] = true;
 		k++;}
 	}
+
 	if(hasMorph && hasBombs){
 	if(!isAdded[18]){
 		obItems[k] = items[18];
@@ -4513,11 +4515,11 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
 
  //begin Randomizing
 
- Random * randomizer = new Random();
- randomizer->setup(seed);
+ Random randomizer;
+ randomizer.setup(seed);
  while(orderedItems.size() > 0){
 
-   int number = randomizer->Next(addedItems.size());
+   int number = randomizer.Next(addedItems.size());
    randomizedItems[addedItems[number]] = orderedItems[0];
    //cout << "added first orderedItem to randomizedItems" << endl;
    orderedItems = shrinkStringVector(orderedItems);

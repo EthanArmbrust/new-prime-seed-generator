@@ -428,7 +428,15 @@ mainThreadDone = true;
 clock_t end = clock();
 double elapsed_secs = double(end-begin) / (CLOCKS_PER_SEC/100);
 seedCounter += newThreadSeedCount;
+#if defined _WIN32 || defined _WIN64
 getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
+#else
+if(enableMultithreading){
+  getTimeAndSeedCount(elapsed_secs/200.0, seedCounter);
+}
+else getTimeAndSeedCount(elapsed_secs/100.0, seedCounter);
+
+#endif
 if(mainThreadDone){
   header1 = checker.returnSeed();
   scriptSeed = randoSeed;
