@@ -38,6 +38,7 @@ void loadScript(int, vector <int>);
 string simplifyString(string);
 void multithreadTest(bool, int, bool, bool);
 string seedListName(int difficulty, bool only);
+bool is_digits(const std::string &str);
 
 
 
@@ -48,11 +49,11 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.3";
+string header1 = "			    Seed Generator v1.4 (beta 5.4.2017.04)";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
-string bottomHelp1 = "Type $# to give a seed of ONLY a difficulty. Type HELP $ for more info.";
+string bottomHelp1 = "";
 string bottomHelp2 = "Type \"HELP #\" for more information on an option.";
 //string pretzels = "these pretzels are making me thirsty!";
 bool mainThreadDone = false;
@@ -63,6 +64,7 @@ bool enableMultithreading = true;
 string multithreadingState = "8 - Disable Multithreading \n \n";
 int scriptSeed;
 string dirSeparator;
+string permHeader1 = header1;
 
 
 
@@ -89,7 +91,7 @@ void mainMenu(){
 	cout << "2 - Generate a \"Normal\" difficulty seed \n \n";
 	cout << "3 - Generate a \"Veteran\" difficulty seed\n \n";
 	cout << "4 - Generate a \"Hypermode\" difficulty seed\n \n";
-	cout << "5 - Generate a \"Why\" difficulty seed (Coming soon) \n \n";
+	cout << "5 - Create a log file \n \n";
 	cout << "6 - Check a seed \n \n";
 	cout << "7 - Export seeds to text file \n \n";
   cout << multithreadingState;
@@ -116,23 +118,24 @@ void processOption(){
 		multithreadTest(false, 1, false, false);
 	}
 	if(option == "2" || option == "2-F"){
-	   multithreadTest(false, 2, false, false);
+	   multithreadTest(false, 2, true, false);
 	}
 	if(option == "3"){
-	   multithreadTest(false, 3, false, false);
+	   multithreadTest(false, 3, true, false);
 	}
   if(option == "3-F"){
-     multithreadTest(false, 3, false, true);
+     multithreadTest(false, 3, true, true);
   }
 	if(option == "4"){
-		multithreadTest(false, 4, false, false);
+		multithreadTest(false, 4, true, false);
 	}
   if(option == "4-F"){
-		multithreadTest(false, 4, false, true);
+		multithreadTest(false, 4, true, true);
 	}
 	if(option == "5"){
-    cout << "This will be added sometime in the future" << endl;
-		cin.get();
+    system("mkdir SeedGenLogs");
+    clearScreen();
+    createLogFile();
 	}
 	if(option == "6"){
 		manualChecker(false, false);
@@ -158,20 +161,20 @@ void processOption(){
   }
 
 	if(option == "$2" || option == "$2-F"){
-		multithreadTest(false, 2, true, false);
+		multithreadTest(false, 2, false, false);
 	}
 	if(option == "$3"){
-		multithreadTest(false, 3, true, false);
+		multithreadTest(false, 3, false, false);
 	}
   if(option == "$3-F"){
-		multithreadTest(false, 3, true, true);
+		multithreadTest(false, 3, false, true);
 	}
 
 	if(option == "$4" || option == "$ 4"){
-		multithreadTest(false, 4, true, false);
+		multithreadTest(false, 4, false, false);
 	}
   if(option == "$4-F"){
-		multithreadTest(false, 4, true, true);
+		multithreadTest(false, 4, false, true);
 	}
 	if(option == "HELP1"){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
@@ -323,13 +326,14 @@ void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed
 
   ofstream seedList;
 	vector<int> apNumbers(0);
+  string str;
   while(!validSelection){
 
 	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
 
   vector<int> numbers;
-	string str;
+
 	int x;
 
 	getline(cin, str);
@@ -353,6 +357,9 @@ void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed
     cout << "Invalid Selection.  Please try again" << endl;
   }
  }
+
+if(!(simplifyString(str) == "EXIT")){
+
  CurrentTime current_time;
  int seedCounter = 0;
  LogChecker checker;
@@ -515,6 +522,7 @@ else{
       }
     }
   }
+ }
 }
 
 
@@ -534,6 +542,7 @@ vector <int> getTheExceptions(){
 	int x;
 
 	getline(cin, str);
+
 	stringstream numStream(str);
 	while (numStream >> x)
 		numbers.push_back(x);
@@ -545,6 +554,7 @@ vector <int> getTheExceptions(){
 	for(int tran = 0; tran < apNumbers.size(); tran++){
 		apNumbers[tran] = numbers[tran];
 	}
+
   return apNumbers;
 }
 
@@ -618,6 +628,8 @@ void printMenu(){
 
   printOption = simplifyString(printOption);
 
+
+
 	if(printOption == "1" || printOption == "1-F" || printOption == "$1-F"){
 		multithreadTest(true, 1, false, false);
 	}
@@ -657,7 +669,7 @@ void printMenu(){
 		multithreadTest(true, 4, true,true);
 	}
 	if(printOption == "EXIT" || printOption == "exit"){
-		mainMenu();
+		return;
 	}
 	printMenu();
 }
@@ -759,6 +771,11 @@ return str;
 
 }
 
+bool is_digits(const std::string &str)
+{
+    return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
+}
+
 void clearScreen(){
   #if defined _WIN32 || _WIN64
   system("cls");
@@ -780,6 +797,9 @@ void createLogFile(){
 	int x;
 
 	getline(cin, str);
+  if(simplifyString(str) == "EXIT"){
+    return;
+  }
 	stringstream numStream(str);
 	while (numStream >> x)
 		numbers.push_back(x);
@@ -818,6 +838,10 @@ void createLogFile(){
    CurrentTime current_time;
    seed = (int)(current_time.microseconds() % (long) 2147483647);
  }
+ if(simplifyString(str) == "EXIT"){
+      return;
+ }
+
  LogChecker logGen;
  vector<string> gameLog = logGen.generateLog(apNumbers, seed);
 
@@ -836,9 +860,10 @@ void createLogFile(){
 
  logWriter.open(logPath);
 
- logWriter << "Seed Generator" << endl;
+ logWriter << permHeader1.substr(7, permHeader1.size() - 7) << endl;
+ //logWriter << "Seed Generator" << endl;
  logWriter << "Seed: " << seed << endl;
- logWriter << "Excluded Pickups: ";
+ logWriter << "Excluded pickups: ";
 
  if(apNumbers.size() == 0){
    logWriter << "None" << endl;
