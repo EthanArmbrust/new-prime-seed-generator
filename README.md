@@ -100,8 +100,8 @@ Added no floaty flag for manual checker. Add a -f to any generating option to ge
 Numerous changes to checker logic  
 Updated verbose manual checker to print location and full name of location and item  
 Removed "Why" mode option from menu because it doesn't look like it's happening any time soon and was taking up space  
-Added log printing option
-Swapped the `$` operator around.  Old `$` functionality is on by default now, and using `$` now accepts seeds of lower difficulties.
+Added log printing option  
+Swapped the `$` operator around.  Old `$` functionality is on by default now, and using `$` now accepts seeds of lower difficulties.  
 Fixed memory leak
 
 
