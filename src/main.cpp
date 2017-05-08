@@ -49,7 +49,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.4 (beta 5.4.2017.04)";
+string header1 = "			    Seed Generator v1.4 (beta 5.8.2017.01)";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -616,7 +616,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed){
 
 void printMenu(){
 	cout << "Seeds and exceptions will be printed to a log file.  The seeds will be generated and recorded until the user stops the program. \n \n";
-	cout << "Please select the difficulty.  Note that you may use the $ operator to get an exclusive difficulty. \n \n";
+	cout << "Please select the difficulty.  Note that you may use the $ operator can be used here  See readme for details. \n \n";
 	cout << "1 - Easy \n \n";
 	cout << "2 - Normal \n \n";
 	cout << "3 - Veteran \n \n";
@@ -634,19 +634,19 @@ void printMenu(){
 		multithreadTest(true, 1, false, false);
 	}
 	if(printOption == "2" || printOption == "2-F"){
-		multithreadTest(true, 2, false, false);
+		multithreadTest(true, 2, true, false);
 	}
 	if(printOption == "3"){
-		multithreadTest(true, 3, false, false);
+		multithreadTest(true, 3, true, false);
 	}
   if(printOption == "3-F"){
-		multithreadTest(true, 3, false, true);
+		multithreadTest(true, 3, true, true);
 	}
 	if(printOption == "4"){
-    multithreadTest(true, 4, false, false);
+    multithreadTest(true, 4, true, false);
 	}
   if(printOption == "4-F"){
-    multithreadTest(true, 4, false, true);
+    multithreadTest(true, 4, true, true);
 	}
 
 
@@ -654,19 +654,19 @@ void printMenu(){
 		multithreadTest(true, 1, false,false);
 	}
 	if(printOption == "$2" || printOption == "$2-F"){
-		multithreadTest(true, 2, true,false);
+		multithreadTest(true, 2, false,false);
 	}
 	if(printOption == "$3"){
-		multithreadTest(true, 3, true,false);
+		multithreadTest(true, 3, false,false);
 	}
   if(printOption == "$3-F"){
-		multithreadTest(true, 3, true,true);
+		multithreadTest(true, 3, false,true);
 	}
 	if(printOption == "$4"){
-		multithreadTest(true, 4, true,false);
+		multithreadTest(true, 4, false,false);
 	}
   if(printOption == "$4-F"){
-		multithreadTest(true, 4, true,true);
+		multithreadTest(true, 4, false,true);
 	}
 	if(printOption == "EXIT" || printOption == "exit"){
 		return;

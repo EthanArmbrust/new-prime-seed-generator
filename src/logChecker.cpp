@@ -1402,7 +1402,7 @@ resetter = 0;
 		isAdded[25] = true;
 		k++;}
 	}
-	if(hasMorph && hasMissiles){
+	if(hasMorph && hasMissiles && e >= 1){
 	if(!isAdded[26]){
 		obItems[k] = items[26];
 		isAdded[26] = true;
@@ -1557,7 +1557,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && (hasSJ || hasSpider))){
+	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && hasSJ)){
 	if(!isAdded[49]){
 		obItems[k] = items[49];
 		isAdded[49] = true;
@@ -4449,33 +4449,34 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
   //originalList must have first 3 lines removed before adding!!
 
   vector <string> orderedItems(originalList.size(), "");
-  vector <int> addedItems(originalList.size());
+  vector <int> itemsToAdd(originalList.size());  //list of spots that have not had an item put in them
   vector <string> randomizedItems(originalList.size(), "");
 
+
+	//add all items from originalList to orderedItems in order
   for(int imDumb = 0; imDumb < originalList.size(); imDumb++){
     orderedItems[imDumb] = originalList[imDumb];
   }
 
 
-
-  for(int z = 0; z < addedItems.size(); z++){
-    addedItems[z] = z;
+	//fill addedItems with ordered integers
+  for(int z = 0; z < itemsToAdd.size(); z++){
+    itemsToAdd[z] = z;
   }
 
 
  //add excludedItems
 
 
+	//take the excluded items and set them in the randomizedItems list
  for(int z = 0; z < excludedItems.size(); z++){
-
    randomizedItems[excludedItems[z]] = orderedItems[excludedItems[z]];
  }
 
+	//remove the excluded items from orderedItems list and the addedItems list
  for(int z = 0; z < excludedItems.size(); z++){
    orderedItems = removeStringElement(orderedItems, excludedItems[z] - z);
-   addedItems = removeIntElement(addedItems, excludedItems[z] - z);
-
-
+   itemsToAdd = removeIntElement(itemsToAdd, excludedItems[z] - z);
  }
 
  //begin Randomizing
@@ -4483,14 +4484,10 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
  Random randomizer;
  randomizer.setup(seed);
  while(orderedItems.size() > 0){
-
-   int number = randomizer.Next(addedItems.size());
-   randomizedItems[addedItems[number]] = orderedItems[0];
-   //cout << "added first orderedItem to randomizedItems" << endl;
-   orderedItems = shrinkStringVector(orderedItems);
-   //cout << "shrank orderedItems" << endl;
-   addedItems = removeIntElement(addedItems, number);
-   //cout << "removed the random element from addedItems" << endl;
+   int number = randomizer.Next(itemsToAdd.size()); //grabs a random int between 0 and the size of itemsToAdd
+   randomizedItems[itemsToAdd[number]] = orderedItems[0]; //take the first item from orderedItems and add it to randomizedItems at the "number"th int from itemsToAdd
+   orderedItems = shrinkStringVector(orderedItems); //take out the first item that was just added from orderedItems
+   itemsToAdd = removeIntElement(itemsToAdd, number); //takes out the "number"th element from the itemsToAdd array
  }
 
 
