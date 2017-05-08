@@ -49,7 +49,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.4 (beta 5.8.2017.01)";
+string header1 = "			    Seed Generator v1.4";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
