@@ -49,7 +49,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.4";
+string header1 = "			    Seed Generator v1.5(Beta 5.12.2017.05)";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -393,7 +393,10 @@ if(!(simplifyString(str) == "EXIT")){
    if(checker.returnDifficulty(difficulty)){
      checker.difficultyCheck(difficulty-1,randoSeed, apNumbers,false, noFloatyAllowed);
      if(!checker.returnDifficulty(difficulty-1)){
+       checker.difficultyCheck(difficulty-2,randoSeed, apNumbers,false, noFloatyAllowed);
+       if(!checker.returnDifficulty(difficulty-2)){
        seedGood = true;
+      }
      }
     }
    }

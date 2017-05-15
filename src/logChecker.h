@@ -78,7 +78,7 @@ private:
   void checkDeepPhen();
   void countArtifacts();
   bool isHundo();
-  string getItemLocation(vector<string>, string);
+  string getItemLocation(vector<string>, string, int);
 
 
 public:

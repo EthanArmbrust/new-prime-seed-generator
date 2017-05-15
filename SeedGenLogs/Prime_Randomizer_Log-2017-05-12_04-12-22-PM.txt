@@ -1,0 +1,103 @@
+Seed Generator v1.5(Beta 5.10.2017)
+Seed: 1222809817
+Excluded pickups: None
+Chozo - - - Main Plaza (Half-Pipe) - - - - - - - - Missile Expansion 25
+Chozo - - - Main Plaza (Grapple Ledge) - - - - - - Artifact of Lifegiver
+Chozo - - - Main Plaza (Tree)  - - - - - - - - - - Missile Expansion 4
+Chozo - - - Main Plaza (Locked Door) - - - - - - - Missile Expansion 48
+Chozo - - - Ruined Fountain  - - - - - - - - - - - Missile Expansion 49
+Chozo - - - Ruined Shrine ("Beetle Battle")  - - - Missile Expansion 36
+Chozo - - - Ruined Shrine (Half-Pipe)  - - - - - - Wavebuster
+Chozo - - - Ruined Shrine (Lower Tunnel) - - - - - Missile Expansion 24
+Chozo - - - Vault  - - - - - - - - - - - - - - - - Flamethrower
+Chozo - - - Training Chamber - - - - - - - - - - - Artifact of Wild
+Chozo - - - Ruined Nursery - - - - - - - - - - - - Power Bomb Expansion 1
+Chozo - - - Training Chamber Access  - - - - - - - Power Bomb Expansion 4
+Chozo - - - Magma Pool - - - - - - - - - - - - - - Missile Expansion 19
+Chozo - - - Tower of Light - - - - - - - - - - - - Artifact of Spirit
+Chozo - - - Tower Chamber  - - - - - - - - - - - - Missile Expansion 41
+Chozo - - - Ruined Gallery (Missile Wall)  - - - - Energy Tank 9
+Chozo - - - Ruined Gallery (Tunnel)  - - - - - - - Spider Ball
+Chozo - - - Transport Access North - - - - - - - - Energy Tank 8
+Chozo - - - Gathering Hall - - - - - - - - - - - - Missile Expansion 29
+Chozo - - - Hive Totem - - - - - - - - - - - - - - Missile Expansion 23
+Chozo - - - Sunchamber (Flaahgra)  - - - - - - - - Space Jump Boots
+Chozo - - - Sunchamber (Ghosts)  - - - - - - - - - Artifact of Sun
+Chozo - - - Watery Hall Access - - - - - - - - - - Missile Expansion 44
+Chozo - - - Watery Hall (Scan Puzzle)  - - - - - - Missile Expansion 6
+Chozo - - - Watery Hall (Underwater) - - - - - - - Missile Expansion 43
+Chozo - - - Dynamo (Lower) - - - - - - - - - - - - Missile Expansion 14
+Chozo - - - Dynamo (Spider Track)  - - - - - - - - X-Ray Visor
+Chozo - - - Burn Dome (Missile)  - - - - - - - - - Boost Ball
+Chozo - - - Burn Dome (I. Drone) - - - - - - - - - Missile Expansion 5
+Chozo - - - Furnace (Spider Tracks)  - - - - - - - Missile Expansion 38
+Chozo - - - Furnace (Inside Furnace) - - - - - - - Missile Expansion 9
+Chozo - - - Hall of the Elders - - - - - - - - - - Power Bomb
+Chozo - - - Crossway - - - - - - - - - - - - - - - Ice Spreader
+Chozo - - - Elder Chamber  - - - - - - - - - - - - Missile Expansion 8
+Chozo - - - Antechamber  - - - - - - - - - - - - - Energy Tank 14
+Phendrana - Phendrana Shorelines (Behind Ice)  - - Varia Suit
+Phendrana - Phendrana Shorelines (Spider Track)  - Missile Expansion 37
+Phendrana - Chozo Ice Temple - - - - - - - - - - - Energy Tank 13
+Phendrana - Ice Ruins West - - - - - - - - - - - - Energy Tank 5
+Phendrana - Ice Ruins East (Behind Ice)  - - - - - Artifact of Warrior
+Phendrana - Ice Ruins East (Spider Track)  - - - - Missile Expansion 39
+Phendrana - Chapel of the Elders - - - - - - - - - Ice Beam
+Phendrana - Ruined Courtyard - - - - - - - - - - - Missile Expansion 28
+Phendrana - Phendrana Canyon - - - - - - - - - - - Energy Tank 1
+Phendrana - Quarantine Cave  - - - - - - - - - - - Missile Expansion 27
+Phendrana - Research Lab Hydra - - - - - - - - - - Super Missile
+Phendrana - Quarantine Monitor - - - - - - - - - - Thermal Visor
+Phendrana - Observatory  - - - - - - - - - - - - - Missile Expansion 3
+Phendrana - Transport Access - - - - - - - - - - - Missile Expansion 42
+Phendrana - Control Tower  - - - - - - - - - - - - Missile Expansion 17
+Phendrana - Research Core  - - - - - - - - - - - - Energy Tank 2
+Phendrana - Frost Cave - - - - - - - - - - - - - - Missile Expansion 21
+Phendrana - Research Lab Aether (Tank) - - - - - - Missile Expansion 11
+Phendrana - Research Lab Aether (Morph Track)  - - Artifact of World
+Phendrana - Gravity Chamber (Underwater) - - - - - Missile Expansion 35
+Phendrana - Gravity Chamber (Grapple Ledge)  - - - Plasma Beam
+Phendrana - Storage Cave - - - - - - - - - - - - - Missile Expansion 1
+Phendrana - Security Cave  - - - - - - - - - - - - Missile Expansion 47
+Tallon  - - Landing Site - - - - - - - - - - - - - Missile Expansion 22
+Tallon  - - Alcove - - - - - - - - - - - - - - - - Missile Expansion 26
+Tallon  - - Frigate Crash Site - - - - - - - - - - Missile Expansion 32
+Tallon  - - Overgrown Cavern - - - - - - - - - - - Missile Expansion 33
+Tallon  - - Root Cave  - - - - - - - - - - - - - - Energy Tank 10
+Tallon  - - Artifact Temple  - - - - - - - - - - - Morph Ball
+Tallon  - - Transport Tunnel B - - - - - - - - - - Morph Ball Bomb
+Tallon  - - Arbor Chamber  - - - - - - - - - - - - Grapple Beam
+Tallon  - - Cargo Freight Lift to Deck Gamma - - - Artifact of Elder
+Tallon  - - Biohazard Containment  - - - - - - - - Missile Expansion 30
+Tallon  - - Hydro Access Tunnel  - - - - - - - - - Energy Tank 3
+Tallon  - - Great Tree Chamber - - - - - - - - - - Power Bomb Expansion 3
+Tallon  - - Life Grove Tunnel  - - - - - - - - - - Missile Expansion 40
+Tallon  - - Life Grove (Start) - - - - - - - - - - Wave Beam
+Tallon  - - Life Grove (Underwater Spinner)  - - - Missile Launcher
+Mines - - - Main Quarry  - - - - - - - - - - - - - Energy Tank 12
+Mines - - - Security Access A  - - - - - - - - - - Missile Expansion 45
+Mines - - - Storage Depot B  - - - - - - - - - - - Artifact of Newborn
+Mines - - - Storage Depot A  - - - - - - - - - - - Power Bomb Expansion 2
+Mines - - - Elite Research (Phazon Elite)  - - - - Missile Expansion 7
+Mines - - - Elite Research (Laser) - - - - - - - - Gravity Suit
+Mines - - - Elite Control Access - - - - - - - - - Missile Expansion 13
+Mines - - - Ventilation Shaft  - - - - - - - - - - Missile Expansion 18
+Mines - - - Phazon Processing Center - - - - - - - Charge Beam
+Mines - - - Processing Center Access - - - - - - - Missile Expansion 31
+Mines - - - Elite Quarters - - - - - - - - - - - - Artifact of Nature
+Mines - - - Central Dynamo - - - - - - - - - - - - Energy Tank 7
+Mines - - - Metroid Quarantine B - - - - - - - - - Missile Expansion 12
+Mines - - - Metroid Quarantine A - - - - - - - - - Missile Expansion 15
+Mines - - - Fungal Hall B  - - - - - - - - - - - - Artifact of Chozo
+Mines - - - Phazon Mining Tunnel - - - - - - - - - Energy Tank 4
+Mines - - - Fungal Hall Access - - - - - - - - - - Missile Expansion 2
+Magmoor - - Lava Lake  - - - - - - - - - - - - - - Energy Tank 11
+Magmoor - - Triclops Pit - - - - - - - - - - - - - Artifact of Strength
+Magmoor - - Storage Cavern - - - - - - - - - - - - Missile Expansion 34
+Magmoor - - Transport Tunnel A - - - - - - - - - - Missile Expansion 46
+Magmoor - - Warrior Shrine - - - - - - - - - - - - Missile Expansion 10
+Magmoor - - Shore Tunnel - - - - - - - - - - - - - Missile Expansion 20
+Magmoor - - Fiery Shores (Morph Track) - - - - - - Artifact of Truth
+Magmoor - - Fiery Shores (Warrior Shrine Tunnel) - Missile Expansion 16
+Magmoor - - Plasma Processing  - - - - - - - - - - Energy Tank 6
+Magmoor - - Magmoor Workstation  - - - - - - - - - Phazon Suit
