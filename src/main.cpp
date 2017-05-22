@@ -26,7 +26,7 @@
 
 void mainMenu();
 void processOption();
-void manualChecker(bool verbose, bool noFloatyAllowed);
+void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump);
 void printMenu();
 void clearScreen();
 bool fileExists(const std::string& fileName);
@@ -36,9 +36,10 @@ void createLogFile();
 vector <int> getTheExceptions();
 void loadScript(int, vector <int>);
 string simplifyString(string);
-void multithreadTest(bool, int, bool, bool);
+void multithreadTest(bool, int, bool, bool, bool);
 string seedListName(int difficulty, bool only);
 bool is_digits(const std::string &str);
+bool stringParser(string input, string option);
 
 
 
@@ -49,7 +50,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.5(Beta 5.12.2017.05)";
+string header1 = "			    Seed Generator v1.5(Beta 5.22.2017.06)";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -108,74 +109,49 @@ void processOption(){
   string temp = simplifyString(option);
   option = temp;
 
+  bool only = !(stringParser(option, "$"));
+  bool noFloaty = stringParser(option, "-F");
+  bool verbose = stringParser(option, "-V");
+  bool noSpaceJump = stringParser(option, "-N");
+
+
   if(option == "L"){
     system("mkdir SeedGenLogs");
     clearScreen();
     createLogFile();
   }
 
-	if(option == "1" || option == "$1" || option == "$1-F" || option == "1-F"){
-		multithreadTest(false, 1, false, false);
+
+	if(stringParser(option, "1")){
+		multithreadTest(false, 1, false, false, false);
 	}
-	if(option == "2" || option == "2-F"){
-	   multithreadTest(false, 2, true, false);
+	if(stringParser(option, "2")){
+	   multithreadTest(false, 2, only, false, false);
 	}
-	if(option == "3"){
-	   multithreadTest(false, 3, true, false);
+	if(stringParser(option, "3")){
+	   multithreadTest(false, 3, only, noFloaty, false);
 	}
-  if(option == "3-F"){
-     multithreadTest(false, 3, true, true);
-  }
-	if(option == "4"){
-		multithreadTest(false, 4, true, false);
+	if(stringParser(option, "4")){
+		multithreadTest(false, 4, only, noFloaty, noSpaceJump);
 	}
-  if(option == "4-F"){
-		multithreadTest(false, 4, true, true);
-	}
-	if(option == "5"){
+	if(stringParser(option, "5")){
     system("mkdir SeedGenLogs");
     clearScreen();
     createLogFile();
 	}
-	if(option == "6"){
-		manualChecker(false, false);
+	if(stringParser(option, "6")){
+		manualChecker(verbose, noFloaty, noSpaceJump);
 	}
-  if(option == "6-V"){
-		manualChecker(true, false);
-	}
-  if(option == "6-V-F" || option == "6-F-V"){
-		manualChecker(true, true);
-	}
-  if(option == "6-F"){
-		manualChecker(false, true);
-	}
-	if(option == "7"){
+	if(stringParser(option, "7")){
 		printMenu();
 	}
-  if(option == "8"){
+  if(stringParser(option, "8")){
     enableMultithreading = !enableMultithreading;
     if(enableMultithreading){
       multithreadingState = "8 - Disable Multithreading \n \n";
     }
     else multithreadingState = "8 - Enable Multithreading \n \n";
   }
-
-	if(option == "$2" || option == "$2-F"){
-		multithreadTest(false, 2, false, false);
-	}
-	if(option == "$3"){
-		multithreadTest(false, 3, false, false);
-	}
-  if(option == "$3-F"){
-		multithreadTest(false, 3, false, true);
-	}
-
-	if(option == "$4" || option == "$ 4"){
-		multithreadTest(false, 4, false, false);
-	}
-  if(option == "$4-F"){
-		multithreadTest(false, 4, false, true);
-	}
 	if(option == "HELP1"){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
 		cin.get();
@@ -246,30 +222,30 @@ string seedListName(int difficulty, bool only){
 }
 
 
-void barebonesSeedGen(vector<int> apNumbers, int difficulty, bool print, bool only, bool noFloatyAllowed, std::ofstream& seedList){
+void barebonesSeedGen(vector<int> apNumbers, int difficulty, bool print, bool only, bool noFloatyAllowed, bool noSpaceJump, std::ofstream& seedList){
   int seedCounter = 0;
   CurrentTime current_time;
   LogChecker checker2;
-  int randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647);
-	checker2.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed);
+  int randoSeed = (int)((current_time.microseconds()+1073741823) % (long) 2147483647); //1073741823 is half of INT_MAX
+	checker2.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed, noSpaceJump);
 	seedCounter++;
 
   if(!print){
   if(!only){
 	while(!checker2.returnDifficulty(difficulty) && !mainThreadDone){
-		randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
-  	checker2.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed);
+		randoSeed = (int)((current_time.microseconds()+1073741823) % (long) 2147483647) + seedCounter;
+  	checker2.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed, noSpaceJump);
 		seedCounter++;
     }
   }
   else{
     bool seedGood = false;
     while(!seedGood && !mainThreadDone){
-    randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+    randoSeed = (int)((current_time.microseconds()+1073741823) % (long) 2147483647) + seedCounter;
     seedCounter++;
-    checker2.difficultyCheck(difficulty,randoSeed, apNumbers, false, noFloatyAllowed);
+    checker2.difficultyCheck(difficulty,randoSeed, apNumbers, false, noFloatyAllowed, noSpaceJump);
     if(checker2.returnDifficulty(difficulty)){
-      checker2.difficultyCheck(difficulty-1,randoSeed, apNumbers, false, noFloatyAllowed);
+      checker2.difficultyCheck(difficulty-1,randoSeed, apNumbers, false, noFloatyAllowed, noSpaceJump);
       if(!checker2.returnDifficulty(difficulty-1)){
         seedGood = true;
       }
@@ -287,24 +263,24 @@ void barebonesSeedGen(vector<int> apNumbers, int difficulty, bool print, bool on
     if(!only){
       for(;;){
   	while(!checker2.returnDifficulty(difficulty)){
-  		randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
-    	checker2.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed);
+  		randoSeed = (int)((current_time.microseconds()+1073741823) % (long) 2147483647) + seedCounter;
+    	checker2.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed, noSpaceJump);
   		seedCounter++;
       }
       seedList << checker2.returnSeed() << " " << checker2.returnExceptions()  << endl;
-      randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
-      checker2.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed);
+      randoSeed = (int)((current_time.microseconds()+1073741823) % (long) 2147483647) + seedCounter;
+      checker2.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed, noSpaceJump);
      }
     }
     else{
       bool seedGood = false;
       for(;;){
       while(!seedGood){
-      randoSeed = (int)((current_time.microseconds()+2000000) % (long) 2147483647) + seedCounter;
+      randoSeed = (int)((current_time.microseconds()+1073741823) % (long) 2147483647) + seedCounter;
       seedCounter++;
-      checker2.difficultyCheck(difficulty, randoSeed, apNumbers, false, noFloatyAllowed);
+      checker2.difficultyCheck(difficulty, randoSeed, apNumbers, false, noFloatyAllowed, noSpaceJump);
       if(checker2.returnDifficulty(difficulty)){
-        checker2.difficultyCheck(difficulty-1, randoSeed, apNumbers, false, noFloatyAllowed);
+        checker2.difficultyCheck(difficulty-1, randoSeed, apNumbers, false, noFloatyAllowed, noSpaceJump);
         if(!checker2.returnDifficulty(difficulty-1)){
           seedGood = true;
         }
@@ -321,7 +297,7 @@ void barebonesSeedGen(vector<int> apNumbers, int difficulty, bool print, bool on
 
 
 
-void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed){
+void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed, bool noSpaceJump){
   bool validSelection = false;
 
   ofstream seedList;
@@ -371,15 +347,15 @@ if(!(simplifyString(str) == "EXIT")){
 
 	cout << "Looking for a seed..." << endl;
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
-	checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed);
+	checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed, noSpaceJump);
 	seedCounter++;
   if(enableMultithreading){
-  std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, noFloatyAllowed, std::ref(seedList));
+  std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, noFloatyAllowed, noSpaceJump, std::ref(seedList));
   if(!only){
 	while(!checker.returnDifficulty(difficulty) && !newThreadDone){
 		cout << "Current Seed: " << randoSeed << '\r' << flush;
 		randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-		checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed);
+		checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed, noSpaceJump);
 		seedCounter++;
   }
  }
@@ -389,11 +365,11 @@ if(!(simplifyString(str) == "EXIT")){
    randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
    seedCounter++;
    cout << "Current Seed: " << randoSeed << '\r' << flush;
-   checker.difficultyCheck(difficulty,randoSeed, apNumbers,false, noFloatyAllowed);
+   checker.difficultyCheck(difficulty,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
    if(checker.returnDifficulty(difficulty)){
-     checker.difficultyCheck(difficulty-1,randoSeed, apNumbers,false, noFloatyAllowed);
+     checker.difficultyCheck(difficulty-1,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
      if(!checker.returnDifficulty(difficulty-1)){
-       checker.difficultyCheck(difficulty-2,randoSeed, apNumbers,false, noFloatyAllowed);
+       checker.difficultyCheck(difficulty-2,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
        if(!checker.returnDifficulty(difficulty-2)){
        seedGood = true;
       }
@@ -411,7 +387,7 @@ if(!only){
 while(!checker.returnDifficulty(difficulty) && !newThreadDone){
   cout << "Current Seed: " << randoSeed << '\r' << flush;
   randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-  checker.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed);
+  checker.difficultyCheck(difficulty,randoSeed,apNumbers, false, noFloatyAllowed, noSpaceJump);
   seedCounter++;
 }
 }
@@ -421,11 +397,14 @@ else {
  randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
  seedCounter++;
  cout << "Current Seed: " << randoSeed << '\r' << flush;
- checker.difficultyCheck(difficulty,randoSeed, apNumbers,false, noFloatyAllowed);
+ checker.difficultyCheck(difficulty,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
  if(checker.returnDifficulty(difficulty)){
-   checker.difficultyCheck(difficulty-1,randoSeed, apNumbers,false, noFloatyAllowed);
+   checker.difficultyCheck(difficulty-1,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
    if(!checker.returnDifficulty(difficulty-1)){
-     seedGood = true;
+     checker.difficultyCheck(difficulty-2,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
+     if(!checker.returnDifficulty(difficulty-2)){
+      seedGood = true;
+    }
    }
   }
  }
@@ -487,14 +466,14 @@ else{
   int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
   cout << "Looking for seeds..." << endl;
   if(enableMultithreading){
-    std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, noFloatyAllowed, std::ref(seedList));
+    std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, noFloatyAllowed, noSpaceJump, std::ref(seedList));
     t1.detach();}
   for(;;){ //infinite loop
     if(!only){
     while(!checker.returnDifficulty(difficulty) && !newThreadDone){
       cout << "Current Seed: " << randoSeed << '\r' << flush;
       randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
-      checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed);
+      checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed, noSpaceJump);
       seedCounter++;
     }
     }
@@ -504,9 +483,9 @@ else{
      randoSeed = (int)(current_time.microseconds() % (long) 2147483647) + seedCounter;
      seedCounter++;
      cout << "Current Seed: " << randoSeed << '\r' << flush;
-     checker.difficultyCheck(difficulty,randoSeed, apNumbers,false, noFloatyAllowed);
+     checker.difficultyCheck(difficulty,randoSeed, apNumbers,false, noFloatyAllowed, noSpaceJump);
      if(checker.returnDifficulty(difficulty)){
-       checker.difficultyCheck(difficulty-1,randoSeed, apNumbers, false, noFloatyAllowed);
+       checker.difficultyCheck(difficulty-1,randoSeed, apNumbers, false, noFloatyAllowed, noSpaceJump);
        if(!checker.returnDifficulty(difficulty-1)){
          seedGood = true;
        }
@@ -563,7 +542,7 @@ vector <int> getTheExceptions(){
 
 
 
-void manualChecker(bool verbose, bool noFloatyAllowed){
+void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 	bool tempVersion;
 	string firstLine;
 
@@ -577,9 +556,6 @@ void manualChecker(bool verbose, bool noFloatyAllowed){
 
   int inputSeed = getASeed();
   LogChecker checker;
-  if(noFloatyAllowed){
-    cout << "No Floaty Allowed: " << endl;
-  }
 
 	checker.CheckFinishEasyNew(inputSeed, apNumbers, verbose);
 		if(checker.returnCompletableEasy()){
@@ -595,18 +571,45 @@ void manualChecker(bool verbose, bool noFloatyAllowed){
 			}
 			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers, verbose, noFloatyAllowed);
 				if(checker.returnCompletableVeteran()){
-					cout << "Seed is completable (Veteran Difficulty)" << endl;
+					cout << "Seed is completable";
+          if(noFloatyAllowed){
+            cout << " without Floaty";
+          }
+           cout << " (Veteran Difficulty)" << endl;
           cout << "Press Enter to continue...";
 					cin.ignore().get();
 				}
-				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers, verbose, noFloatyAllowed);
+				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers, verbose, noFloatyAllowed, noSpaceJump);
 					if(checker.returnCompletableHypermode()){
-						cout << "Seed is completable (Hypermode Difficulty)" << endl;
+						cout << "Seed is completable";
+            if(noSpaceJump){
+            cout << " without Space Jump";
+            }
+
+            if(noSpaceJump && noFloatyAllowed){
+              cout << " or";
+            }
+
+            if(noFloatyAllowed){
+              cout << " without Floaty";
+            }
+
+            cout << " (Hypermode Difficulty)" << endl;
             cout << "Press Enter to continue...";
 						cin.ignore().get();
 					}
 					else{
-						cout << "This seed is NOT completable (Easy through Hypermode)" << endl;
+						cout << "This seed is NOT completable";
+            if(noSpaceJump){
+            cout << " without Space Jump";
+            }
+            if(noSpaceJump && noFloatyAllowed){
+              cout << " or";
+            }
+            if(noFloatyAllowed){
+              cout << " without Floaty";
+            }
+            cout << " (Easy through Hypermode)" << endl;
             cout << "Press Enter to continue...";
 						cin.ignore().get();
 					}
@@ -631,47 +634,27 @@ void printMenu(){
 
   printOption = simplifyString(printOption);
 
+  bool only = !(stringParser(printOption, "$"));
+  bool noFloaty = stringParser(printOption, "-F");
+  bool verbose = stringParser(printOption, "-V");
+  bool noSpaceJump = stringParser(printOption, "-N");
 
 
-	if(printOption == "1" || printOption == "1-F" || printOption == "$1-F"){
-		multithreadTest(true, 1, false, false);
+
+	if(stringParser(printOption, "1")){
+		multithreadTest(true, 1, false, false, false);
 	}
-	if(printOption == "2" || printOption == "2-F"){
-		multithreadTest(true, 2, true, false);
+	if(stringParser(printOption, "2")){
+		multithreadTest(true, 2, only, false, false);
 	}
-	if(printOption == "3"){
-		multithreadTest(true, 3, true, false);
+	if(stringParser(printOption, "3")){
+		multithreadTest(true, 3, only, noFloaty, false);
 	}
-  if(printOption == "3-F"){
-		multithreadTest(true, 3, true, true);
-	}
-	if(printOption == "4"){
-    multithreadTest(true, 4, true, false);
-	}
-  if(printOption == "4-F"){
-    multithreadTest(true, 4, true, true);
+	if(stringParser(printOption, "4")){
+    multithreadTest(true, 4, only, noFloaty, noSpaceJump);
 	}
 
-
-	if(printOption == "$1"){
-		multithreadTest(true, 1, false,false);
-	}
-	if(printOption == "$2" || printOption == "$2-F"){
-		multithreadTest(true, 2, false,false);
-	}
-	if(printOption == "$3"){
-		multithreadTest(true, 3, false,false);
-	}
-  if(printOption == "$3-F"){
-		multithreadTest(true, 3, false,true);
-	}
-	if(printOption == "$4"){
-		multithreadTest(true, 4, false,false);
-	}
-  if(printOption == "$4-F"){
-		multithreadTest(true, 4, false,true);
-	}
-	if(printOption == "EXIT" || printOption == "exit"){
+	if(printOption == "EXIT"){
 		return;
 	}
 	printMenu();
@@ -885,4 +868,9 @@ void createLogFile(){
   cout << "Log file created!" <<endl;
   cout << "Press Enter to continue...";
   cin.ignore().get();
+}
+
+bool stringParser(string input, string option){
+
+  return input.find(option) != string::npos;
 }

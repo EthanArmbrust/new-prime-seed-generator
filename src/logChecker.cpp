@@ -50,7 +50,7 @@ void LogChecker::apvectorBenchmark(int count){
 	}
 }
 
-void LogChecker::difficultyCheck(int difficulty, int seed, vector <int> exceptions, bool verbose, bool noFloatyAllowed){
+void LogChecker::difficultyCheck(int difficulty, int seed, vector <int> exceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 	if(difficulty == 1){
 		this->CheckFinishEasyNew(seed, exceptions, verbose);
 	}
@@ -61,7 +61,7 @@ void LogChecker::difficultyCheck(int difficulty, int seed, vector <int> exceptio
 		this->CheckFinishVeteranNew(seed, exceptions, verbose, noFloatyAllowed);
 	}
 	if(difficulty == 4){
-		this->CheckFinishHypermodeNew(seed, exceptions, verbose, noFloatyAllowed);
+		this->CheckFinishHypermodeNew(seed, exceptions, verbose, noFloatyAllowed, noSpaceJump);
 	}
 }
 
@@ -185,7 +185,7 @@ while(resetter < 105){
 
 
   firstCheck = true;
-	while (checkObtainedItems(verbose, logline)){
+	while (checkObtainedItems(verbose, logline, false)){
 
 
 	if(!isAdded[21]){
@@ -1041,7 +1041,7 @@ resetter = 0;
 
 
 	firstCheck = true;
-	while(checkObtainedItems(verbose, logline)){
+	while(checkObtainedItems(verbose, logline, false)){
 
 	checkEarlyMines();
 	checkDeepMines();
@@ -2108,7 +2108,7 @@ while(resetter < 105){
 
 
 	firstCheck = true;
-	while(checkObtainedItems(verbose, logline)){
+	while(checkObtainedItems(verbose, logline, false)){
 
 
 	if(!isAdded[21]){
@@ -2841,7 +2841,7 @@ if(verbose){
 }
 }
 
-void LogChecker::CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed){
+void LogChecker::CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 
 	if(verbose){
 		cout << "Item order for Hypermode difficulty: " << endl;
@@ -2988,7 +2988,7 @@ resetter = 0;
 
 	firstCheck = true;
 
-	while (checkObtainedItems(verbose, logline)){
+	while (checkObtainedItems(verbose, logline, noSpaceJump)){
 
 	checkEarlyMines();
 	checkDeepMines();
@@ -4026,7 +4026,7 @@ resetter = 0;
 
 }
 
-bool LogChecker::checkObtainedItems(bool verbose, vector<string> logs){
+bool LogChecker::checkObtainedItems(bool verbose, vector<string> logs, bool noSpaceJump){
 int prevEtankCount = e;
 int prevArt = art;
 art = 0;
@@ -4034,7 +4034,7 @@ int q = 0;
 e = 0;
 bool foundItems = false;
 
-while (q < 105){
+while (q < obItems.size()){
 	if((obItems[q] == "Missi" || obItems[q].substr(0,7) == "Missile") && !hasMissiles){
 		if(verbose){
 
@@ -4087,7 +4087,7 @@ while (q < 105){
 		}
 		hasBoost = true;
 		foundItems = true;}
-	if((obItems[q] == "Space" || obItems[q] == "Space Jump Boots") && !hasSJ){
+	if((obItems[q] == "Space" || obItems[q] == "Space Jump Boots") && !hasSJ && !noSpaceJump){
 		if(verbose){
 		cout << getItemLocation(logs, obItems[q], e) << endl;
 		}

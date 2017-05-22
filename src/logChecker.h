@@ -71,7 +71,7 @@ private:
   bool deepPhenPB = false;
   bool bombsWithoutGravity = false;
 
-  bool checkObtainedItems(bool verbose, vector<string> logline);
+  bool checkObtainedItems(bool verbose, vector<string> logline, bool noSpaceJump);
   void checkEarlyMines();
   void checkDeepMines();
   void checkFrigate();
@@ -83,12 +83,12 @@ private:
 
 public:
 LogChecker();
-void difficultyCheck(int, int, vector<int>, bool, bool);
+void difficultyCheck(int, int, vector<int>, bool, bool, bool);
 vector <string> generateLog(vector<int>, int);
 void CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose);
 void CheckFinishVeteranNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
 void CheckFinishEasyNew(int seed, vector <int> inExceptions, bool verbose);
-void CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
+void CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump);
 void benchmark(int randomizeCount);
 void apvectorBenchmark(int count);
 void printList();
