@@ -50,7 +50,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.5(Beta 5.22.2017.06)";
+string header1 = "			    Seed Generator v1.45";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -587,7 +587,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
             }
 
             if(noSpaceJump && noFloatyAllowed){
-              cout << " or";
+              cout << " and";
             }
 
             if(noFloatyAllowed){
@@ -604,7 +604,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
             cout << " without Space Jump";
             }
             if(noSpaceJump && noFloatyAllowed){
-              cout << " or";
+              cout << " and";
             }
             if(noFloatyAllowed){
               cout << " without Floaty";

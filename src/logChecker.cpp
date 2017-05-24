@@ -1459,7 +1459,7 @@ resetter = 0;
 		isAdded[34] = true;
 		k++;}
 	}
-	if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma && (hasSJ || hasSpider)) || (hasMorph && hasBombs && hasMissiles && hasBoost)){
+	if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma && (hasSJ || hasSpider)) || (hasMorph && hasBombs && hasMissiles && hasBoost && (hasSJ || hasFloaty))){
 	if(!isAdded[35]){
 		obItems[k] = items[35];
 		isAdded[35] = true;
@@ -3458,7 +3458,7 @@ resetter = 0;
 		isAdded[34] = true;
 		k++;}
 	}
-	if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma) || (hasMorph && hasBombs && hasMissiles && hasBoost)){ //done
+	if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma) || (hasMorph && hasBombs && hasMissiles && hasBoost && (hasSJ || hasFloaty))){ //done
 	if(!isAdded[35]){
 		obItems[k] = items[35];
 		isAdded[35] = true;

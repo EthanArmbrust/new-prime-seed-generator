@@ -47,6 +47,8 @@ Type `exit` to quit the program.
 
 `-v` - Verbose manual checker.  Place this after option `6` to have the manual checker to show the order that checker expects you to pick up the items for the given seed.  This will likely not be the most logical order when playing, but it is a possible order.  Can be used in conjunction with the `-f` modifier.  Ex. `6 -v`, `6 -v -f` 
 
+`-n` - No Space Jump. Place this after option `4` to generate a seed that does not require space jump to beat it. Space Jump may or may not be obtainable, but it is not required. Can also be used with option `6`.  
+
 
 ### Randomizer Script Compatibility
 
@@ -81,9 +83,9 @@ Small other optimizations for additional speed increases.
 Created macOS version  
 
 "Behind-the-Scenes" changes:  
-Restructured LogChecker to be a class instead of a messy conglomeration of methods, allowing for multithreading
-Removed lots of unnessecary code duplication in the main.
-Swapped out apvector for std::vector
+Restructured LogChecker to be a class instead of a messy conglomeration of methods, allowing for multithreading  
+Removed lots of unnessecary code duplication in the main.  
+Swapped out apvector for std::vector  
 
 
 #### Version 1.2  
@@ -104,6 +106,10 @@ Added log printing option
 Swapped the `$` operator around.  Old `$` functionality is on by default now, and using `$` now accepts seeds of lower difficulties.  
 Fixed memory leak
 
+#### Version 1.45  
+Checker logic bug fixes  
+Fix for hypermode giving normal seeds  
+Added `-n` option for no Space Jump seeds  
 
 
 ---------------
