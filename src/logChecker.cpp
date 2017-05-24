@@ -4001,8 +4001,11 @@ resetter = 0;
 	countArtifacts();
 	//cout << "Num of Artifacts " << a <<endl;
 
-	if(a == 12 && hasWave && hasIce && hasPlasma && hasMissiles && hasSJ && hasPhazon)
+
+
+	if(a == 12 && hasWave && hasIce && hasPlasma && hasMissiles && (hasSJ || noSpaceJump) && hasPhazon){
 		isCompletableHypermode = true;
+	}
 
 	int outSeed = seed;
 	string newSeed = to_string(outSeed);
