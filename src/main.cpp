@@ -122,68 +122,68 @@ void processOption(){
   }
 
 
-	if(stringParser(option, "1")){
+	if(stringParser(option, "1") && !stringParser(option, "HELP")){
 		multithreadTest(false, 1, false, false, false);
 	}
-	if(stringParser(option, "2")){
+	if(stringParser(option, "2") && !stringParser(option, "HELP")){
 	   multithreadTest(false, 2, only, false, false);
 	}
-	if(stringParser(option, "3")){
+	if(stringParser(option, "3") && !stringParser(option, "HELP")){
 	   multithreadTest(false, 3, only, noFloaty, false);
 	}
-	if(stringParser(option, "4")){
+	if(stringParser(option, "4") && !stringParser(option, "HELP")){
 		multithreadTest(false, 4, only, noFloaty, noSpaceJump);
 	}
-	if(stringParser(option, "5")){
+	if(stringParser(option, "5") && !stringParser(option, "HELP")){
     system("mkdir SeedGenLogs");
     clearScreen();
     createLogFile();
 	}
-	if(stringParser(option, "6")){
+	if(stringParser(option, "6") && !stringParser(option, "HELP")){
 		manualChecker(verbose, noFloaty, noSpaceJump);
 	}
-	if(stringParser(option, "7")){
+	if(stringParser(option, "7") && !stringParser(option, "HELP")){
 		printMenu();
 	}
-  if(stringParser(option, "8")){
+  if(stringParser(option, "8") && !stringParser(option, "HELP")){
     enableMultithreading = !enableMultithreading;
     if(enableMultithreading){
       multithreadingState = "8 - Disable Multithreading \n \n";
     }
     else multithreadingState = "8 - Enable Multithreading \n \n";
   }
-	if(option == "HELP1"){
+	if(stringParser(option, "1") && stringParser(option, "HELP")){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
 		cin.get();
 
 	}
-	if(option == "HELP2"){
+	if(stringParser(option, "2") && stringParser(option, "HELP")){
 		cout << "This is the original rendition of the seed generator.  This difficulty will NOT require the player to do any Hyper Bomb Jumps or Uber Bomb Jumps, do a Suitless Magmoor run (except from the Tallon elevator to South Magmoor), do the Chozo floaty glitch without Space Jump, or any other stupid tricks.  Good for beginner speedrunners with moderate knowledge of sequence breaking.  A full list of item requirements can be found here: http://bombch.us/BNcL" << endl;
 		cin.get();
 	}
-	if(option == "HELP3"){
+	if(stringParser(option, "3") && stringParser(option, "HELP")){
 		cout << "This is a step up from the previous difficulty.  Players will be expected to be able to do all 22% tricks, as well as some of the easier 21% tricks.  A full list of item requirements can be found here: http://bombch.us/BNcM . Use \"-f\" to prevent the seed from requiring floaty jump." << endl;
 		cin.get();
 	}
-	if(option == "HELP4"){
+	if(stringParser(option, "4") && stringParser(option, "HELP")){
 		cout << "This difficulty requires the player to do pretty much everything, minus some very difficult tricks such as Life Grove 21%, Root Cave without Space Jump, and other tricks that you wish were never discovered. Use \"-f\" to prevent the seed from requiring floaty jump." << endl;
 		cin.get();
 	}
-	if(option == "HELP5"){
-		cout << "If it is possible, you might have to do it.  To be added soon." << endl;
+	if(stringParser(option, "5") && stringParser(option, "HELP")){
+		cout << "Creates a log file in the folder \"SeedGenLogs\".  These logs are identical to the ones from the Randomizer, with the exception of the first line." << endl;
 		cin.get();
 	}
 
-	if(option == "HELP6"){
+	if(stringParser(option, "6") && stringParser(option, "HELP")){
 		cout << "Allows you to manually check a seed.  Enter the exceptions and the seed when prompted.  Will return the lowest possible difficulty that it is completable on. Use \"-v\" to get the item order list.  Use \"-f\" to prevent the seed from requiring floaty jump." << endl;
 		cin.get();
 	}
-	if(option == "HELP$"){
-		cout << "Gives you a seed that is completable only by a player of desired skill level. For example, $5 will generate a seed that is completable by a \"Veteran\" player, but not a \"Normal\" player \n \n" << endl;
+	if(stringParser(option, "$") && stringParser(option, "HELP")){
+		cout << "Gives you a seed that is completable by the difficulty given or lower. For example, $5 will generate a seed that is completable by a \"Veteran\" player or lower. \n \n" << endl;
 		cin.get();
 	}
-	if(option == "HELP7"){
-		cout << "Allows you to pick a difficulty and run the generator indefinatly while dumping completable seeds into a text file.  Lists are located in the CompletableSeeds folder." << endl;
+	if(stringParser(option, "7") && stringParser(option, "HELP")){
+		cout << "Allows you to pick a difficulty and run the generator indefinatly while dumping completable seeds into a text file.  Lists are located in the \"CompletableSeeds folder\"." << endl;
 		cin.get();
 	}
 	if(option == "DF"){
@@ -867,7 +867,7 @@ void createLogFile(){
   logWriter.close();
   cout << "Log file created!" <<endl;
   cout << "Press Enter to continue...";
-  cin.ignore().get();
+  cin.get();
 }
 
 bool stringParser(string input, string option){
