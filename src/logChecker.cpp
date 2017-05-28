@@ -259,7 +259,7 @@ while(resetter < 105){
 		isAdded[10] = true;
 		k++;}
 	}
-	if(hasMorph && hasWave && hasBoost && hasSpider && ((hasSJ || hasGrapple) && hasSuit) || (hasMorph && hasPB && hasSJ && e >= 3)) {
+	if(hasMissiles && hasMorph && hasBombs && hasBoost && hasSpider && ((hasSuit && hasGrapple) || hasSJ)) {
 	if(!isAdded[11]){ //TRAINING CHAMBER
 		obItems[k] = items[11];
 		isAdded[11] = true;
@@ -271,13 +271,13 @@ while(resetter < 105){
 		isAdded[12] = true;
 		k++;}
 	}
-	if(hasMorph && hasWave && ((hasSJ || hasGrapple) && hasSuit) || (hasMorph && hasPB && hasSJ && e >= 3)){
+	if(hasMorph && hasWave && ((hasSuit && hasGrapple) || (hasSJ &&(hasSuit || e >= 1)))){
 	if(!isAdded[13]){ //TRAINING CHAMBER ACCESS
 		obItems[k] = items[13];
 		isAdded[13] = true;
 		k++;}
 	}
-	if(hasMorph && hasPB && ((hasSJ || hasGrapple) && hasSuit) || (hasMorph && hasPB && hasSJ && e >= 3)){
+	if(hasMorph && hasPB && ((hasSuit && hasGrapple) || (hasSJ && (hasSuit || e >= 2)))){
 	if(!isAdded[14]){ //MAGMA POOL
 		obItems[k] = items[14];
 		isAdded[14] = true;
@@ -370,7 +370,7 @@ while(resetter < 105){
 		k++;}
 	}
 	if(hasMorph && hasMissiles){
-	if(items[30] == "Morph Ball Bomb" || items[29] == "Morph Ball Bomb" || hasBombs){
+	if(items[30] == "Morph Ball Bomb" || (items[29] == "Morph Ball Bomb" && hasPB)|| hasBombs){
 	if(!isAdded[30]){ //BURN DOME (I. DRONE)
 		obItems[k] = items[30];
 		isAdded[30] = true;
@@ -390,13 +390,13 @@ while(resetter < 105){
 		isAdded[32] = true;
 		k++;}
 	}
-	if(hasMissiles && hasMorph && hasBombs && hasSJ || hasMissiles && hasMorph && hasBombs && hasIce && hasSpider){
+	if(hasMissiles && hasMorph && hasBombs && (hasSJ || (hasIce && hasSpider))){
 	if(!isAdded[33]){ //HALL OF THE ELDERS
 		obItems[k] = items[33];
 		isAdded[33] = true;
 		k++;}
 	}
-	if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasBoost && hasCharge && hasSuper && hasSpider && (hasWave || hasIce))){
+	if(hasMissiles && hasMorph && hasBombs && (hasSJ || (hasBoost && hasCharge && hasSuper && hasSpider && (hasWave || hasIce)))){
 	if(!isAdded[34]){ //CROSSWAY
 		obItems[k] = items[34];
 		isAdded[34] = true;
