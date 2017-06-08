@@ -10,6 +10,9 @@
 #include <algorithm>
 #include "logChecker.h"
 #include "randomizerTime.h"
+#include "BigInteger/BigUnsigned.hh"
+#include "BigInteger/BigIntegerUtils.hh"
+#include "BigInteger/BigUnsignedInABase.hh"
 //platform specific includes
 #ifdef __APPLE__
 #include <sys/syscall.h>
@@ -40,6 +43,9 @@ void multithreadTest(bool, int, bool, bool, bool);
 string seedListName(int difficulty, bool only);
 bool is_digits(const std::string &str);
 bool stringParser(string input, string option);
+int compute_checksum(BigUnsigned layout_number);
+string encode_pickup_layout(vector<int> layout);
+void convertSeed();
 
 
 
@@ -50,7 +56,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.5(Beta 5.31.2017.01)";
+string header1 = "			    Seed Generator v1.5(Beta 6.8.2017.01)";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -119,6 +125,16 @@ void processOption(){
     system("mkdir SeedGenLogs");
     clearScreen();
     createLogFile();
+  }
+
+  if(option == "S"){
+    vector<int> bob {0,0,1,0,0,6,12,8,0,0,0,0,11,0,0,0,11,22,0,7,13,4,9,20,0,0,15,0,1,1,0,0,33,0,1,0,1,19,0,0,0,0,1,3,21,0,0,16,1,0,0,0,24,11,27,28,0,0,10,0,0,30,2,0,14,0,1,0,0,25,0,1,0,34,0,17,0,29,0,1,23,1,32,0,1,0,1,31,0,0,1,0,5,18,0,0,26,0,0,11};
+    cout << encode_pickup_layout(bob) << endl;
+    cin.get();
+  }
+
+  if(option == "D"){
+    convertSeed();
   }
 
 
@@ -511,9 +527,27 @@ else{
 
 int getASeed(){
   int inputSeed = -1;
+  string str;
   cout << "Please enter the seed:" << endl;
   cout << "> ";
-	cin >> inputSeed;
+	getline(cin, str);
+
+  str = simplifyString(str);
+
+  while(str == ""){
+    clearScreen();
+    cout << "Error. Please enter a seed from 0 to 2147482647 or EXIT to return to the menu" << endl;
+    cout << "> ";
+    getline(cin,str);
+    str = simplifyString(str);
+  }
+
+  if(stringParser(str, "EXIT")){
+    return -1;
+  }
+
+  inputSeed = abs(stoi(str, nullptr));
+
   return inputSeed;
 }
 
@@ -525,9 +559,18 @@ vector <int> getTheExceptions(){
 
 	getline(cin, str);
 
+  if(stringParser(simplifyString(str), "EXIT")){
+    vector<int> exiter(1);
+    exiter[0] = -1;
+    return exiter;
+  }
+
 	stringstream numStream(str);
+
 	while (numStream >> x)
 		numbers.push_back(x);
+
+
 
 	sort(numbers.begin(), numbers.end());
 
@@ -545,29 +588,36 @@ vector <int> getTheExceptions(){
 void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 	bool tempVersion;
 	string firstLine;
+  string excep;
 
   cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
 	cout << "> ";
 
-
-
-
   vector <int> apNumbers = getTheExceptions();
 
+  if(apNumbers.size() != 0){
+  if(apNumbers[0] == -1){
+    return;
+  }
+ }
+
   int inputSeed = getASeed();
+  if(inputSeed == -1){
+    return;
+  }
   LogChecker checker;
 
 	checker.CheckFinishEasyNew(inputSeed, apNumbers, verbose);
 		if(checker.returnCompletableEasy()){
 			cout << "Seed is completable (Easy Difficulty)" << endl;
       cout << "Press Enter to continue...";
-			cin.ignore().get();
+			cin.get();
 		}
 		else{checker.CheckFinishNormalNew(inputSeed, apNumbers,verbose);
 			if(checker.returnCompletableNormal()){
 				cout << "Seed is completable (Normal Difficulty)" << endl;
         cout << "Press Enter to continue...";
-				cin.ignore().get();
+				cin.get();
 			}
 			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers, verbose, noFloatyAllowed);
 				if(checker.returnCompletableVeteran()){
@@ -577,7 +627,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
           }
            cout << " (Veteran Difficulty)" << endl;
           cout << "Press Enter to continue...";
-					cin.ignore().get();
+					cin.get();
 				}
 				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers, verbose, noFloatyAllowed, noSpaceJump);
 					if(checker.returnCompletableHypermode()){
@@ -596,7 +646,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 
             cout << " (Hypermode Difficulty)" << endl;
             cout << "Press Enter to continue...";
-						cin.ignore().get();
+						cin.get();
 					}
 					else{
 						cout << "This seed is NOT completable";
@@ -611,7 +661,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
             }
             cout << " (Easy through Hypermode)" << endl;
             cout << "Press Enter to continue...";
-						cin.ignore().get();
+						cin.get();
 					}
 				}
 			}
@@ -873,4 +923,327 @@ void createLogFile(){
 bool stringParser(string input, string option){
 
   return input.find(option) != string::npos;
+}
+
+int compute_checksum(BigUnsigned layout_number){
+  int s = 0;
+  BigUnsigned b(32);
+  BigUnsigned remainderToBe;
+  while(layout_number > 0){
+    layout_number.divideWithRemainder(b, remainderToBe);  //layout_number becomes remainder
+    BigUnsigned swap;                                     //remainderToBe becomes quotient
+    swap = remainderToBe;                                 //need to swap these
+    remainderToBe = layout_number;
+    layout_number = swap;
+    s = (s + remainderToBe.toInt()) % 32;
+  }
+  return s;
+}
+
+string encode_pickup_layout(vector<int> layout){
+  string TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
+  BigUnsigned num(0);
+
+
+  /*cout << layout.size() << " << layout size" << endl;
+  cout << "layout 0: " << layout[0] << endl;
+  cout << "layout 50: " << layout[50] << endl;
+  cout << "layout 98: " << layout[98] << endl;
+  cout << "layout 99: " << layout[99] << endl;
+  */
+
+  for(int i = 0; i < layout.size(); i++){
+    //num = (num * 36) + layout[i];
+    //cout << "i size: " << i << endl;
+    //cout << "layout[i] = " << layout[i] << endl;
+    num *= 36;
+    num += layout[i];
+
+  }
+ //cout << "made num nice and big" << endl;
+
+
+  int checksum = compute_checksum(num);
+//  cout << "checksum " << checksum << endl;
+  BigUnsigned bigChecksum(checksum);
+  bigChecksum.bitShiftLeft(bigChecksum,517);
+  num += bigChecksum;
+
+  //cout << "num: " << bigUnsignedToString(num) << endl; //num is correct here
+
+  string all_bits = bigUnsignedToString(num, 2);
+
+  //cout << "all_bits: " << all_bits << endl;
+  vector<char> even_bits(0);
+  vector<char> odd_bits(0);
+
+  for(int k = 0; k < all_bits.length(); k++){
+    if(k % 2){
+      odd_bits.push_back(all_bits.at(k));
+    }
+    else{
+    even_bits.push_back(all_bits.at(k));
+    }
+  }
+  odd_bits.shrink_to_fit();
+  even_bits.shrink_to_fit();
+
+ /*
+  cout << "Even Bits: ";
+  for(int bug = 0; bug < even_bits.size(); bug++){
+    cout << even_bits[bug];
+  }
+  cout << " Size = " << even_bits.size();
+  cout << "\n";
+
+*/
+
+  reverse(odd_bits.begin(), odd_bits.end());
+  vector<char> all_bits_array(0);
+
+  /*
+  cout << "all_bits_array size = " << all_bits_array.size() << endl;
+
+  cout << "Odd Bits: ";
+  for(int bug = 0; bug < odd_bits.size(); bug++){
+    cout << odd_bits[bug];
+  }
+  cout << " Size = " << odd_bits.size();
+  cout << "\n";
+  */
+
+  for(int z = 0; z < even_bits.size(); z++){
+    if(even_bits[z] == '1' || even_bits[z] == '0'){
+    all_bits_array.push_back(even_bits[z]);}
+    if(odd_bits[z] == '1' || odd_bits[z] == '0'){
+    all_bits_array.push_back(odd_bits[z]);}
+  }
+
+  int invalidCount = 0;
+  for(int badCount = 0; badCount < all_bits_array.size(); badCount++){
+    if(!(all_bits_array[badCount] == '1' || all_bits_array[badCount] == '0')){
+      invalidCount++;
+    }
+  }
+
+  //cout << "invalidCount = " << invalidCount << endl;
+  //cout << "all_bits_array size = " << all_bits_array.size() << endl;
+
+  string all_bits_conversion = "";
+
+  //cout << "Created all_bits_conversion" << endl;
+
+  for(int t = 0; t < all_bits_array.size(); t++){
+    all_bits_conversion += all_bits_array[t];
+  }
+  const std::string all_bits_const = all_bits_conversion;
+
+  //cout << "moved bits from array to string" << endl;
+
+  BigUnsignedInABase Lary(all_bits_const, 2);
+
+  //cout << "created Lary" << endl;
+
+  BigUnsigned Jerry(Lary);
+
+  string s = "";
+
+  BigUnsigned max(36);
+
+//  cout << "created larry, jerry, and max. Actually Max is dead now." << endl;
+
+
+  BigUnsigned b(64);
+  BigUnsigned remainderToBe;
+  for(int countEightySeven = 0; countEightySeven < 87; countEightySeven++){
+
+    Jerry.divideWithRemainder(b, remainderToBe);          //Jerry becomes remainder
+    BigUnsigned swap;                                     //remainderToBe becomes quotient
+    swap = remainderToBe;                                 //need to swap these
+    remainderToBe = Jerry;
+    Jerry = swap;
+
+    s = s + TABLE[remainderToBe.toInt()];
+  }
+
+  return s;
+}
+
+void convertSeed(){
+  bool validSelection = false;
+	vector<int> apNumbers(0);
+  while(!validSelection){
+
+	cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+	cout << "> ";
+
+  vector<int> numbers;
+	string str;
+	int x;
+
+	getline(cin, str);
+  if(simplifyString(str) == "EXIT"){
+    return;
+  }
+	stringstream numStream(str);
+	while (numStream >> x)
+		numbers.push_back(x);
+
+	sort(numbers.begin(), numbers.end());
+  bool tooLarge = false;
+  apNumbers.resize(numbers.size());
+
+	for(int tran = 0; tran < apNumbers.size(); tran++){
+		apNumbers[tran] = numbers[tran];
+    if(apNumbers[tran] > 99 || apNumbers[tran] < 0){
+      tooLarge = true;
+    }
+	}
+  validSelection = !tooLarge;
+  if(!validSelection){
+    clearScreen();
+    cout << "Invalid Selection.  Please try again" << endl;
+  }
+ }
+
+ int seed = -1;
+
+ cout << "Enter seed number (leave blank for random)" << endl;
+ cout << "> ";
+
+ string str;
+
+ getline(cin, str);
+
+ if(simplifyString(str) != ""){
+   stringstream seedString(str);
+   seedString >> seed;
+ }
+ else{
+   CurrentTime current_time;
+   seed = (int)(current_time.microseconds() % (long) 2147483647);
+   cout << seed;
+ }
+ if(simplifyString(str) == "EXIT"){
+      return;
+ }
+
+ LogChecker logGen;
+ vector<string> gameLog = logGen.generateLog(apNumbers, seed);
+
+ vector<int> logLayout(100, -1);
+
+ for(int bob = 2; bob < 102; bob++){
+
+   if(gameLog[bob].substr(51, 5) == "Missi"){
+     logLayout[bob-2] = 0;
+   }
+   if(gameLog[bob].substr(51, 5) == "Energ"){
+     logLayout[bob-2] = 1;
+   }
+   if(gameLog[bob].substr(51,5) == "Therm"){
+     logLayout[bob-2] = 2;
+   }
+   if(gameLog[bob].substr(51,5) == "X-Ray"){
+     logLayout[bob-2] = 3;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Varia Suit"){
+     logLayout[bob-2] = 4;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Gravity Suit"){
+     logLayout[bob-2] = 5;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Phazon Suit"){
+     logLayout[bob-2] = 6;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Morph Ball"){
+     logLayout[bob-2] = 7;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Boost Ball"){
+     logLayout[bob-2] = 8;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Spider Ball"){
+     logLayout[bob-2] = 9;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Morph Ball Bomb"){
+     logLayout[bob-2] = 10;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 53) == "Power Bomb Expansion"){
+     logLayout[bob-2] = 11;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Power Bomb"){
+     logLayout[bob-2] = 12;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Charge Beam"){
+     logLayout[bob-2] = 13;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Space Jump Boots"){
+     logLayout[bob-2] = 14;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Grapple Beam"){
+     logLayout[bob-2] = 15;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Super Missile"){
+     logLayout[bob-2] = 16;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Wavebuster"){
+     logLayout[bob-2] = 17;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Ice Spreader"){
+     logLayout[bob-2] = 18;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Flamethrower"){
+     logLayout[bob-2] = 19;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Wave Beam"){
+     logLayout[bob-2] = 20;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Ice Beam"){
+     logLayout[bob-2] = 21;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Plasma Beam"){
+     logLayout[bob-2] = 22;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Lifegiver"){
+     logLayout[bob-2] = 23;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Wild"){
+     logLayout[bob-2] = 24;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of World"){
+     logLayout[bob-2] = 25;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Sun"){
+     logLayout[bob-2] = 26;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Elder"){
+     logLayout[bob-2] = 27;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Spirit"){
+     logLayout[bob-2] = 28;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Truth"){
+     logLayout[bob-2] = 29;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Chozo"){
+     logLayout[bob-2] = 30;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Warrior"){
+     logLayout[bob-2] = 31;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Newborn"){
+     logLayout[bob-2] = 32;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Nature"){
+     logLayout[bob-2] = 33;
+   }
+   if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Artifact of Strength"){
+     logLayout[bob-2] = 34;
+   }
+ }
+cout << "\n\nLayout: \n" << endl;
+cout << encode_pickup_layout(logLayout) << "\n" <<endl;
+cout << "Press Enter to return to the main menu...";
+cin.get();
+
 }

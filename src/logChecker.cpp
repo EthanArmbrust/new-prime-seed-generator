@@ -502,7 +502,7 @@ while(resetter < 105){
 		k++;}
 	}
 
-	if(hasMissiles && hasMorph && hasBombs && hasSuit && hasWave && hasSJ){
+	if(hasMissiles && hasMorph && ((hasBombs && hasSuit) || (hasIce && (hasSuit || e >= 1))) && hasWave && hasSJ){
 	if(!isAdded[49]){ //OBESERVATORY
 		obItems[k] = items[49];
 		isAdded[49] = true;
@@ -1227,70 +1227,70 @@ resetter = 0;
 
 
 	if((hasMorph && (hasBoost || hasBombs)) || hasSJ){
-	if(!isAdded[2]){
+	if(!isAdded[2]){  //MAIN PLAZA (HALF PIPE)
 		obItems[k] = items[2];
 		isAdded[2] = true;
 		k++;}
 	}
 	if(hasGrapple || hasSJ || hasFloaty){
-	if(!isAdded[3]){
+	if(!isAdded[3]){	//MAIN PLAZA (GRAPPLE LEDGE)
 		obItems[k] = items[3];
 		isAdded[3] = true;
 		k++;}
 	}
 	if(hasMissiles && hasSuper && hasCharge){
-	if(!isAdded[4]){
+	if(!isAdded[4]){ //MAIN PLAZA (TREE)
 		obItems[k] = items[4];
 		isAdded[4] = true;
 		k++;}
 	}
 	if((hasMorph && hasMissiles) || hasSJ){
-	if(!isAdded[5]){
+	if(!isAdded[5]){ //MAIN PLAZA (LOCKED DOOR)
 		obItems[k] = items[5];
 		isAdded[5] = true;
 		k++;}
 	}
-	if((hasMissiles && hasMorph && hasBombs && hasSpider) || hasFloaty){
-	if(!isAdded[6]){
+	if(hasMissiles && hasMorph && hasBombs && (hasSpider || hasFloaty)){
+	if(!isAdded[6]){ //RUINED FOUNTAIN
 		obItems[k] = items[6];
 		isAdded[6] = true;
 		k++;}
 	}
 
 	if(hasMissiles){
-	if(!isAdded[7]){
+	if(!isAdded[7]){ //RUINED SHRINE (MORPH BALL)
 		obItems[k] = items[7];
 		isAdded[7] = true;
 		k++;}
 	}
 
 	if(hasMissiles && hasMorph){
-	if(!isAdded[8]){
+	if(!isAdded[8]){ //RUINED SHRINE (HALF PIPE)
 		obItems[k] = items[8];
 		isAdded[8] = true;
 		k++;}
 	}
-	if((hasMorph && hasMissiles && hasBombs) || (hasMissiles && hasMorph && hasPB)){
-	if(!isAdded[9]){
+	if(hasMorph && hasMissiles && (hasBombs || hasPB)){
+	if(!isAdded[9]){ //RUINED SHRINE (BOMB TUNNEL)
 		obItems[k] = items[9];
 		isAdded[9] = true;
 		k++;}
 	}
 	if(hasMorph && hasBombs && hasMissiles){
-	if(!isAdded[10]){
+	if(!isAdded[10]){ //VAULT
 		obItems[k] = items[10];
 		isAdded[10] = true;
 		k++;}
 	}
 
 	if((hasMissiles && hasMorph && hasWave && hasBoost && hasSpider && (hasSuit || e >= 1) && (hasSJ || (hasGrapple && hasSuit))) || (hasFloaty && hasSJ)){
-	if(!isAdded[11]){
+	if(!isAdded[11]){ //TRAINING CHAMBER
 		obItems[k] = items[11];
 		isAdded[11] = true;
 		k++;}
 	}
 	if(hasBombs && hasMorph){
-	if(!isAdded[12]){
+	if(!isAdded[12]){ //RUINED NURSERY
 		obItems[k] = items[12];
 		isAdded[12] = true;
 		k++;}
