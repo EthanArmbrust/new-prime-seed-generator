@@ -45,7 +45,7 @@ bool is_digits(const std::string &str);
 bool stringParser(string input, string option);
 int compute_checksum(BigUnsigned layout_number);
 string encode_pickup_layout(vector<int> layout);
-void convertSeed();
+void convertSeed(bool noSpaceJump);
 
 
 
@@ -56,7 +56,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.5";
+string header1 = "			    Seed Generator v1.51";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -171,7 +171,7 @@ void processOption(){
   }
 
   if(stringParser(option, "9") && !stringParser(option, "HELP")){
-    convertSeed();
+    convertSeed(stringParser(option, "-N"));
   }
 
 
@@ -1080,7 +1080,7 @@ string encode_pickup_layout(vector<int> layout){
   return s;
 }
 
-void convertSeed(){
+void convertSeed(bool noSpaceJump){
   bool validSelection = false;
 	vector<int> apNumbers(0);
   while(!validSelection){
@@ -1189,7 +1189,7 @@ void convertSeed(){
      logLayout[bob-2] = 13;
    }
    if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Space Jump Boots"){
-     logLayout[bob-2] = 14;
+     logLayout[bob-2] = !noSpaceJump ? 14 : 35;
    }
    if(gameLog[bob].substr(51,gameLog[bob].length() - 51) == "Grapple Beam"){
      logLayout[bob-2] = 15;
