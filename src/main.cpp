@@ -56,7 +56,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.5(Beta 6.8.2017.01)";
+string header1 = "			    Seed Generator v1.5";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -93,7 +93,7 @@ void mainMenu(){
 
 	clearScreen();
 	cout << header1 << endl;
-	cout << header2 << endl << endl;
+	cout << header2 << endl;
 	cout << "1 - Generate an \"Easy\" difficulty seed \n \n";
 	cout << "2 - Generate a \"Normal\" difficulty seed \n \n";
 	cout << "3 - Generate a \"Veteran\" difficulty seed\n \n";
@@ -102,9 +102,10 @@ void mainMenu(){
 	cout << "6 - Check a seed \n \n";
 	cout << "7 - Export seeds to text file \n \n";
   cout << multithreadingState;
+  cout << "9 - Convert Seed to Layout\n \n";
   //cout << simplifyString(pretzels) << endl;
 	cout << bottomHelp1 << endl;
-	cout << bottomHelp2 << "\n"  << endl;
+	cout << bottomHelp2 << endl;
 	cout << "> ";
 	getline(cin, option);
 	processOption();
@@ -121,7 +122,7 @@ void processOption(){
   bool noSpaceJump = stringParser(option, "-N");
 
 
-  if(option == "L"){
+  /*if(option == "L"){
     system("mkdir SeedGenLogs");
     clearScreen();
     createLogFile();
@@ -136,7 +137,7 @@ void processOption(){
   if(option == "D"){
     convertSeed();
   }
-
+*/
 
 	if(stringParser(option, "1") && !stringParser(option, "HELP")){
 		multithreadTest(false, 1, false, false, false);
@@ -168,6 +169,12 @@ void processOption(){
     }
     else multithreadingState = "8 - Enable Multithreading \n \n";
   }
+
+  if(stringParser(option, "9") && !stringParser(option, "HELP")){
+    convertSeed();
+  }
+
+
 	if(stringParser(option, "1") && stringParser(option, "HELP")){
 		cout << "This is the easiest difficulty seed.  These seeds can be completed with little to no sequence breaking.  Good for those unfamiliar with Metroid Prime speedrunning or if you are playing on a patched version of the game." << endl;
 		cin.get();
@@ -200,6 +207,10 @@ void processOption(){
 	}
 	if(stringParser(option, "7") && stringParser(option, "HELP")){
 		cout << "Allows you to pick a difficulty and run the generator indefinatly while dumping completable seeds into a text file.  Lists are located in the \"CompletableSeeds folder\"." << endl;
+		cin.get();
+	}
+  if(stringParser(option, "9") && stringParser(option, "HELP")){
+		cout << "Allows you to convert a Claris Randomizer Seed to a Syncathetic Randomizer layout.  The Syncathetic Randomizer can be found here:\nhttps://github.com/aprilwade/randomprime" << endl;
 		cin.get();
 	}
 	if(option == "DF"){

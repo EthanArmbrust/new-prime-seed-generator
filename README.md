@@ -37,6 +37,8 @@ Option `7` allows you to run the program indefinitely while printing completable
 
 Option `8` allows you disable/enable multithreading. Multithreading is enabled by default.  Use option 8 to turn off multithreading if you have an ancient single thread CPU or have scarce resources.  If unsure, leave this alone.  
 
+Option `9` allows you to convert a Claris Randomizer seed to a Syncathetic Randomizer layout.  The Syncathetic Randomizer can be found here: https://github.com/aprilwade/randomprime  
+
 Type `exit` to quit the program.  
 
 ### Modifiers   
@@ -45,7 +47,7 @@ Type `exit` to quit the program.
 
 `-f` - No floaty allowed. Place this after options `3` or `4` to get a seed that does not require floaty jump.  Easy and Normal difficulties will never require floaty jump.  Can be used with `6` to check if a seed is completable without floaty jump.  Can be used on the print to text file menu.  Ex. `4 -f`
 
-`-v` - Verbose manual checker.  Place this after option `6` to have the manual checker to show the order that checker expects you to pick up the items for the given seed.  This will likely not be the most logical order when playing, but it is a possible order.  Can be used in conjunction with the `-f` modifier.  Ex. `6 -v`, `6 -v -f` 
+`-v` - Verbose manual checker.  Place this after option `6` to have the manual checker to show the order that checker expects you to pick up the items for the given seed.  This will likely not be the most logical order when playing, but it is a possible order.  Can be used in conjunction with the `-f` modifier.  Ex. `6 -v`, `6 -v -f`
 
 `-n` - No Space Jump. Place this after option `4` to generate a seed that does not require space jump to beat it. Space Jump may or may not be obtainable, but it is not required. Can also be used with option `6`.  
 
@@ -111,6 +113,9 @@ Checker logic bug fixes
 Fix for hypermode giving normal seeds  
 Added `-n` option for no Space Jump seeds  
 
+#### Version 1.5  
+Added Seed -> Layout converter  
+Some checker logic bug fixes  
 
 ---------------
 
