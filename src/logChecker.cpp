@@ -926,6 +926,8 @@ int z = 0; //for debugging
 int m = 0; //more debugging
 int resetter = 0;
 bool hasFloaty = false;
+bool tallonToMagmoorWest = false;  //checks if you can go from Magmoor-Tallon elevator to Transport to Phendrana Drifts North Elevator
+bool tallonToMagmoorSouth = false; //checks if you can go from Magmoor-Tallon elevator to Magmoor Workstation
 bool earlyMinesEscape = false;
 bool deepMinesEscape = false;
 a = 0;
@@ -1058,6 +1060,25 @@ resetter = 0;
 	}
 	else hasFloaty = false;
 }
+
+
+//tallonToMagmoorWest check
+
+if(hasSuit && hasMissiles && hasMorph && hasBombs){
+	tallonToMagmoorWest = true;
+}
+if(hasMissiles && hasMorph && hasBombs && ((e >= 5 && hasSJ) || (e >= 7))){
+	tallonToMagmoorWest = true;
+}
+
+
+//tallonToMagmoorSouth check
+
+if((hasSuit || e >= 1)  && hasMissiles && hasWave){
+	tallonToMagmoorSouth = true;
+}
+
+
 
 	//EARLY MINES ESCAPE CHECK
 
@@ -1283,7 +1304,7 @@ resetter = 0;
 		k++;}
 	}
 
-	if((hasMissiles && hasMorph && hasWave && hasBoost && hasSpider && (hasSuit || e >= 1) && (hasSJ || (hasGrapple && hasSuit))) || (hasFloaty && hasSJ)){
+	if(hasMorph && hasBombs && ((hasWave && hasBoost && hasSpider && ((hasSJ && (hasSuit || e >= 1)) || (hasGrapple && hasSuit))) || ((hasSJ || hasFloaty) && (hasBoost || hasWave || (items[11] == "Wave Beam") || (items[11] == "Boost Ball"))))){
 	if(!isAdded[11]){ //TRAINING CHAMBER
 		obItems[k] = items[11];
 		isAdded[11] = true;
@@ -1295,30 +1316,21 @@ resetter = 0;
 		isAdded[12] = true;
 		k++;}
 	}
-	if((hasWave && hasMorph && hasSuit && hasGrapple && hasBombs) || (hasMorph && hasBombs && hasSJ && hasWave) || (hasFloaty && hasWave)){
-	if(!isAdded[13]){
+	if(hasMorph && ((hasWave && ((hasSJ && (hasSuit || e >= 1)) || (hasGrapple && hasSuit))) || ((hasSJ || hasFloaty) && (hasWave || (hasBombs && (items[13] == "Wave Beam")))))){
+	if(!isAdded[13]){ //TRAINING CHAMBER ACCESS
 		obItems[k] = items[13];
 		isAdded[13] = true;
 		k++;}
 	}
-	if((hasPB && hasMorph && hasSuit && hasGrapple && hasBombs) || (hasPB && hasMorph && hasBombs && hasSJ && (hasSuit || e >= 2)) || (hasMorph && hasBombs && hasSJ && hasWave && hasPB) || (hasFloaty && hasWave && hasPB)){
-	if(!isAdded[14]){
+	if(hasMorph && (((hasSuit && hasGrapple) || (hasSJ && (hasSuit || e >= 3))) && hasPB) || (hasBombs && hasBoost && hasSuit)){
+	if(!isAdded[14]){ //MAGMA POOL
 		obItems[k] = items[14];
 		isAdded[14] = true;
 		k++;}
 	}
-	if(items[15] == "Wave Beam"){
-	if(hasMissiles && hasMorph && hasBombs){
-	if(!isAdded[15]){
-		obItems[k] = items[15];
-		isAdded[15] = true;
-		k++;}
-	}
-	}
 
-
-	if(hasMissiles && hasWave && (hasSJ || (hasMorph && hasBombs))){
-	if(!isAdded[15]){
+	if(hasMissiles && ((hasSJ && hasWave) || (hasMorph && hasBombs && (hasWave || (items[15] == "Wave Beam"))))){
+	if(!isAdded[15]){ //TOWER OF LIGHT
 		obItems[k] = items[15];
 		isAdded[15] = true;
 		k++;}
@@ -1326,7 +1338,7 @@ resetter = 0;
 
 	if(items[16] == "Wave Beam"){
 	if(hasMorph && hasBombs && hasBoost && (hasSJ || hasMissiles)){
-	if(!isAdded[16]){
+	if(!isAdded[16]){ //TOWER CHAMBER
 		obItems[k] = items[16];
 		isAdded[16] = true;
 		k++;}
@@ -1335,193 +1347,197 @@ resetter = 0;
 	}
 
 	if(hasMissiles && hasWave && (hasMorph || hasSJ)){
-	if(!isAdded[16]){
+	if(!isAdded[16]){ //TOWER CHAMBER
 		obItems[k] = items[16];
 		isAdded[16] = true;
 		k++;}
 	}
+
 	if(hasMissiles){
-	if(!isAdded[17]){
+	if(!isAdded[17]){ //RUINED GALLERY (MISSILE WALL)
 		obItems[k] = items[17];
 		isAdded[17] = true;
 		k++;}
 	}
+
 	if(hasMorph && hasBombs){
-	if(!isAdded[18]){
+	if(!isAdded[18]){ //RUILED GALLERY (MORPH BALL TUNNEL)
 		obItems[k] = items[18];
 		isAdded[18] = true;
 		k++;}
 	}
+
 	if(hasMissiles){
-	if(!isAdded[19]){
+	if(!isAdded[19]){ //TRANSPORT ACCESS TUNNEL
 		obItems[k] = items[19];
 		isAdded[19] = true;
 		k++;}
 	}
+
 	if(hasMissiles && hasMorph && (hasBombs || (hasPB && hasSJ))){
-	if(!isAdded[20]){
+	if(!isAdded[20]){ //GATHERING HALL
 		obItems[k] = items[20];
 		isAdded[20] = true;
 		k++;}
 	}
+
+	//HIVE TOTEM IS NEAR THE TOP
+
 	if(hasMorph && hasBombs && hasMissiles){
-	if(!isAdded[22]){
+	if(!isAdded[22]){ //SUNCHAMBER (FLAAHGRA)
 		obItems[k] = items[22];
 		isAdded[22] = true;
 		k++;}
 	}
 	if(hasMissiles && hasMorph && hasBombs){
-	if(!isAdded[23]){
+	if(!isAdded[23]){ //SUNCHAMBER (GHOSTS)
 		obItems[k] = items[23];
 		isAdded[23] = true;
 		k++;}
 	}
 	if(hasMissiles && hasMorph){
-	if(!isAdded[24]){
+	if(!isAdded[24]){ //WATERY HALL ACCESS
 		obItems[k] = items[24];
 		isAdded[24] = true;
 		k++;}
 	}
 	if(hasMorph && hasMissiles){
-	if(!isAdded[25]){
+	if(!isAdded[25]){ //WATERY HALL (CHARGE BEAM)
 		obItems[k] = items[25];
 		isAdded[25] = true;
 		k++;}
 	}
 	if(hasMorph && hasMissiles && e >= 1){
-	if(!isAdded[26]){
+	if(!isAdded[26]){ //WATERY HALL (UNDERWATER)
 		obItems[k] = items[26];
 		isAdded[26] = true;
 		k++;}
 	}
 	if(hasMorph && hasMissiles && (hasBombs || hasPB)){
-	if(!isAdded[27]){
+	if(!isAdded[27]){ //DYNAMO (UPPER)
 		obItems[k] = items[27];
 		isAdded[27] = true;
 		k++;}
 	}
 	if((hasMorph && hasMissiles && hasSpider && (hasBombs || hasPB)) || hasFloaty){
-	if(!isAdded[28]){
+	if(!isAdded[28]){ //DYNAMO (LOWER)
 		obItems[k] = items[28];
 		isAdded[28] = true;
 		k++;}
 	}
-	if(hasMissiles && hasMorph && (hasBombs || (hasPB && (items[29] == "Bombs" || items[29] == "Morph Ball Bomb" || items[30] == "Bombs" || items[30] == "Morph Ball Bomb")))){
-	if(!isAdded[29]){
+	if(hasMissiles && hasMorph && (hasBombs || (hasPB && (items[29] == "Morph Ball Bomb"|| items[30] == "Morph Ball Bomb")))){
+	if(!isAdded[29]){ //BURN DOME (MISSILE)
 		obItems[k] = items[29];
 		isAdded[29] = true;
 		k++;}
 	}
 
-	if(hasMissiles && hasMorph && (hasBombs || items[30] == "Bombs" || items[30] == "Morph Ball Bomb")){
-	if(!isAdded[30]){
+	if(hasMissiles && hasMorph && (hasBombs || items[30] == "Morph Ball Bomb")){
+	if(!isAdded[30]){ //BURN DOME (INCINERATOR DRONE)
 		obItems[k] = items[30];
 		isAdded[30] = true;
 		k++;}
 	}
 
 	if((hasMissiles && hasMorph && hasBombs && (hasSJ || (hasPB && hasBoost && hasSpider))) || hasFloaty){
-	if(!isAdded[31]){
+	if(!isAdded[31]){ //FURNACE (SPIDER PUZZLE)
 		obItems[k] = items[31];
 		isAdded[31] = true;
 		k++;}
 	}
 	if(hasMissiles && hasMorph && hasBombs){
-	if(!isAdded[32]){
+	if(!isAdded[32]){ //FURNACE (INSIDE FURNACE)
 		obItems[k] = items[32];
 		isAdded[32] = true;
 		k++;}
 	}
-	if(hasMissiles && hasMorph && hasBombs && hasSJ || hasMissiles && hasMorph && hasBombs && hasIce && hasSpider){
-	if(!isAdded[33]){
+	if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasIce && hasSpider)){
+	if(!isAdded[33]){ //HALL OF THE ELDERS
 		obItems[k] = items[33];
 		isAdded[33] = true;
 		k++;}
 	}
 	if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasBoost && hasCharge && hasSuper && hasSpider && (hasWave || hasIce)) || hasFloaty){
-	if(!isAdded[34]){
+	if(!isAdded[34]){ //CROSSWAY
 		obItems[k] = items[34];
 		isAdded[34] = true;
 		k++;}
 	}
 	if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma && (hasSJ || hasSpider)) || (hasMorph && hasBombs && hasMissiles && hasBoost && (hasSJ || hasFloaty))){
-	if(!isAdded[35]){
+	if(!isAdded[35]){ //ELDER CHAMBER
 		obItems[k] = items[35];
 		isAdded[35] = true;
 		k++;}
 	}
-	if((hasMissiles && hasMorph && hasBombs && (hasSJ || hasIce)) || (hasMissiles && hasMorph && hasBombs && hasWave && hasSpider)){
-	if(!isAdded[36]){
+	if((hasMissiles && hasMorph && hasBombs && (hasSJ || hasIce || hasFloaty)) || (hasMissiles && hasMorph && hasBombs && hasWave && hasSpider)){
+	if(!isAdded[36]){ //ANTECHAMBER
 		obItems[k] = items[36];
 		isAdded[36] = true;
 		k++;}
 	}
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && (hasPlasma || hasBoost)){
-	if(!isAdded[37]){
+
+	//NEED SPACE JUMP TO ESCAPE FROM EARLY PHENDRANA IF YOU ENTER PHENDRANA FROM MAGMOOR SOUTH WITHOUT CHARGE/SUPERS OR SUIT + BOMBS
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[37] == "Space Jump Boots" && hasSpider)))) && (hasPlasma || (hasBoost && (hasWave || (hasPB && hasBombs))))){
+	if(!isAdded[37]){ //PHENDRANA SHORELINES (BEHIND ICE)
 		obItems[k] = items[37];
 		isAdded[37] = true;
 		k++;}
 	}
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && (hasCharge && hasSuper && hasSpider)){
-	if(!isAdded[38]){
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[38] == "Space Jump Boots" && hasSpider)))) && (hasCharge && hasSuper && hasSpider)){
+	if(!isAdded[38]){ //PHENDRANA SHORELINES (SPIDER)
 		obItems[k] = items[38];
 		isAdded[38] = true;
 		k++;}
 	}
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && (hasPlasma || hasBoost)){
-	if(!isAdded[39]){
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[39] == "Space Jump Boots" && hasSpider)))) && (hasPlasma || (hasBoost && (hasWave || (hasPB && hasBombs))))){
+	if(!isAdded[39]){ //CHOZO ICE TEMPLE
 		obItems[k] = items[39];
 		isAdded[39] = true;
 		k++;}
 	}
 
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && (hasPlasma)){
-	if(!isAdded[40]){
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[40] == "Space Jump Boots" && hasSpider)))) && (hasPlasma && (hasBombs || hasSJ))){
+	if(!isAdded[40]){ //ICE RUINS WEST
 		obItems[k] = items[40];
 		isAdded[40] = true;
 		k++;}
 	}
 
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && (hasPlasma || hasBoost)){
-	if(!isAdded[41]){
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[41] == "Space Jump Boots" && hasSpider)))) && (hasPlasma || (hasBoost && (hasWave || (hasPB && hasBombs))))){
+	if(!isAdded[41]){ //ICE RUINS EAST (BEHIND THE ICE)
 		obItems[k] = items[41];
 		isAdded[41] = true;
 		k++;}
 	}
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && (hasSpider || hasBoost)){
-	if(!isAdded[42]){
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[42] == "Space Jump Boots" && hasSpider)))) && ((hasBombs && hasBoost) || hasSpider)){
+	if(!isAdded[42]){ //ICE RUINS EAST (SPIDER PUZZLE)
 		obItems[k] = items[42];
 		isAdded[42] = true;
 		k++;}
 	}
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1)))){
-	if(!isAdded[43]){
+	if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[43] == "Space Jump Boots" && hasSpider)))) && (hasBombs && (hasWave || items[43] == "Wave Beam" || hasPB))){
+	if(!isAdded[43]){ //CHAPEL OF THE ELDERS
 		obItems[k] = items[43];
 		isAdded[43] = true;
 		k++;}
-	if(!isAdded[45]){
-		obItems[k] = items[45];
-		isAdded[45] = true;
-		k++;}
 	}
 
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >=5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && hasWave){
-	if(!isAdded[44]){
+	if((tallonToMagmoorWest /*bombs are implied*/ && hasWave) || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[44] == "Space Jump Boots" && hasSpider)))){
+	if(!isAdded[44]){//RUINED COURTYARD
 		obItems[k] = items[44];
 		isAdded[44] = true;
 		k++;}
 	}
 
-	if(items[46] ==  "Space Jump Boots" || items[46] == "Spider Ball" || items[46] == "Grapple Beam"){
-	if(hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave){
-	if(!isAdded[46]){
-		obItems[k] = items[46];
-		isAdded[46] = true;
+  if((tallonToMagmoorWest || (tallonToMagmoorSouth && hasMorph && (hasSJ || (items[45] == "Space Jump Boots" && hasSpider))))){
+	if(!isAdded[45]){ //PHENDRANA CANYON
+		obItems[k] = items[45];
+		isAdded[45] = true;
 		k++;}
 	}
-	}
 
-	if(hasMissiles && hasMorph && (hasBombs || hasSJ) && (hasSuit || e >= 1) && hasWave && (hasSJ || hasGrapple || hasSpider)){
+
+	if(((tallonToMagmoorWest && ((hasSuper && hasCharge) || hasSJ)) || (tallonToMagmoorSouth && hasMorph)) && (hasSJ || hasGrapple || hasSpider || items[46] == "Spider Ball" || items[46] == "Space Jump Boots" || items[46] == "Grapple Beam")){
 	if(!isAdded[46]){
 		obItems[k] = items[46];
 		isAdded[46] = true;
