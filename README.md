@@ -64,7 +64,7 @@ The item requirements for each difficulty can be found on the Google Sheet liste
 
 Easy: https://docs.google.com/spreadsheets/d/1y1aSUM7sH3QAWD46nvdkuJVatDe1fqXOqqBNIPP7IrM/edit?usp=sharing  
 Normal:  
-Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolBY4NcFQzs6oGw/edit#gid=977269899  
+Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolBY4NcFQzs6oGw/edit?usp=sharing  
 
 
 ---------------
