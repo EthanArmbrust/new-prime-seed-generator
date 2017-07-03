@@ -1537,57 +1537,57 @@ if((hasSuit || e >= 1)  && hasMissiles && hasWave){
 	}
 
 
-	if(((tallonToMagmoorWest && ((hasSuper && hasCharge) || hasSJ)) || (tallonToMagmoorSouth && hasMorph)) && (hasSJ || hasGrapple || hasSpider || items[46] == "Spider Ball" || items[46] == "Space Jump Boots" || items[46] == "Grapple Beam")){
-	if(!isAdded[46]){
+	if(tallonToMagmoorSouth && hasMorph && (hasSJ || hasGrapple || hasSpider || items[46] == "Spider Ball" || items[46] == "Space Jump Boots" || items[46] == "Grapple Beam")){
+	if(!isAdded[46]){ //QUARANTINE CAVE
 		obItems[k] = items[46];
 		isAdded[46] = true;
 		k++;}
 	}
 
 
-	if(((hasMissiles && hasMorph && hasBombs && (hasSuit || (hasSJ && e >= 5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider) && (hasSuit || e >= 1))) && hasWave && hasCharge && hasSuper){
-	if(!isAdded[47]){
+	if(((tallonToMagmoorWest && hasWave) || (tallonToMagmoorSouth && hasMorph && hasIce && (hasSJ || (hasSpider && items[47] == "Space Jump Boots")))) && (hasCharge && hasSuper)){
+	if(!isAdded[47]){ //RESEARCH LAB HYDRA
 		obItems[k] = items[47];
 		isAdded[47] = true;
 		k++;}
 	}
 
-	if(hasMissiles && hasMorph && (hasBombs || hasSJ) && hasWave && (hasSuit || e >= 1) && (hasGrapple || hasSJ)){
-	if(!isAdded[48]){
+	if(tallonToMagmoorSouth && hasMorph && (hasSJ || hasGrapple)){
+	if(!isAdded[48]){ //QUARANTINE MONITOR
 		obItems[k] = items[48];
 		isAdded[48] = true;
 		k++;}
 	}
 
-	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && hasSJ)){
-	if(!isAdded[49]){
+	if((tallonToMagmoorSouth && hasMorph && hasIce && hasSJ && hasWave) || (tallonToMagmoorWest && hasWave && hasSJ)){
+	if(!isAdded[49]){ //OBSERVATORY
 		obItems[k] = items[49];
 		isAdded[49] = true;
 		k++;}
 	}
 
-	if((hasMissiles && hasMorph && hasBombs && hasPlasma && hasWave && hasIce && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasPlasma && hasWave && hasIce && hasSpider)){
-	if(!isAdded[50]){
+	if(tallonToMagmoorSouth && hasMorph && hasIce && hasPlasma && (hasSJ || hasSpider)){
+	if(!isAdded[50]){ //TRANSPORT ACCESS
 		obItems[k] = items[50];
 		isAdded[50] = true;
 		k++;}
 	}
 
-	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && (hasSJ || (hasSpider && hasPlasma)))){
-	if(!isAdded[51]){
+	if((tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && items[51] == "Space Jump Boots" && hasPlasma)) && hasIce && (hasBombs || items[51] == "Morph Ball Bomb")) || (tallonToMagmoorWest && hasSJ && hasWave)){
+	if(!isAdded[51]){ //CONTROL TOWER
 		obItems[k] = items[51];
 		isAdded[51] = true;
 		k++;}
 	}
 
-	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && hasSpider)){
-	if(!isAdded[52]){
+	if((tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && items[52] == "Space Jump Boots")) && hasIce) || (tallonToMagmoorWest && hasSJ && hasWave)){
+	if(!isAdded[52]){ //RESEARCH CORE
 		obItems[k] = items[52];
 		isAdded[52] = true;
 		k++;}
 	}
-	if(hasMissiles && hasMorph && hasBombs && hasSJ && hasWave && (hasSuit || e >= 1) && hasIce && (hasGrapple || hasSJ)){
-	if(!isAdded[53]){
+	if(tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && hasGrapple && items[53] == "Space Jump Boots")) && hasIce){
+	if(!isAdded[53]){ //FROST CAVE
 		obItems[k] = items[53];
 		isAdded[53] = true;
 		k++;}
@@ -1595,293 +1595,297 @@ if((hasSuit || e >= 1)  && hasMissiles && hasWave){
 
 
 
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasSJ || (hasSpider && hasGrapple)) && (hasPhazon || e >= 8) && deepMinesEscape){
-		if(!isAdded[90]){
+		if((tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && items[54] == "Space Jump Boots")) && hasIce) || (tallonToMagmoorWest && hasSJ && hasWave)){
+			if(!isAdded[54]){ //RESEARCH LAB AETHER (E-TANK)
+				obItems[k] = items[54];
+				isAdded[54] = true;
+				k++;}
+		}
+
+		if((tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && items[55] == "Space Jump Boots" && hasBombs)) && hasIce) || (tallonToMagmoorWest && hasSJ && hasWave)){
+			if(!isAdded[55]){ //RESEARCH LAB AETHER (MORPH TRACK)
+				obItems[k] = items[55];
+				isAdded[55] = true;
+				k++;}
+		}
+
+		if((tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && items[56] == "Space Jump Boots")) && hasIce)){
+			if(!isAdded[56]){ //GRAVITY CHAMBER (UNDERWATER)
+				obItems[k] = items[56];
+				isAdded[56] = true;
+				k++;}
+		}
+
+		if((tallonToMagmoorSouth && hasMorph && (hasSJ || (hasSpider && items[57] == "Space Jump Boots" && hasPlasma && hasGrapple)) && hasIce)){
+			if(!isAdded[57]){ //GRAVITY CHAMBER (GRAPPLE LEDGE)
+				obItems[k] = items[57];
+				isAdded[57] = true;
+				k++;}
+		}
+
+		if(tallonToMagmoorSouth && hasMorph && hasIce && hasPlasma && (hasSJ || (hasGrapple && hasBombs && items[58] == "Space Jump Boots"))){
+			if(!isAdded[58]){ //STORAGE CAVE
+				obItems[k] = items[58];
+				isAdded[58] = true;
+				k++;}
+		}
+
+		if(tallonToMagmoorSouth && hasMorph && hasIce && (hasSJ || (hasGrapple && hasBombs && items[59] == "Space Jump Boots"))){
+			if(!isAdded[59]){ //SECURITY CAVE
+				obItems[k] = items[59];
+				isAdded[59] = true;
+				k++;}
+		}
+
+		if(hasMorph){
+			if(!isAdded[60]){ //LANDING SITE
+				obItems[k] = items[60];
+				isAdded[60] = true;
+				k++;}
+		}
+
+		//ALCOVE IS NEAR TOP
+
+		if(hasMissiles && hasMorph){
+			if(!isAdded[62]){//FRIGATE CRASH SITE
+				obItems[k] = items[62];
+				isAdded[62] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && (hasBombs || hasSJ) && hasIce){
+			if(!isAdded[63]){ //OVERGROWN CAVERN
+				obItems[k] = items[63];
+				isAdded[63] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasSJ){
+			if(!isAdded[64]){ //ROOT CAVE
+				obItems[k] = items[64];
+				isAdded[64] = true;
+				k++;}
+		}
+
+		if(hasMissiles){
+			if(!isAdded[65]){ //ARTIFACT TEMPLE
+				obItems[k] = items[65];
+				isAdded[65] = true;
+				k++;}
+		}
+
+		if(hasMissiles){
+			if(!isAdded[66]){ //TRANSPORT TUNNEL B
+				obItems[k] = items[66];
+				isAdded[66] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasSJ){ //ARBOR CHAMBER
+			if(!isAdded[67]){
+				obItems[k] = items[67];
+				isAdded[67] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && (hasBoost || hasGravity || hasSJ)){
+		if(!isAdded[68]){ //CARGO FREIGHT LIFT TO DECK GAMMA
+			obItems[k] = items[68];
+			isAdded[68] = true;
+			k++;}
+		}
+
+
+		if(items[68] == "Gravi" || items[68] == "Space" || items[68] == "Boost" || items[68] == "Gravity Suit" || items[68] == "Space Jump Boots" || items[68] == "Boost Ball"){
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave){
+			if(!isAdded[68]){ //CARGO FREIGHT LIFT TO DECK GAMMA
+				obItems[k] = items[68];
+				isAdded[68] = true;
+				k++;}
+		}
+		}
+
+
+		if(items[68] == "Wave Beam"){
+		if(hasMissiles && hasMorph && hasBombs && hasIce && (hasBoost || ((items[69] == "Boost Ball") && hasSuper && hasCharge) || ((hasGravity || ((items[69] == "Gravity Suit") && hasSuper && hasCharge)) && (hasSJ || ((items[69] == "Space Jump Boots") && hasCharge && hasSuper))))){
+			if(!isAdded[68]){ //CARGO FREIGHT LIFT TO DECK GAMMA
+				obItems[k] = items[68];
+				isAdded[68] = true;
+				k++;}
+		}
+		}
+
+		if(items[69] == "Wave Beam")
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity || items[68] == "Boost Ball" || items[68] == "Gravity Suit")){
+			if(!isAdded[69]){ //BIOHAZARD CONTAINMENT
+				obItems[k] = items[69];
+				isAdded[69] = true;
+				k++;}
+		}
+
+		if(items[68] == "Wave Beam")
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity)){
+			if(!isAdded[69]){ //BIOHAZARD CONTAINMENT
+				obItems[k] = items[69];
+				isAdded[69] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasCharge && hasSuper && (hasBoost || hasGravity || hasSJ)){
+			if(!isAdded[69]){ //BIOHAZARD CONTAINMENT
+				obItems[k] = items[69];
+				isAdded[69] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && (hasSJ || items[70] == "Space Jump Boots") && (hasBoost || hasGravity)){
+					if(!isAdded[70]){ //HYDRO ACCESS TUNNEL
+						obItems[k] = items[70];
+						isAdded[70] = true;
+						k++;}
+			}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce){
+				if(!isAdded[71]){ //GREAT TREE CHAMBER
+					obItems[k] = items[71];
+					isAdded[71] = true;
+					k++;}
+			}
+
+			if(hasMissiles && hasMorph && hasBombs && hasIce && hasPB && (hasSpider || hasSJ)){
+				if(!isAdded[72]){ //LIFE GROVE TUNNEL
+					obItems[k] = items[72];
+					isAdded[72] = true;
+					k++;}
+			}
+
+			if(hasMissiles && hasMorph && hasBombs && hasIce && hasPB && (hasSpider || hasSJ)){
+				if(!isAdded[73]){ //LIFE GROVE (X-RAY)
+					obItems[k] = items[73];
+					isAdded[73] = true;
+					k++;}
+			}
+
+			if(hasMissiles && hasMorph && hasBombs && hasIce && hasBoost && hasPB && (hasSpider || hasSJ)){
+				if(!isAdded[74]){ //LIFE GROVE (CHOZO)
+					obItems[k] = items[74];
+					isAdded[74] = true;
+					k++;}
+			}
+
+
+			if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && (hasSpider || hasSJ) && earlyMinesEscape){
+				if(!isAdded[75]){ //MAIN QUARRY
+						obItems[k] = items[75];
+						isAdded[75] = true;
+						k++;}
+					}
+
+			if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && earlyMinesEscape){
+						if(!isAdded[76]){ //SECURITY ACCESS A
+							obItems[k] = items[76];
+							isAdded[76] = true;
+							k++;}
+					}
+
+			if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && (hasSpider || hasGrapple) && earlyMinesEscape){
+						if(!isAdded[77]){ //STORAGE DEPOT B
+							obItems[k] = items[77];
+							isAdded[77] = true;
+							k++;}
+					}
+
+
+			if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPB && hasPlasma && earlyMinesEscape){
+						if(!isAdded[78]){ //STORAGE DEPOT A
+							obItems[k] = items[78];
+							isAdded[78] = true;
+							k++;}
+					}
+
+
+		if(isAdded[86]){ /* checks if central dynamo has been collected */
+			if(!isAdded[79]){ //ELITE RESEARCH (PHAZON ELITE)
+				obItems[k] = items[79];
+				isAdded[79] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
+			if(!isAdded[80]){ //ELITE RESEARCH (LAZER)
+				obItems[k] = items[80];
+				isAdded[80] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
+			if(!isAdded[81]){ //ELITE CONTROL ACCESS
+				obItems[k] = items[81];
+				isAdded[81] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){
+			if(!isAdded[82]){ //VENTILATION SHAFT
+				obItems[k] = items[82];
+				isAdded[82] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPB && earlyMinesEscape){
+			if(!isAdded[83]){ //PHAZON PROCESSING CENTER
+				obItems[k] = items[83];
+				isAdded[83] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && hasXray && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
+			if(!isAdded[84]){ //PROCESSING CENTER ACCESS
+				obItems[k] = items[84];
+				isAdded[84] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && hasXray && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
+			if(!isAdded[85]){ //ELITE QUARTERS
+				obItems[k] = items[85];
+				isAdded[85] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape){
+			if(!isAdded[86]){ //CENTRAL DYNAMO
+				obItems[k] = items[86];
+				isAdded[86] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasSJ || (hasSpider && hasGrapple)) && hasCharge && hasSuper && deepMinesEscape){
+			if(!isAdded[87]){ //METROID QUARANTINE B
+				obItems[k] = items[87];
+				isAdded[87] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPB && (hasSJ || hasSpider) && deepMinesEscape){
+			if(!isAdded[88]){ //METROID QUARANTINE A
+				obItems[k] = items[88];
+				isAdded[88] = true;
+				k++;}
+		}
+
+		if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
+			if(!isAdded[89]){ //FUNGAL HALL B
+				obItems[k] = items[89];
+				isAdded[89] = true;
+				k++;}
+		}
+
+
+	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasSJ || (hasSpider && hasGrapple)) && (hasPhazon || e >= 10) && deepMinesEscape){
+		if(!isAdded[90]){ //PHAZON MINING TUNNEL
 			obItems[k] = items[90];
 			isAdded[90] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
-		if(!isAdded[89]){
-			obItems[k] = items[89];
-			isAdded[89] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPB && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
-		if(!isAdded[88]){
-			obItems[k] = items[88];
-			isAdded[88] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasSJ || (hasSpider && hasGrapple)) && hasCharge && hasSuper && deepMinesEscape){
-		if(!isAdded[87]){
-			obItems[k] = items[87];
-			isAdded[87] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape){
-		if(!isAdded[86]){
-			obItems[k] = items[86];
-			isAdded[86] = true;
-			k++;}
-	}
-
-
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && hasXray && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
-		if(!isAdded[85]){
-			obItems[k] = items[85];
-			isAdded[85] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && hasXray && (hasSJ || (hasSpider && hasGrapple)) && deepMinesEscape){
-		if(!isAdded[84]){
-			obItems[k] = items[84];
-			isAdded[84] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){
-		if(!isAdded[83]){
-			obItems[k] = items[83];
-			isAdded[83] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){
-		if(!isAdded[82]){
-			obItems[k] = items[82];
-			isAdded[82] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
-		if(!isAdded[81]){
-			obItems[k] = items[81];
-			isAdded[81] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
-		if(!isAdded[80]){
-			obItems[k] = items[80];
-			isAdded[80] = true;
-			k++;}
-	}
-
-	if(isAdded[86]){
-		if(!isAdded[79]){
-			obItems[k] = items[79];
-			isAdded[79] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && hasPlasma && earlyMinesEscape){
-		if(!isAdded[78]){
-			obItems[k] = items[78];
-			isAdded[78] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
-		if(!isAdded[77]){
-			obItems[k] = items[77];
-			isAdded[77] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && earlyMinesEscape){
-		if(!isAdded[76]){
-			obItems[k] = items[76];
-			isAdded[76] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasSpider) || (hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasSJ) && earlyMinesEscape){
-		if(!isAdded[75]){
-			obItems[k] = items[75];
-			isAdded[75] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && hasIce && hasPB && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasIce && hasPB && hasSpider)){
-		if(!isAdded[74]){
-			obItems[k] = items[74];
-			isAdded[74] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && hasSJ && hasIce && hasPB) || (hasMissiles && hasMorph && hasBombs && hasIce && hasPB && hasSpider)){
-		if(!isAdded[73]){
-			obItems[k] = items[73];
-			isAdded[73] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && hasSJ && hasIce && hasPB) || (hasMissiles && hasMorph && hasBombs && hasIce && hasPB && hasSpider)){
-		if(!isAdded[72]){
-			obItems[k] = items[72];
-			isAdded[72] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce){
-		if(!isAdded[71]){
-			obItems[k] = items[71];
-			isAdded[71] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && hasWave && hasIce && (hasBoost || items[70] == "Boost" || items[70] == "Gravity" || items[70] == "Boost Ball" || items[70] == "Gravity Suit")) || (hasMissiles && hasMorph && hasBombs && hasIce && hasGravity)){
-		if(!isAdded[70]){
-			obItems[k] = items[70];
-			isAdded[70] = true;
-			k++;}
-	}
-
-	if(items[69] == "Wave Beam")
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity || items[68] == "Boost" || items[68] == "Gravi" || items[68] == "Boost Ball" || items[68] == "Gravity Suit")){
-		if(!isAdded[69]){
-			obItems[k] = items[69];
-			isAdded[69] = true;
-			k++;}
-	}
-
-	if(items[68] == "Wave Beam")
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity)){
-		if(!isAdded[69]){
-			obItems[k] = items[69];
-			isAdded[69] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasCharge && hasSuper && (hasBoost || hasGravity || hasSJ)){
-		if(!isAdded[69]){
-			obItems[k] = items[69];
-			isAdded[69] = true;
-			k++;}
-	}
-
-
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && (hasBoost || hasGravity || hasSJ)){
-	if(!isAdded[68]){
-		obItems[k] = items[68];
-		isAdded[68] = true;
-		k++;}
-	}
-
-
-	if(items[68] == "Gravi" || items[68] == "Space" || items[68] == "Boost" || items[68] == "Gravity Suit" || items[68] == "Space Jump Boots" || items[68] == "Boost Ball"){
-	if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave){
-		if(!isAdded[68]){
-			obItems[k] = items[68];
-			isAdded[68] = true;
-			k++;}
-	}
-	}
-
-
-	if(items[68] == "Wave Beam"){
-	if(hasMissiles && hasMorph && hasBombs && hasIce && (hasBoost || ((items[69] == "Boost" || items[69] == "Boost Ball") && hasSuper && hasCharge) || ((hasGravity || ((items[69] == "Gravity Suit") && hasSuper && hasCharge)) && (hasSJ || ((items[69] == "Space Jump Boots") && hasCharge && hasSuper))))){
-		if(!isAdded[68]){
-			obItems[k] = items[68];
-			isAdded[68] = true;
-			k++;}
-	}
-	}
-	if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasSJ && hasPlasma) ){
-		if(!isAdded[67]){
-			obItems[k] = items[67];
-			isAdded[67] = true;
-			k++;}
-	}
-
-	if(hasMissiles){
-		if(!isAdded[66]){
-			obItems[k] = items[66];
-			isAdded[66] = true;
-			k++;}
-	}
-
-	if(hasMissiles){
-		if(!isAdded[65]){
-			obItems[k] = items[65];
-			isAdded[65] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasSJ){
-		if(!isAdded[64]){
-			obItems[k] = items[64];
-			isAdded[64] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasIce){
-		if(!isAdded[63]){
-			obItems[k] = items[63];
-			isAdded[63] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph){
-		if(!isAdded[62]){
-			obItems[k] = items[62];
-			isAdded[62] = true;
-			k++;}
-	}
-
-	if(hasMorph){
-		if(!isAdded[60]){
-			obItems[k] = items[60];
-			isAdded[60] = true;
-			k++;}
-	}
-	if(hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasIce && hasSJ){
-		if(!isAdded[59]){
-			obItems[k] = items[59];
-			isAdded[59] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && hasSJ && hasPB && hasPlasma){
-		if(!isAdded[58]){
-			obItems[k] = items[58];
-			isAdded[58] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && (hasSJ || (hasSpider && hasGrapple && hasPlasma))){
-		if(!isAdded[57]){
-			obItems[k] = items[57];
-			isAdded[57] = true;
-			k++;}
-	}
-
-	if(hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && (hasSJ || (hasSpider && (items[56] == "Space Jump Boots")))){
-		if(!isAdded[56]){
-			obItems[k] = items[56];
-			isAdded[56] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && hasSpider)){
-		if(!isAdded[55]){
-			obItems[k] = items[55];
-			isAdded[55] = true;
-			k++;}
-	}
-
-	if((hasMissiles && hasMorph && hasBombs && (hasSuit || e >= 1) && hasWave && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || e >= 1) && hasIce && hasSpider)){
-		if(!isAdded[54]){
-			obItems[k] = items[54];
-			isAdded[54] = true;
 			k++;}
 	}
 

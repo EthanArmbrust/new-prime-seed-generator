@@ -1051,18 +1051,13 @@ string encode_pickup_layout(vector<int> layout){
 
   //cout << "moved bits from array to string" << endl;
 
-  BigUnsignedInABase Lary(all_bits_const, 2);
+  BigUnsignedInABase Lary(all_bits_const, 2);  //creates bigUnsigned in base 2
 
   //cout << "created Lary" << endl;
 
-  BigUnsigned Jerry(Lary);
+  BigUnsigned Jerry(Lary); //converts Lary to base 10 as Jerry
 
   string s = "";
-
-  BigUnsigned max(36);
-
-//  cout << "created larry, jerry, and max. Actually Max is dead now." << endl;
-
 
   BigUnsigned b(64);
   BigUnsigned remainderToBe;
