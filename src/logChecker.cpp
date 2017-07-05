@@ -1346,7 +1346,7 @@ if((hasSuit || e >= 1)  && hasMissiles && hasWave){
 	}
 	}
 
-	if(hasMissiles && hasWave && (hasMorph || hasSJ)){
+	if(hasMissiles && hasMorph && (hasWave || ((hasFloaty || hasSJ) && hasBombs && hasBoost && items[16] == "Wave Beam"))){
 	if(!isAdded[16]){ //TOWER CHAMBER
 		obItems[k] = items[16];
 		isAdded[16] = true;
@@ -1916,7 +1916,7 @@ if((hasSuit || e >= 1)  && hasMissiles && hasWave){
 		k++;}
 	}
 
-	if(hasMissiles && hasMorph && hasBombs && hasSuit){
+	if(tallonToMagmoorWest){
 	if(!isAdded[95]){ //TRANSPORT TUNNEL A
 		obItems[k] = items[95];
 		isAdded[95] = true;
@@ -1937,14 +1937,14 @@ if((hasSuit || e >= 1)  && hasMissiles && hasWave){
 		k++;}
 	}
 
-	if(hasMissiles && hasSuit){
+	if(hasMissiles && (hasSuit || e >= 4 || (e >= 2 && (items[98] == "Varia Suit" || items[98] == "Gravity Suit" || items[98] == "Phazon Suit" || items[98].substr(0,5) == "Energ")))){
 	if(!isAdded[98]){ //FIREY SHORES (MORPH TRACK)
 		obItems[k] = items[98];
 		isAdded[98] = true;
 		k++;}
 	}
 
-	if(hasMissile && hasSuit && hasMorph && hasPB && (hasBombs || items[99] == "Morph Ball Bomb")){
+	if(hasMissiles && hasSuit && hasMorph && hasPB && (hasBombs || items[99] == "Morph Ball Bomb")){
 	if(!isAdded[99]){ //FIREY SHORES (POWER BOMB)
 		obItems[k] = items[99];
 		isAdded[99] = true;

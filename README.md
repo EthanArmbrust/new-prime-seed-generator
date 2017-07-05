@@ -63,7 +63,7 @@ Place the Seed Generator in the same folder as the Randomizer Script.  After the
 The item requirements for each difficulty can be found on the Google Sheet listed below:
 
 Easy: https://docs.google.com/spreadsheets/d/1y1aSUM7sH3QAWD46nvdkuJVatDe1fqXOqqBNIPP7IrM/edit?usp=sharing  
-Normal:  
+Normal:  https://docs.google.com/spreadsheets/d/1szKMf7fPucOW3hp5kmDmHG2T0ndVnAp0wI5s5jQXC10/edit?usp=sharing  
 Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolBY4NcFQzs6oGw/edit?usp=sharing  
 
 

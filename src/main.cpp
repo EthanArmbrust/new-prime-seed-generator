@@ -56,7 +56,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.51";
+string header1 = "			    Seed Generator v1.6 Beta 2017.7.4.02";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -764,7 +764,11 @@ if(myfile.is_open()){
   myfile.close();
 
 }
-else {cout << "Couldn't find settings file.";}
+else {
+	cout << "Couldn't find settings file.";
+	cin.get();
+	return;
+}
 
 
 string line ="seed ";
