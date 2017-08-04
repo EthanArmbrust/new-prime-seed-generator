@@ -3,6 +3,8 @@ bin/
 
 *.exe
 
+*.o
+
 SeedGenLogs/
 
 
