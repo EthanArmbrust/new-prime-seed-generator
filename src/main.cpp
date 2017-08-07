@@ -56,7 +56,7 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.6 Beta 2017.8.2.01";
+string header1 = "			    Seed Generator v1.6 Beta 2017.8.5.01";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -77,7 +77,7 @@ string permHeader1 = header1;
 
 
 
-int main(){
+int main(int argc, char *argv[]){
 
   #if defined _WIN32 || defined _WIN64
   dirSeparator = "\\";
@@ -85,7 +85,32 @@ int main(){
   dirSeparator = "/";
   #endif
 
-  mainMenu();
+
+  ifstream userLogFile;
+  userLogFile.open(argv[1]);
+
+  string logHeader, logSeedNum, logExceptionsList;
+  string showSpoilersOption;
+  bool showSpoilers;
+
+  if(userLogFile.is_open()){
+    getline(userLogFile, logHeader);
+    getline(userLogFile, logSeedNum);
+    getline(userLogFile, logExceptionsList);
+
+    clearScreen();
+
+    cout << "Show item order spoilers? (Y/N)" << endl << ">";
+    getline(cin, showSpoilersOption);
+
+    showSpoilersOption = simplifyString(showSpoilersOption);
+    showSpoilers = stringParser(showSpoilersOption, "Y");
+
+
+  }
+  else{
+    mainMenu();
+  }
   return 0;
 }
 
