@@ -30,7 +30,8 @@ else
 	endif
 	ifeq ($(CXX),i686-w64-mingw32-g++-posix)
 		EXECUTABLE := bin/SeedGenerator.exe
-		SOURCES += ./src/icon.res
+		WINDRES := i686-w64-mingw32-windres
+		SOURCES += ./src/sgIcon.res
 		LDFLAGS += -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 	endif
 endif
@@ -51,4 +52,4 @@ src/sgIcon.res: src/sgIcon.rc
 	$(WINDRES) $< -O coff -o $@
 
 clean:
-	rm ./src/*.o
+	rm ./src/*.o ./src/*.res
