@@ -13,7 +13,6 @@
 #include "BigInteger/BigUnsigned.hh"
 #include "BigInteger/BigIntegerUtils.hh"
 #include "BigInteger/BigUnsignedInABase.hh"
-//platform specific includes
 #ifdef __APPLE__
 #include <sys/syscall.h>
 #elif defined __linux__
