@@ -11,6 +11,8 @@ bin/
 
 *.swp
 
+*.res
+
 SeedGenLogs/
 
 
