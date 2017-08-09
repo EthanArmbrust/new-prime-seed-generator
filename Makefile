@@ -16,7 +16,7 @@ WINDRES = windres
 
 ifeq 	($(OS),Windows_NT)
 	EXECUTABLE := bin/SeedGenerator.exe
-	SOURCES += ./src/sgIcon.rc
+	SOURCES += ./src/sgIcon.res
 else
 	ifeq ($(UNAME_S),Linux)
 		LDFLAGS += -pthread
@@ -48,7 +48,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 src/sgIcon.res: src/sgIcon.rc
-	$(WINDRES) $< -o $@
+	$(WINDRES) $< -O coff -o $@
 
 clean:
 	rm ./src/*.o
