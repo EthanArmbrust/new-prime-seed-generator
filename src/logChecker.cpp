@@ -3349,15 +3349,6 @@ resetter = 0;
 	}
 
 
-	if(hasSJ){
-	if(!isAdded[18]){
-		obItems[k] = items[18];
-		isAdded[18] = true;
-		k++;
-		}
-	}
-
-
 	if(hasMissiles){ //done
 	if(!isAdded[19]){
 		obItems[k] = items[19];
