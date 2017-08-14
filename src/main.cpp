@@ -111,19 +111,51 @@ int main(int argc, char *argv[]){
 	}
 	
 	std::string::size_type sz;
-	int seedNum = stoi(logSeedNum, &sz);
+	int seedNum = std::stoi(logSeedNum.substr(5, logSeedNum.length() - 5), &sz);
 	
-	cout << seedNum << endl;
+	cout << logSeedNum << endl;
+	
+	string excepNumsOnly = logExceptionsList.substr(18, logExceptionsList.length() - 18);
+	
+	cout << logExceptionsList << endl << endl;
+	
+	
+	vector<int> numbers;
+	int x;
+	
+
+	stringstream numStream(excepNumsOnly);
+	
+	while (numStream >> x)
+		numbers.push_back(x);
+
+	sort(numbers.begin(), numbers.end());
+
+	vector<int> apNumbers(numbers.size());
+
+	for(int tran = 0; tran < apNumbers.size(); tran++)
+		apNumbers[tran] = numbers[tran];
+	
 
     cout << "Show item order spoilers? (Y/N)" << endl << ">";
     getline(cin, showSpoilersOption);
 
     showSpoilersOption = simplifyString(showSpoilersOption);
     showSpoilers = stringParser(showSpoilersOption, "Y");
+	cout << "\n\n";
 	
-	//manualCheckerBarebones(showSpoilers, false, false,
+	manualCheckerBarebones(showSpoilers, false, false, seedNum, apNumbers);
 
-
+	string returnToMainMenu;
+	
+	cout << "Return to main menu? (Y/N)" << endl;
+	cout << "> ";
+	getline(cin, returnToMainMenu);
+	
+	if(stringParser(simplifyString(returnToMainMenu), "Y"))
+		mainMenu();
+	else return 0;
+	
   }
   else{
     mainMenu();
@@ -660,6 +692,9 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
   }
   
   manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
+  cout << "Press Enter to continue...";
+  cin.get();
+
   
 }
   
@@ -671,24 +706,20 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 	checker.CheckFinishEasyNew(inputSeed, apNumbers, verbose);
 		if(checker.returnCompletableEasy()){
 			cout << "Seed is completable (Easy Difficulty)" << endl;
-      cout << "Press Enter to continue...";
-			cin.get();
+			
 		}
 		else{checker.CheckFinishNormalNew(inputSeed, apNumbers,verbose);
-			if(checker.returnCompletableNormal()){
+			if(checker.returnCompletableNormal())
 				cout << "Seed is completable (Normal Difficulty)" << endl;
-        cout << "Press Enter to continue...";
-				cin.get();
-			}
+				
 			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers, verbose, noFloatyAllowed);
 				if(checker.returnCompletableVeteran()){
 					cout << "Seed is completable";
-          if(noFloatyAllowed){
-            cout << " without Floaty";
-          }
-           cout << " (Veteran Difficulty)" << endl;
-          cout << "Press Enter to continue...";
-					cin.get();
+					if(noFloatyAllowed){
+						cout << " without Floaty";
+					}
+					cout << " (Veteran Difficulty)" << endl;
+					
 				}
 				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers, verbose, noFloatyAllowed, noSpaceJump);
 					if(checker.returnCompletableHypermode()){
@@ -706,8 +737,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
             }
 
             cout << " (Hypermode Difficulty)" << endl;
-            cout << "Press Enter to continue...";
-						cin.get();
+            
 					}
 					else{
 						cout << "This seed is NOT completable";
@@ -721,8 +751,6 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
               cout << " without Floaty";
             }
             cout << " (Easy through Hypermode)" << endl;
-            cout << "Press Enter to continue...";
-						cin.get();
 					}
 				}
 			}
