@@ -29,6 +29,7 @@
 void mainMenu();
 void processOption();
 void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump);
+void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, int inputSeed, vector <int> apNumbers);
 void printMenu();
 void clearScreen();
 bool fileExists(const std::string& fileName);
@@ -50,12 +51,13 @@ void convertSeed(bool noSpaceJump);
 
 
 
+
 using namespace std;
 
 
 
 
-string header1 = "			    Seed Generator v1.6 Beta 2017.8.7.01";
+string header1 = "			    Seed Generator v1.6 Beta 2017.8.10.01";
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -98,12 +100,28 @@ int main(int argc, char *argv[]){
     getline(userLogFile, logExceptionsList);
 
     clearScreen();
+	
+	if(logSeedNum.substr(0,6) != "Seed: "){
+		cout << "Invalid log file. Exiting..." << endl;
+		return 0;
+	}
+	if(logExceptionsList.substr(0,18) != "Excluded pickups: "){
+		cout << "Invalid log file. Exiting..." << endl;
+		return 0;
+	}
+	
+	std::string::size_type sz;
+	int seedNum = stoi(logSeedNum, &sz);
+	
+	cout << seedNum << endl;
 
     cout << "Show item order spoilers? (Y/N)" << endl << ">";
     getline(cin, showSpoilersOption);
 
     showSpoilersOption = simplifyString(showSpoilersOption);
     showSpoilers = stringParser(showSpoilersOption, "Y");
+	
+	//manualCheckerBarebones(showSpoilers, false, false,
 
 
   }
@@ -640,6 +658,14 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
   if(inputSeed == -1){
     return;
   }
+  
+  manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
+  
+}
+  
+  
+  
+  void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, int inputSeed, vector <int> apNumbers){
   LogChecker checker;
 
 	checker.CheckFinishEasyNew(inputSeed, apNumbers, verbose);
