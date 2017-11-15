@@ -1,12 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include "Random.h"
+
 using namespace std;
-
-
-
-
-
 
     Random::Random(){
 

@@ -63,7 +63,6 @@ string option;
 string printOption;
 string bottomHelp1 = "";
 string bottomHelp2 = "Type \"HELP #\" for more information on an option.";
-//string pretzels = "these pretzels are making me thirsty!";
 bool mainThreadDone = false;
 bool newThreadDone = false;
 int newThreadSeedCount = 0;
@@ -100,7 +99,7 @@ int main(int argc, char *argv[]){
     getline(userLogFile, logExceptionsList);
 
     clearScreen();
-	
+
 	if(logSeedNum.substr(0,6) != "Seed: "){
 		cout << "Invalid log file. Exiting..." << endl;
 		return 0;
@@ -109,23 +108,23 @@ int main(int argc, char *argv[]){
 		cout << "Invalid log file. Exiting..." << endl;
 		return 0;
 	}
-	
+
 	std::string::size_type sz;
 	int seedNum = std::stoi(logSeedNum.substr(5, logSeedNum.length() - 5), &sz);
-	
+
 	cout << logSeedNum << endl;
-	
+
 	string excepNumsOnly = logExceptionsList.substr(18, logExceptionsList.length() - 18);
-	
+
 	cout << logExceptionsList << endl << endl;
-	
-	
+
+
 	vector<int> numbers;
 	int x;
-	
+
 
 	stringstream numStream(excepNumsOnly);
-	
+
 	while (numStream >> x)
 		numbers.push_back(x);
 
@@ -135,7 +134,7 @@ int main(int argc, char *argv[]){
 
 	for(int tran = 0; tran < apNumbers.size(); tran++)
 		apNumbers[tran] = numbers[tran];
-	
+
 
     cout << "Show item order spoilers? (Y/N)" << endl << ">";
     getline(cin, showSpoilersOption);
@@ -143,19 +142,19 @@ int main(int argc, char *argv[]){
     showSpoilersOption = simplifyString(showSpoilersOption);
     showSpoilers = stringParser(showSpoilersOption, "Y");
 	cout << "\n\n";
-	
+
 	manualCheckerBarebones(showSpoilers, false, false, seedNum, apNumbers);
 
 	string returnToMainMenu;
-	
+
 	cout << "Return to main menu? (Y/N)" << endl;
 	cout << "> ";
 	getline(cin, returnToMainMenu);
-	
+
 	if(stringParser(simplifyString(returnToMainMenu), "Y"))
 		mainMenu();
 	else return 0;
-	
+
   }
   else{
     mainMenu();
@@ -226,7 +225,7 @@ void processOption(){
 		multithreadTest(false, 4, only, noFloaty, noSpaceJump);
 	}
 	if(stringParser(option, "5") && !stringParser(option, "HELP")){
-    system("mkdir SeedGenLogs");
+    int throwaway = system("mkdir SeedGenLogs");
     clearScreen();
     createLogFile();
 	}
@@ -549,14 +548,14 @@ if(runScript == "Y" || runScript == "YES"){
     clearScreen();
     loadScript(scriptSeed, apNumbers);
     clearScreen();
-    system("\"Metroid Prime Randomizer.bat\"");
+    int systemGarbage = system("\"Metroid Prime Randomizer.bat\"");
   }
  }
 }
 
 else{
   int prevSeed = -1;
-  system("mkdir CompletableSeeds");
+  int systemGarbage = system("mkdir CompletableSeeds");
   clearScreen();
   seedList.open(seedListName(difficulty, only), ios::app);
 
@@ -690,28 +689,28 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
   if(inputSeed == -1){
     return;
   }
-  
+
   manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
   cout << "Press Enter to continue...";
   cin.get();
 
-  
+
 }
-  
-  
-  
+
+
+
   void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, int inputSeed, vector <int> apNumbers){
   LogChecker checker;
 
 	checker.CheckFinishEasyNew(inputSeed, apNumbers, verbose);
 		if(checker.returnCompletableEasy()){
 			cout << "Seed is completable (Easy Difficulty)" << endl;
-			
+
 		}
 		else{checker.CheckFinishNormalNew(inputSeed, apNumbers,verbose);
 			if(checker.returnCompletableNormal())
 				cout << "Seed is completable (Normal Difficulty)" << endl;
-				
+
 			else{checker.CheckFinishVeteranNew(inputSeed, apNumbers, verbose, noFloatyAllowed);
 				if(checker.returnCompletableVeteran()){
 					cout << "Seed is completable";
@@ -719,7 +718,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
 						cout << " without Floaty";
 					}
 					cout << " (Veteran Difficulty)" << endl;
-					
+
 				}
 				else{checker.CheckFinishHypermodeNew(inputSeed, apNumbers, verbose, noFloatyAllowed, noSpaceJump);
 					if(checker.returnCompletableHypermode()){
@@ -737,7 +736,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
             }
 
             cout << " (Hypermode Difficulty)" << endl;
-            
+
 					}
 					else{
 						cout << "This seed is NOT completable";
@@ -906,10 +905,11 @@ bool is_digits(const std::string &str)
 }
 
 void clearScreen(){
+  int throwaway;
   #if defined _WIN32 || _WIN64
-  system("cls");
+  throwaway = system("cls");
   #else
-  system("clear");
+  throwaway = system("clear");
   #endif
 }
 
@@ -1037,32 +1037,18 @@ string encode_pickup_layout(vector<int> layout){
   string TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
   BigUnsigned num(0);
 
-
-  /*cout << layout.size() << " << layout size" << endl;
-  cout << "layout 0: " << layout[0] << endl;
-  cout << "layout 50: " << layout[50] << endl;
-  cout << "layout 98: " << layout[98] << endl;
-  cout << "layout 99: " << layout[99] << endl;
-  */
-
   for(int i = 0; i < layout.size(); i++){
-    //num = (num * 36) + layout[i];
-    //cout << "i size: " << i << endl;
-    //cout << "layout[i] = " << layout[i] << endl;
     num *= 36;
     num += layout[i];
 
   }
- //cout << "made num nice and big" << endl;
 
 
   int checksum = compute_checksum(num);
-//  cout << "checksum " << checksum << endl;
   BigUnsigned bigChecksum(checksum);
   bigChecksum.bitShiftLeft(bigChecksum,517);
   num += bigChecksum;
 
-  //cout << "num: " << bigUnsignedToString(num) << endl; //num is correct here
 
   string all_bits = bigUnsignedToString(num, 2);
 
@@ -1081,29 +1067,8 @@ string encode_pickup_layout(vector<int> layout){
   odd_bits.shrink_to_fit();
   even_bits.shrink_to_fit();
 
- /*
-  cout << "Even Bits: ";
-  for(int bug = 0; bug < even_bits.size(); bug++){
-    cout << even_bits[bug];
-  }
-  cout << " Size = " << even_bits.size();
-  cout << "\n";
-
-*/
-
   reverse(odd_bits.begin(), odd_bits.end());
   vector<char> all_bits_array(0);
-
-  /*
-  cout << "all_bits_array size = " << all_bits_array.size() << endl;
-
-  cout << "Odd Bits: ";
-  for(int bug = 0; bug < odd_bits.size(); bug++){
-    cout << odd_bits[bug];
-  }
-  cout << " Size = " << odd_bits.size();
-  cout << "\n";
-  */
 
   for(int z = 0; z < even_bits.size(); z++){
     if(even_bits[z] == '1' || even_bits[z] == '0'){
@@ -1119,23 +1084,14 @@ string encode_pickup_layout(vector<int> layout){
     }
   }
 
-  //cout << "invalidCount = " << invalidCount << endl;
-  //cout << "all_bits_array size = " << all_bits_array.size() << endl;
-
   string all_bits_conversion = "";
-
-  //cout << "Created all_bits_conversion" << endl;
 
   for(int t = 0; t < all_bits_array.size(); t++){
     all_bits_conversion += all_bits_array[t];
   }
   const std::string all_bits_const = all_bits_conversion;
 
-  //cout << "moved bits from array to string" << endl;
-
   BigUnsignedInABase Lary(all_bits_const, 2);  //creates bigUnsigned in base 2
-
-  //cout << "created Lary" << endl;
 
   BigUnsigned Jerry(Lary); //converts Lary to base 10 as Jerry
 

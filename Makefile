@@ -5,10 +5,12 @@ CXX = g++
 CXXFLAGS = -c -std=c++11 -O3
 LDFLAGS = -static-libgcc -static-libstdc++
 UNAME_S := $(shell uname -s)
+FOR_WIN := FALSE
 SOURCES = ./src/main.cpp ./src/Random.cpp ./src/logChecker.cpp ./src/BigInteger/BigUnsigned.cc ./src/BigInteger/BigUnsignedInABase.cc ./src/BigInteger/BigIntegerUtils.cc ./src/BigInteger/BigInteger.cc
 OBJECTS= $(SOURCES:.cpp=.o)
 BIN_DIR = ./bin/
 WINDRES = windres
+CLEANUP = ./src/*.o
 
 #============================================
 #=Operating system specific compiler options=
@@ -17,6 +19,7 @@ WINDRES = windres
 ifeq 	($(OS),Windows_NT)
 	EXECUTABLE := bin/SeedGenerator.exe
 	SOURCES += ./src/sgIcon.res
+	CLEANUP += ./src/*.res
 else
 	ifeq ($(UNAME_S),Linux)
 		LDFLAGS += -pthread
@@ -33,6 +36,7 @@ else
 		WINDRES := i686-w64-mingw32-windres
 		SOURCES += ./src/sgIcon.res
 		LDFLAGS += -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
+		CLEANUP += ./src/*.res
 	endif
 endif
 
@@ -40,16 +44,20 @@ all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	@if [ -d "./bin" ]; then \
-        echo "bin folder exists"; else\
+        echo "\033[1;36mBin folder already exists"; else\
 		mkdir bin; \
-    fi
-	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
+	fi
+	@echo "\033[1;34mLinking objects"
+	@$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $< -o $@
+	@echo "\033[1;32mBuilding \033[0;32m$<"
+	@$(CXX) $(CXXFLAGS) $< -o $@
 
 src/sgIcon.res: src/sgIcon.rc
-	$(WINDRES) $< -O coff -o $@
+	@echo "\033[1;32mBuilding \033[0;32m$<"
+	@$(WINDRES) $< -O coff -o $@
 
 clean:
-	rm ./src/*.o ./src/*.res
+	@echo "\033[1;31mDeleting compiled objects..."
+	@rm $(CLEANUP)

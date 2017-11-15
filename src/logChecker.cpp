@@ -4456,7 +4456,12 @@ vector <string> LogChecker::removeStringElement(vector <string> inVector, int el
 
 
 vector <string> LogChecker::randomize(vector <string> originalList, vector <int> excludedItems, int seed){
+	//originalList is vector filled with strings of item names in their original order
   //originalList must have first 3 lines removed before adding!!
+
+	//excludedItems is a vector of ints with the item spot numbers to exclude (same as randomizer)
+
+	//seed is an integer value to be used as a seed (same as randomizer)
 
   vector <string> orderedItems(originalList.size(), "");
   vector <int> itemsToAdd(originalList.size());  //list of spots that have not had an item put in them
@@ -4469,7 +4474,7 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
   }
 
 
-	//fill addedItems with ordered integers
+	//fill itemsToAdd with ordered integers
   for(int z = 0; z < itemsToAdd.size(); z++){
     itemsToAdd[z] = z;
   }
