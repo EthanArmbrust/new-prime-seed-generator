@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/e/new-prime-seed-generator/src/BigInteger/BigInteger.cc
+BigInteger.hh
+/home/e/new-prime-seed-generator/src/BigInteger/BigInteger.hh
+
+/home/e/new-prime-seed-generator/src/BigInteger/BigInteger.hh
+BigUnsigned.hh
+/home/e/new-prime-seed-generator/src/BigInteger/BigUnsigned.hh
+
+/home/e/new-prime-seed-generator/src/BigInteger/BigUnsigned.hh
+NumberlikeArray.hh
+/home/e/new-prime-seed-generator/src/BigInteger/NumberlikeArray.hh
+
+/home/e/new-prime-seed-generator/src/BigInteger/NumberlikeArray.hh
+

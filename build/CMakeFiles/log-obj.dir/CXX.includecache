@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/e/new-prime-seed-generator/src/Random.h
+
+/home/e/new-prime-seed-generator/src/logChecker.cpp
+iostream
+-
+fstream
+-
+string
+-
+vector
+-
+Random.h
+/home/e/new-prime-seed-generator/src/Random.h
+logChecker.h
+/home/e/new-prime-seed-generator/src/logChecker.h
+
+/home/e/new-prime-seed-generator/src/logChecker.h
+vector
+-
+string
+-
+
