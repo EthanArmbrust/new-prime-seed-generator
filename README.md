@@ -71,13 +71,11 @@ Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolB
 
 # Compiling Instructions
 
-Building requires a C++ compiler with posix threading.
+Requires cmake and a c++ compiler
 
-Run the build.bat to build for Windows on Windows.
-
-Run the buildForWindows.sh to build for Windows on Linux.
-
-Run the buildForLinux.sh to build for Linux on Linux.
+```mkdir build && cd build  
+cmake ..  
+make```
 
 --------------
 
