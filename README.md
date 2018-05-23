@@ -73,9 +73,11 @@ Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolB
 
 Requires cmake and a c++ compiler
 
-```mkdir build && cd build  
+```
+mkdir build && cd build  
 cmake ..  
-make```
+make
+```
 
 --------------
 
