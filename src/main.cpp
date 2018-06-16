@@ -57,7 +57,8 @@ using namespace std;
 
 
 
-string header1 = "			    Seed Generator v1.6 Beta 2017.8.10.01";
+string date(__TIMESTAMP__);
+string header1 = "	    Seed Generator v1.6 Beta - Built " __DATE__ " "__TIME__;
 string header2 = "			        by Interslice";
 string option;
 string printOption;
@@ -449,8 +450,12 @@ if(!(simplifyString(str) == "EXIT")){
 	int randoSeed = (int)(current_time.microseconds() % (long) 2147483647);
 	checker.difficultyCheck(difficulty,randoSeed,apNumbers,false, noFloatyAllowed, noSpaceJump);
 	seedCounter++;
+
+  std::thread * t2;
   if(enableMultithreading){
-  std::thread t1(barebonesSeedGen, apNumbers, difficulty, print, only, noFloatyAllowed, noSpaceJump, std::ref(seedList));
+     t2 = new std::thread(barebonesSeedGen, apNumbers, difficulty, print, only, 
+		             noFloatyAllowed, noSpaceJump, std::ref(seedList));
+  }
   if(!only){
 	while(!checker.returnDifficulty(difficulty) && !newThreadDone){
 		cout << "Current Seed: " << randoSeed << '\r' << flush;
@@ -480,7 +485,12 @@ if(!(simplifyString(str) == "EXIT")){
 if(!newThreadDone){
   mainThreadDone = true;
 }
-t1.join();}
+
+if(enableMultithreading){
+  t2->join();
+  delete t2;
+}
+
 
 else{
 if(!only){

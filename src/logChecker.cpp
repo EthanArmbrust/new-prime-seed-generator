@@ -629,7 +629,7 @@ while(resetter < 105){
 			k++;}
 	}
 
-	if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce){
+	if(hasMissiles && hasMorph && (hasBombs || hasSJ) && hasWave && hasIce){
 		if(!isAdded[68]){ //CARGO FREIGHT LIFT TO DECK GAMMA
 			obItems[k] = items[68];
 			isAdded[68] = true;
@@ -4463,15 +4463,10 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
 
 	//seed is an integer value to be used as a seed (same as randomizer)
 
-  vector <string> orderedItems(originalList.size(), "");
   vector <int> itemsToAdd(originalList.size());  //list of spots that have not had an item put in them
   vector <string> randomizedItems(originalList.size(), "");
 
 
-	//add all items from originalList to orderedItems in order
-  for(int imDumb = 0; imDumb < originalList.size(); imDumb++){
-    orderedItems[imDumb] = originalList[imDumb];
-  }
 
 
 	//fill itemsToAdd with ordered integers
@@ -4485,12 +4480,12 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
 
 	//take the excluded items and set them in the randomizedItems list
  for(int z = 0; z < excludedItems.size(); z++){
-   randomizedItems[excludedItems[z]] = orderedItems[excludedItems[z]];
+   randomizedItems[excludedItems[z]] = originalList[excludedItems[z]];
  }
 
 	//remove the excluded items from orderedItems list and the addedItems list
  for(int z = 0; z < excludedItems.size(); z++){
-   orderedItems = removeStringElement(orderedItems, excludedItems[z] - z);
+   originalList = removeStringElement(originalList, excludedItems[z] - z);
    itemsToAdd = removeIntElement(itemsToAdd, excludedItems[z] - z);
  }
 
@@ -4498,10 +4493,10 @@ vector <string> LogChecker::randomize(vector <string> originalList, vector <int>
 
  Random randomizer;
  randomizer.setup(seed);
- while(orderedItems.size() > 0){
+ while(originalList.size() > 0){
    int number = randomizer.Next(itemsToAdd.size()); //grabs a random int between 0 and the size of itemsToAdd
-   randomizedItems[itemsToAdd[number]] = orderedItems[0]; //take the first item from orderedItems and add it to randomizedItems at the "number"th int from itemsToAdd
-   orderedItems = shrinkStringVector(orderedItems); //take out the first item that was just added from orderedItems
+   randomizedItems[itemsToAdd[number]] = originalList[0]; //take the first item from orderedItems and add it to randomizedItems at the "number"th int from itemsToAdd
+   originalList = shrinkStringVector(originalList); //take out the first item that was just added from orderedItems
    itemsToAdd = removeIntElement(itemsToAdd, number); //takes out the "number"th element from the itemsToAdd array
  }
 
