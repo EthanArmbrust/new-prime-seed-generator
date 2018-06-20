@@ -69,7 +69,19 @@ Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolB
 
 ---------------
 
-# Compiling Instructions
+# Compiling Instructions (Windows)
+
+Requires cmake and Visual Studio
+
+```
+mkdir build && cd build
+cmake ..  
+cmake --build . --config Release
+```
+Binary will be found in build\Release\  
+
+--------------
+# Compiling Instructions (Linux)
 
 Requires cmake and a c++ compiler
 
