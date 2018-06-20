@@ -88,8 +88,10 @@ int main(int argc, char *argv[]){
 
 
   ifstream userLogFile;
-  userLogFile.open(argv[1]);
 
+  if(argc > 1){
+      userLogFile.open(argv[1]);
+  }
   string logHeader, logSeedNum, logExceptionsList;
   string showSpoilersOption;
   bool showSpoilers;
