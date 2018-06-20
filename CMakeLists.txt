@@ -13,7 +13,10 @@ add_library(BigUnsigned-obj OBJECT src/BigInteger/BigUnsigned.cc)
 add_library(BigUInBase-obj OBJECT src/BigInteger/BigUnsignedInABase.cc)
 add_library(BigIntUtils-obj OBJECT src/BigInteger/BigIntegerUtils.cc)
 add_library(BigInteger-obj OBJECT src/BigInteger/BigInteger.cc)
+add_subdirectory(src/clip)
 
 
 
 add_executable(SeedGenerator $<TARGET_OBJECTS:random-obj> $<TARGET_OBJECTS:log-obj> $<TARGET_OBJECTS:main-obj> $<TARGET_OBJECTS:BigUnsigned-obj> $<TARGET_OBJECTS:BigUInBase-obj> $<TARGET_OBJECTS:BigIntUtils-obj> $<TARGET_OBJECTS:BigInteger-obj>)
+
+target_link_libraries(SeedGenerator clip)

@@ -13,6 +13,7 @@
 #include "BigInteger/BigUnsigned.hh"
 #include "BigInteger/BigIntegerUtils.hh"
 #include "BigInteger/BigUnsignedInABase.hh"
+#include "clip/clip.h"
 #ifdef __APPLE__
 #include <sys/syscall.h>
 #elif defined __linux__
@@ -45,7 +46,7 @@ bool is_digits(const std::string &str);
 bool stringParser(string input, string option);
 int compute_checksum(BigUnsigned layout_number);
 string encode_pickup_layout(vector<int> layout);
-void convertSeed(bool noSpaceJump);
+void convertSeed(bool noSpaceJump, bool autoCopy);
 
 
 
@@ -244,7 +245,7 @@ void processOption(){
   }
 
   if(stringParser(option, "9") && !stringParser(option, "HELP")){
-    convertSeed(stringParser(option, "-N"));
+    convertSeed(stringParser(option, "-N"), stringParser(option, "-C"));
   }
 
 
@@ -1113,7 +1114,7 @@ string encode_pickup_layout(vector<int> layout){
   return s;
 }
 
-void convertSeed(bool noSpaceJump){
+void convertSeed(bool noSpaceJump, bool autoCopy){
   bool validSelection = false;
 	vector<int> apNumbers(0);
   while(!validSelection){
@@ -1285,8 +1286,16 @@ void convertSeed(bool noSpaceJump){
      logLayout[bob-2] = 34;
    }
  }
+
+string finalLayout = encode_pickup_layout(logLayout);
+
+
 cout << "\n\nLayout: \n" << endl;
-cout << encode_pickup_layout(logLayout) << "\n" <<endl;
+cout << finalLayout << "\n" <<endl;
+if(autoCopy){
+	clip::set_text(finalLayout);
+	cout << "Layout copied to clipboard" << endl;
+}
 cout << "Press Enter to return to the main menu...";
 cin.get();
 
