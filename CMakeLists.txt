@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_CXX_FLAGS "-O3 -std=c++11 -pthread")
 set(CMAKE_MODULE_LINKER_FLAGS = "-static-libgcc -static-libstdc++")
+set(CLIP_EXAMPLES OFF CACHE BOOL "turn off example")
+set(CLIP_TESTS OFF CACHE BOOL "turn off tests")
 
 add_subdirectory(src/clip)
 
