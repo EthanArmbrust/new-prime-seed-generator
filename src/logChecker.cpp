@@ -84,6 +84,21 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool ver
    vector<string> itemInput = getItemNames();
    vector<string>newItems = randomize(itemInput, exceptions, seed);
 
+   int    outSeed = seed;
+   string newSeed = to_string(outSeed);
+   seedString = "Seed: " + newSeed;
+
+   string listOfExceptions = "";
+   for(int zork = 0; zork < exceptions.size(); zork++){
+      listOfExceptions += to_string(exceptions[zork]);
+      listOfExceptions += " ";
+   }
+
+   seedExceptions = "Exceptions: " + listOfExceptions;
+   if(exceptions.size() == 0){
+      seedExceptions = "Exceptions: None";
+   }
+
    CheckFinishNormalNew(newItems, verbose);
 }
 
@@ -957,21 +972,6 @@ void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
       isCompletableNormal = true;
    }
 
-   int    outSeed = seed;
-   string newSeed = to_string(outSeed);
-   seedString = "Seed: " + newSeed;
-
-   string listOfExceptions = "";
-   for(int zork = 0; zork < exceptions.size(); zork++){
-      listOfExceptions += to_string(exceptions[zork]);
-      listOfExceptions += " ";
-   }
-
-
-   seedExceptions = "Exceptions: " + listOfExceptions;
-   if(exceptions.size() == 0){
-      seedExceptions = "Exceptions: None";
-   }
 
    if(verbose){
       cout << "\n" << endl;
