@@ -79,7 +79,7 @@ vector<string>LogChecker::generateLog(vector<int>exceptions, int seed){
    return(logline);
 }
 
-void LogChecker::CheckFinishNormalNew(int seed, vector<int>inExceptions, bool verbose){
+void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool verbose){
    if(verbose){
       cout << "Item order for Normal difficulty: " << endl;
    }
@@ -89,7 +89,6 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int>inExceptions, bool ve
    vector<string>logline(104, "");
    vector<string>itemInput(100, "");
    vector<string>areaInput(100, "");
-   vector<int>   exceptions(inExceptions);
    isCompletableNormal = false;
 
    int k        = 0; //for adding items to obtained list
@@ -142,12 +141,15 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int>inExceptions, bool ve
 
 
    itemInput = getItemNames();
-
-
    areaInput = getAreaNames();
 
    vector<string>newItems = randomize(itemInput, exceptions, seed);
-
+   
+/*  cout << "Printing newItems" << endl;
+*   for(string item : newItems){
+*	   cout << item << endl;
+*   }
+*/
 
 
    for(int zorro = 2; zorro < logline.size() - 2; zorro++){

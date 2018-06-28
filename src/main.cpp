@@ -518,7 +518,7 @@ void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed
             header1    = autoConvert ? convertSeed(apNumbers, randoSeed, noSpaceJump) : checker.returnSeed();
             scriptSeed = randoSeed;
          }
-         header2            = autoConvert ? "" : checker.returnExceptions();
+         header2            = autoConvert ? "Seed: " + to_string(scriptSeed) : checker.returnExceptions();
          mainThreadDone     = false;
          newThreadDone      = false;
          newThreadSeedCount = 0;
