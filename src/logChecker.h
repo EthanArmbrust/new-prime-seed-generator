@@ -86,6 +86,7 @@ LogChecker();
 void difficultyCheck(int, int, vector<int>, bool, bool, bool);
 vector <string> generateLog(vector<int>, int);
 void CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose);
+void CheckFinishNormalNew(vector<string> newItems, bool verbose);
 void CheckFinishVeteranNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
 void CheckFinishEasyNew(int seed, vector <int> inExceptions, bool verbose);
 void CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump);

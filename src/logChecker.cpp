@@ -80,6 +80,19 @@ vector<string>LogChecker::generateLog(vector<int>exceptions, int seed){
 }
 
 void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool verbose){
+
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
+
+   CheckFinishNormalNew(newItems, verbose);
+}
+
+void LogChecker::CheckFinishNormalNew(string layout, bool verbose){
+	
+
+}
+
+void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
    if(verbose){
       cout << "Item order for Normal difficulty: " << endl;
    }
@@ -87,7 +100,6 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool ver
    bool          newRando = true;
    vector<string>items(104, "");
    vector<string>logline(104, "");
-   vector<string>itemInput(100, "");
    vector<string>areaInput(100, "");
    isCompletableNormal = false;
 
@@ -140,10 +152,8 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool ver
 
 
 
-   itemInput = getItemNames();
    areaInput = getAreaNames();
 
-   vector<string>newItems = randomize(itemInput, exceptions, seed);
    
 /*  cout << "Printing newItems" << endl;
 *   for(string item : newItems){
