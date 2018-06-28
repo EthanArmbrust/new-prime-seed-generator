@@ -69,15 +69,27 @@ Veteran: https://docs.google.com/spreadsheets/d/12ADgV4RhXCKsAPaZTKC9y_G9vXvKolB
 
 ---------------
 
-# Compiling Instructions
+# Compiling Instructions (Windows)
 
-Building requires a C++ compiler with posix threading.
+Requires cmake and Visual Studio
 
-Run the build.bat to build for Windows on Windows.
+```
+mkdir build && cd build
+cmake ..  
+cmake --build . --config Release
+```
+Binary will be found in build\Release\  
 
-Run the buildForWindows.sh to build for Windows on Linux.
+--------------
+# Compiling Instructions (Linux)
 
-Run the buildForLinux.sh to build for Linux on Linux.
+Requires cmake and a c++ compiler
+
+```
+mkdir build && cd build  
+cmake ..  
+make
+```
 
 --------------
 
