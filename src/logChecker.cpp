@@ -4843,7 +4843,62 @@ vector<int> decode_pickup_layout(string layout_string){
    string TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
    map<char,int> REV_TABLE;
    for(int i = 0; i < TABLE.length(); i++){
-      REV_TABLE.insert
+      REV_TABLE.insert(pair<char,int>(TABLE[i], i));
+   }
+
+   BigUnsigned num(0);
+   
+   for(int i = layout_string.length() - 1; i >= 0; i--){
+      num.bitShiftLeft(num,6);
+      num += REV_TABLE.find(layout_string[i])->second;
+   }
+
+   string all_bits = bigUnsignedToString(num, 2);
+
+   //cout << "all_bits: " << all_bits << endl;
+   vector<char>even_bits(0);
+   vector<char>odd_bits(0);
+
+   for(int k = 0; k < all_bits.length(); k++){
+      if(k % 2){
+         odd_bits.push_back(all_bits.at(k));
+      }
+      else{
+         even_bits.push_back(all_bits.at(k));
+      }
+   }
+   odd_bits.shrink_to_fit();
+   even_bits.shrink_to_fit();
+
+   reverse(odd_bits.begin(), odd_bits.end());
+   vector<char>all_bits_array(0);
+
+   for(int z = 0; z < even_bits.size(); z++){
+      if(even_bits[z] == '1' || even_bits[z] == '0'){
+         all_bits_array.push_back(even_bits[z]);
+      }
+      if(odd_bits[z] == '1' || odd_bits[z] == '0'){
+         all_bits_array.push_back(odd_bits[z]);
+      }
+   }
+
+   int invalidCount = 0;
+   for(int badCount = 0; badCount < all_bits_array.size(); badCount++){
+      if(!(all_bits_array[badCount] == '1' || all_bits_array[badCount] == '0')){
+         invalidCount++;
+      }
+   }
+
+   string all_bits_conversion = "";
+
+   for(int t = 0; t < all_bits_array.size(); t++){
+      all_bits_conversion += all_bits_array[t];
+   }
+   const std::string all_bits_const = all_bits_conversion;
+
+   BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
+
+   BigUnsigned Jerry(Lary);                    //converts Lary to base 10 as Jerry
 
 
 

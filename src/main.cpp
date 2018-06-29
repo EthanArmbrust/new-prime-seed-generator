@@ -1031,7 +1031,7 @@ string encode_pickup_layout(vector<int>layout){
    bigChecksum.bitShiftLeft(bigChecksum, 517);
    num += bigChecksum;
 
-
+   //here i think?
    string all_bits = bigUnsignedToString(num, 2);
 
    //cout << "all_bits: " << all_bits << endl;
@@ -1078,7 +1078,7 @@ string encode_pickup_layout(vector<int>layout){
    BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
 
    BigUnsigned Jerry(Lary);                    //converts Lary to base 10 as Jerry
-
+   //to here?
    string s = "";
 
    BigUnsigned b(64);
