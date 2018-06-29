@@ -4837,3 +4837,14 @@ vector<string>LogChecker::randomize(vector<string>originalList, vector<int>exclu
 
    return(randomizedItems);
 }
+
+vector<int> decode_pickup_layout(string layout_string){
+
+   string TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
+   map<char,int> REV_TABLE;
+   for(int i = 0; i < TABLE.length(); i++){
+      REV_TABLE.insert
+
+
+
+}
