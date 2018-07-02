@@ -4897,9 +4897,36 @@ vector<int> decode_pickup_layout(string layout_string){
    const std::string all_bits_const = all_bits_conversion;
 
    BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
-
    BigUnsigned Jerry(Lary);                    //converts Lary to base 10 as Jerry
+   
+   BigUnsigend checksum_value(num);
+   checksum_value.bitShiftRight(checksum_value, 517);
 
+   BigUnsigned temp(checksum_value);
+   temp.bitShiftLeft(temp, 517);
+
+   num -= temp;
+
+   int cs_value = checksum_value.toInt();
+
+   if(cs_value != compute_checksum(num)){
+	   cout << "Invalid layout: checksum failed" << endl;
+   }
+
+   vector<int> layout;
+   BigUnsigned b(36);
+   BigUnsigned remainderToBe;
+   for(int i = 0; i < 100; i++){ 
+      Jerry.divideWithRemainder(b, remainderToBe);   //Jerry becomes remainder
+      BigUnsigned swap;                              //remainderToBe becomes quotient
+      swap          = remainderToBe;                 //need to swap these
+      remainderToBe = Jerry;
+      Jerry         = swap;
+     
+      layout.push_back(remainderToBe.toInt());
+   }
+   reverse(layout.begin(), layout.end());
+   return layout;
 
 
 }
