@@ -2,8 +2,16 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
+#include <algorithm>
 #include "Random.h"
 #include "logChecker.h"
+#include "BigInteger/BigUnsigned.hh"
+#include "BigInteger/BigIntegerUtils.hh"
+#include "BigInteger/BigUnsignedInABase.hh"
+
+
+
 using namespace std;
 
 LogChecker::LogChecker(){
@@ -4838,10 +4846,26 @@ vector<string>LogChecker::randomize(vector<string>originalList, vector<int>exclu
    return(randomizedItems);
 }
 
-vector<int> decode_pickup_layout(string layout_string){
+int LogChecker::compute_checksum_2(BigUnsigned layout_number){
+   int         s = 0;
+   BigUnsigned b(32);
+   BigUnsigned remainderToBe;
+
+   while(layout_number > 0){
+      layout_number.divideWithRemainder(b, remainderToBe); //layout_number becomes remainder
+      BigUnsigned swap;                                    //remainderToBe becomes quotient
+      swap          = remainderToBe;                       //need to swap these
+      remainderToBe = layout_number;
+      layout_number = swap;
+      s             = (s + remainderToBe.toInt()) % 32;
+   }
+   return(s);
+}
+
+vector<int> LogChecker::decode_pickup_layout(string layout_string){
 
    string TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
-   map<char,int> REV_TABLE;
+   std::map<char,int> REV_TABLE;
    for(int i = 0; i < TABLE.length(); i++){
       REV_TABLE.insert(pair<char,int>(TABLE[i], i));
    }
@@ -4899,7 +4923,7 @@ vector<int> decode_pickup_layout(string layout_string){
    BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
    BigUnsigned Jerry(Lary);                    //converts Lary to base 10 as Jerry
    
-   BigUnsigend checksum_value(num);
+   BigUnsigned checksum_value(num);
    checksum_value.bitShiftRight(checksum_value, 517);
 
    BigUnsigned temp(checksum_value);
@@ -4909,7 +4933,7 @@ vector<int> decode_pickup_layout(string layout_string){
 
    int cs_value = checksum_value.toInt();
 
-   if(cs_value != compute_checksum(num)){
+   if(cs_value != compute_checksum_2(num)){
 	   cout << "Invalid layout: checksum failed" << endl;
    }
 

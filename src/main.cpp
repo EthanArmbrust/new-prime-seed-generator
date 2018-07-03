@@ -197,6 +197,18 @@ void processOption(){
    bool autoCopy    = stringParser(option, "-C");
 
 
+   if(stringParser(option, "TEST")){
+      LogChecker layout_check;
+      string layout_string = "JREEt-dQd2K6T8U_IlqI_Wwto50lBIsmwOZqKDReyjnupl9SeJrA9x6e1CHC-Yh2n-RBDt3SLH-qc5VA587qIIS";
+      vector<int> layout = layout_check.decode_pickup_layout(layout_string);
+      cout << "layout test" << endl;
+      for(auto i : layout){
+         cout << i << endl;
+      }
+      cout << "END TEST" << endl;
+      cin.get();
+   }
+
    if(stringParser(option, "1") && !stringParser(option, "HELP")){
       multithreadTest(false, 1, false, false, false, autoConvert, autoCopy);
    }
