@@ -4921,8 +4921,10 @@ vector<int> LogChecker::decode_pickup_layout(string layout_string){
    const std::string all_bits_const = all_bits_conversion;
 
    BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
-   BigUnsigned Jerry(Lary);                    //converts Lary to base 10 as Jerry
+   BigUnsigned Jerry(Lary);    //converts Lary to base 10 as Jerry
    
+   num = Jerry;
+
    BigUnsigned checksum_value(num);
    checksum_value.bitShiftRight(checksum_value, 517);
 
@@ -4941,11 +4943,11 @@ vector<int> LogChecker::decode_pickup_layout(string layout_string){
    BigUnsigned b(36);
    BigUnsigned remainderToBe;
    for(int i = 0; i < 100; i++){ 
-      Jerry.divideWithRemainder(b, remainderToBe);   //Jerry becomes remainder
+      num.divideWithRemainder(b, remainderToBe);     //num becomes remainder
       BigUnsigned swap;                              //remainderToBe becomes quotient
       swap          = remainderToBe;                 //need to swap these
-      remainderToBe = Jerry;
-      Jerry         = swap;
+      remainderToBe = num;
+      num           = swap;
      
       layout.push_back(remainderToBe.toInt());
    }
