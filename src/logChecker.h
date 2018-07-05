@@ -112,6 +112,7 @@ vector <string> shrinkStringVector(vector <string> inVector);
 vector <string> removeStringElement(vector <string> inVector, int element);
 int compute_checksum_2(BigUnsigned layout_number);
 vector<int> decode_pickup_layout(string layout_string);
+vector<string> layoutIntToString(vector<int> intLayout);
 vector <string> randomize(vector <string> originalList, vector <int> excludedItems, int seed);
 }
 ;

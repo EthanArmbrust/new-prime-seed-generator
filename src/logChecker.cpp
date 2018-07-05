@@ -92,13 +92,12 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool ver
    vector<string> itemInput = getItemNames();
    vector<string>newItems = randomize(itemInput, exceptions, seed);
 
-   int    outSeed = seed;
-   string newSeed = to_string(outSeed);
+   string newSeed = to_string(seed);
    seedString = "Seed: " + newSeed;
 
    string listOfExceptions = "";
-   for(int zork = 0; zork < exceptions.size(); zork++){
-      listOfExceptions += to_string(exceptions[zork]);
+   for(int i = 0; i < exceptions.size(); i++){
+      listOfExceptions += to_string(exceptions[i]);
       listOfExceptions += " ";
    }
 
@@ -111,8 +110,11 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool ver
 }
 
 void LogChecker::CheckFinishNormalNew(string layout, bool verbose){
-	
-
+   vector<int> intLayout = decode_pickup_layout(layout);
+   vector<string> stringLayout = layoutIntToString(intLayout); 
+   seedString = "Layout : " + layout;
+   seedExceptions = "";
+   CheckFinishNormalNew(stringLayout, verbose);
 }
 
 void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
@@ -4954,5 +4956,124 @@ vector<int> LogChecker::decode_pickup_layout(string layout_string){
    reverse(layout.begin(), layout.end());
    return layout;
 
+}
 
+vector<string> LogChecker::layoutIntToString(vector<int> intLayout){
+   vector<string> stringLayout;
+
+   for(int i : intLayout){
+      string item = "";
+      switch(i){
+         case 0 :
+	    item = "Missile";
+	    break;
+         case 1 :
+	    item = "Energy Tank";
+	    break;
+         case 2 :
+	    item = "Thermal Visor";
+	    break;
+         case 3 :
+	    item = "X-Ray Visor";
+	    break;
+         case 4 :
+	    item = "Varia Suit";
+	    break;
+         case 5 :
+	    item = "Gravity Suit";
+	    break;
+         case 6 :
+	    item = "Phazon Suit";
+	    break;
+         case 7 :
+	    item = "Morph Ball";
+	    break;
+         case 8 :
+	    item = "Boost Ball";
+	    break;
+         case 9 :
+	    item = "Spider Ball";
+	    break;
+         case 10 :
+	    item = "Morph Ball Bomb";
+	    break;
+         case 11 :
+	    item = "Power Bomb Expansion";
+	    break;
+         case 12 :
+	    item = "Power Bomb";
+	    break;
+         case 13 :
+	    item = "Charge Beam";
+	    break;
+         case 14 :
+	    item = "Space Jump Boots";
+	    break;
+         case 15 :
+	    item = "Grapple Beam";
+	    break;
+         case 16 :
+	    item = "Super Missile";
+	    break;
+         case 17 :
+	    item = "Wavebuster";
+	    break;
+         case 18 :
+	    item = "Ice Spreader";
+	    break;
+         case 19 :
+	    item = "Flamethrower";
+	    break;
+         case 20 :
+	    item = "Wave Beam";
+	    break;
+         case 21 :
+	    item = "Ice Beam";
+	    break;
+         case 22 :
+	    item = "Plasma Beam";
+	    break;
+         case 23 :
+	    item = "Artifact of Lifegiver";
+	    break;
+         case 24 :
+	    item = "Artifact of Wild";
+	    break;
+         case 25 :
+	    item = "Artifact of World";
+	    break;
+         case 26 :
+	    item = "Artifact of Sun";
+	    break;
+         case 27 :
+	    item = "Artifact of Elder";
+	    break;
+         case 28 :
+	    item = "Artifact of Spirit";
+	    break;
+         case 29 :
+	    item = "Artifact of Truth";
+	    break;
+         case 30 :
+	    item = "Artifact of Chozo";
+	    break;
+         case 31 :
+	    item = "Artifact of Warrior";
+	    break;
+         case 32 :
+	    item = "Artifact of Newborn";
+	    break;
+         case 33 :
+	    item = "Artifact of Nature";
+	    break;
+         case 34 :
+	    item = "Artifact of Strength";
+	    break;
+         case 35 :
+	    item = "Nothing";
+	    break;
+      }
+      stringLayout.push_back(item);   
+   }
+   return stringLayout;
 }
