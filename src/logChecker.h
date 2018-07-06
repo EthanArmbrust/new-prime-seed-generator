@@ -89,9 +89,18 @@ vector <string> generateLog(vector<int>, int);
 void CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose);
 void CheckFinishNormalNew(vector<string> newItems, bool verbose);
 void CheckFinishNormalNew(string layout, bool verbose);
-void CheckFinishVeteranNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed);
-void CheckFinishEasyNew(int seed, vector <int> inExceptions, bool verbose);
-void CheckFinishHypermodeNew(int seed, vector <int> inExceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump);
+
+void CheckFinishVeteranNew(int seed, vector <int> exceptions, bool verbose, bool noFloatyAllowed);
+void CheckFinishVeteranNew(string layout, bool verbose, bool noFloatyAllowed);
+void CheckFinishVeteranNew(vector<string> newItems, bool verbose, bool noFloatyAllowed);
+
+void CheckFinishEasyNew(int seed, vector <int> exceptions, bool verbose);
+void CheckFinishEasyNew(string layout, bool verbose);
+void CheckFinishEasyNew(vector <string> newItems, bool verbose);
+
+void CheckFinishHypermodeNew(int seed, vector <int> exceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump);
+void CheckFinishHypermodeNew(vector<string> newItems, bool verbose, bool noFloatyAllowed, bool noSpaceJump);
+void CheckFinishHypermodeNew(string layout, bool verbose, bool noFloatyAllowed, bool noSpaceJump);
 void benchmark(int randomizeCount);
 void apvectorBenchmark(int count);
 void printList();

@@ -80,8 +80,6 @@ vector<string>LogChecker::generateLog(vector<int>exceptions, int seed){
 
    for(int zorro = 2; zorro < logline.size() - 2; zorro++){
       logline[zorro] = areaInput[zorro - 2] + newItems[zorro - 2];
-      // lineLength = logline[zorro].size() - 51;
-      //items[zorro] = logline[zorro].substr(51,lineLength);
    }
 
    return(logline);
@@ -988,7 +986,37 @@ void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
    }
 }
 
-void LogChecker::CheckFinishVeteranNew(int seed, vector<int>inExceptions, bool verbose, bool noFloatyAllowed){
+void LogChecker::CheckFinishVeteranNew(int seed, vector<int>exceptions, bool verbose, bool noFloatyAllowed){
+
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
+
+   string newSeed = to_string(seed);
+   seedString = "Seed: " + newSeed;
+
+   string listOfExceptions = "";
+   for(int i = 0; i < exceptions.size(); i++){
+      listOfExceptions += to_string(exceptions[i]);
+      listOfExceptions += " ";
+   }
+
+   seedExceptions = "Exceptions: " + listOfExceptions;
+   if(exceptions.size() == 0){
+      seedExceptions = "Exceptions: None";
+   }
+
+   CheckFinishVeteranNew(newItems, verbose, noFloatyAllowed);
+}
+
+void LogChecker::CheckFinishVeteranNew(string layout, bool verbose, bool noFloatyAllowed){
+   vector<int> intLayout = decode_pickup_layout(layout);
+   vector<string> stringLayout = layoutIntToString(intLayout); 
+   seedString = "Layout : " + layout;
+   seedExceptions = "";
+   CheckFinishVeteranNew(stringLayout, verbose, noFloatyAllowed);
+}
+
+void LogChecker::CheckFinishVeteranNew(vector<string> newItems, bool verbose, bool noFloatyAllowed){
    if(verbose){
       cout << "Item order for Veteran difficulty: " << endl;
    }
@@ -998,7 +1026,6 @@ void LogChecker::CheckFinishVeteranNew(int seed, vector<int>inExceptions, bool v
    vector<string>logline(104, "");
    vector<string>itemInput(100, "");
    vector<string>areaInput(100, "");
-   vector<int>   exceptions(inExceptions);
    isCompletableVeteran = false;
 
    int  k                    = 0; //for adding items to obtained list
@@ -1090,21 +1117,12 @@ void LogChecker::CheckFinishVeteranNew(int seed, vector<int>inExceptions, bool v
 
    bombsWithoutGravity = false;
 
-
-
-   itemInput = getItemNames();
-
-
    areaInput = getAreaNames();
 
-   vector<string>newItems = randomize(itemInput, exceptions, seed);
-
-
-
-   for(int zorro = 2; zorro < logline.size() - 2; zorro++){
-      logline[zorro] = areaInput[zorro - 2] + newItems[zorro - 2];
-      lineLength     = logline[zorro].size() - 51;
-      items[zorro]   = logline[zorro].substr(51, lineLength);
+   for(int i = 2; i < logline.size() - 2; i++){
+      logline[i] = areaInput[i - 2] + newItems[i - 2];
+      lineLength     = logline[i].size() - 51;
+      items[i]   = logline[i].substr(51, lineLength);
    }
 
 
@@ -2182,29 +2200,43 @@ void LogChecker::CheckFinishVeteranNew(int seed, vector<int>inExceptions, bool v
       isCompletableVeteran = true;
    }
 
-   int    outSeed = seed;
-   string newSeed = to_string(outSeed);
-   seedString = "Seed: " + newSeed;
-
-   string listOfExceptions = "";
-   for(int zork = 0; zork < exceptions.size(); zork++){
-      listOfExceptions += to_string(exceptions[zork]);
-      listOfExceptions += " ";
-   }
-
-
-   seedExceptions = "Exceptions: " + listOfExceptions;
-   if(exceptions.size() == 0){
-      seedExceptions = "Exceptions: None";
-   }
-
 
    if(verbose){
       cout << "\n" << endl;
    }
 }
 
-void LogChecker::CheckFinishEasyNew(int seed, vector<int>inExceptions, bool verbose){
+void LogChecker::CheckFinishEasyNew(int seed, vector<int> exceptions, bool verbose){
+
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
+
+   string newSeed = to_string(seed);
+   seedString = "Seed: " + newSeed;
+
+   string listOfExceptions = "";
+   for(int i = 0; i < exceptions.size(); i++){
+      listOfExceptions += to_string(exceptions[i]);
+      listOfExceptions += " ";
+   }
+
+   seedExceptions = "Exceptions: " + listOfExceptions;
+   if(exceptions.size() == 0){
+      seedExceptions = "Exceptions: None";
+   }
+
+   CheckFinishEasyNew(newItems, verbose);
+}
+
+void LogChecker::CheckFinishEasyNew(string layout, bool verbose){
+   vector<int> intLayout = decode_pickup_layout(layout);
+   vector<string> stringLayout = layoutIntToString(intLayout); 
+   seedString = "Layout : " + layout;
+   seedExceptions = "";
+   CheckFinishEasyNew(stringLayout, verbose);
+}
+
+void LogChecker::CheckFinishEasyNew(vector<string> newItems, bool verbose){
    if(verbose){
       cout << "Item order for Easy difficulty: " << endl;
    }
@@ -2213,7 +2245,6 @@ void LogChecker::CheckFinishEasyNew(int seed, vector<int>inExceptions, bool verb
    vector<string>logline(104, "");
    vector<string>itemInput(100, "");
    vector<string>areaInput(100, "");
-   vector<int>   exceptions(inExceptions);
    isCompletableEasy = false;
 
    int k        = 0; //for adding items to obtained list
@@ -2235,8 +2266,6 @@ void LogChecker::CheckFinishEasyNew(int seed, vector<int>inExceptions, bool verb
       obItems[resetter] = "";
       resetter++;
    }
-
-
 
    //resetting item bools
    hasMissiles = false;
@@ -2264,14 +2293,7 @@ void LogChecker::CheckFinishEasyNew(int seed, vector<int>inExceptions, bool verb
    earlyMinesPB     = false;
    earlyMinesPlasma = false;
 
-   itemInput = getItemNames();
-
-
    areaInput = getAreaNames();
-
-   vector<string>newItems = randomize(itemInput, exceptions, seed);
-
-
 
    for(int zorro = 2; zorro < logline.size() - 2; zorro++){
       logline[zorro] = areaInput[zorro - 2] + newItems[zorro - 2];
@@ -3043,27 +3065,41 @@ void LogChecker::CheckFinishEasyNew(int seed, vector<int>inExceptions, bool verb
       isCompletableEasy = true;
    }
 
-   int    outSeed = seed;
-   string newSeed = to_string(outSeed);
-   seedString = "Seed: " + newSeed;
-
-   string listOfExceptions = "";
-   for(int zork = 0; zork < exceptions.size(); zork++){
-      listOfExceptions += to_string(exceptions[zork]);
-      listOfExceptions += " ";
-   }
-
-
-   seedExceptions = "Exceptions: " + listOfExceptions;
-   if(exceptions.size() == 0){
-      seedExceptions = "Exceptions: None";
-   }
    if(verbose){
       cout << "\n" << endl;
    }
 }
 
-void LogChecker::CheckFinishHypermodeNew(int seed, vector<int>inExceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
+void LogChecker::CheckFinishHypermodeNew(int seed, vector<int> exceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
+
+   string newSeed = to_string(seed);
+   seedString = "Seed: " + newSeed;
+
+   string listOfExceptions = "";
+   for(int i = 0; i < exceptions.size(); i++){
+      listOfExceptions += to_string(exceptions[i]);
+      listOfExceptions += " ";
+   }
+
+   seedExceptions = "Exceptions: " + listOfExceptions;
+   if(exceptions.size() == 0){
+      seedExceptions = "Exceptions: None";
+   }
+
+   CheckFinishHypermodeNew(newItems, verbose, noFloatyAllowed, noSpaceJump);
+}
+
+void LogChecker::CheckFinishHypermodeNew(string layout, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
+   vector<int> intLayout = decode_pickup_layout(layout);
+   vector<string> stringLayout = layoutIntToString(intLayout); 
+   seedString = "Layout : " + layout;
+   seedExceptions = "";
+   CheckFinishHypermodeNew(stringLayout, verbose, noFloatyAllowed, noSpaceJump);
+}
+
+void LogChecker::CheckFinishHypermodeNew(vector<string> newItems, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    if(verbose){
       cout << "Item order for Hypermode difficulty: " << endl;
    }
@@ -3072,7 +3108,6 @@ void LogChecker::CheckFinishHypermodeNew(int seed, vector<int>inExceptions, bool
    vector<string>logline(104, "");
    vector<string>itemInput(100, "");
    vector<string>areaInput(100, "");
-   vector<int>   exceptions(inExceptions);
    isCompletableHypermode = false;
 
    int  k                = 0; //for adding items to obtained list
@@ -3191,14 +3226,7 @@ void LogChecker::CheckFinishHypermodeNew(int seed, vector<int>inExceptions, bool
 
    bombsWithoutGravity = false;
 
-   itemInput = getItemNames();
-
-
    areaInput = getAreaNames();
-
-   vector<string>newItems = randomize(itemInput, exceptions, seed);
-
-
 
    for(int zorro = 2; zorro < logline.size() - 2; zorro++){
       logline[zorro] = areaInput[zorro - 2] + newItems[zorro - 2];
@@ -4315,22 +4343,6 @@ void LogChecker::CheckFinishHypermodeNew(int seed, vector<int>inExceptions, bool
    //FINAL CHECK FOR COMPLETION
    if(a == 12 && hasWave && hasIce && hasPlasma && hasMissiles && (hasSJ || noSpaceJump) && hasPhazon){
       isCompletableHypermode = true;
-   }
-
-   int    outSeed = seed;
-   string newSeed = to_string(outSeed);
-   seedString = "Seed: " + newSeed;
-
-   string listOfExceptions = "";
-   for(int zork = 0; zork < exceptions.size(); zork++){
-      listOfExceptions += to_string(exceptions[zork]);
-      listOfExceptions += " ";
-   }
-
-
-   seedExceptions = "Exceptions: " + listOfExceptions;
-   if(exceptions.size() == 0){
-      seedExceptions = "Exceptions: None";
    }
 
    if(verbose){

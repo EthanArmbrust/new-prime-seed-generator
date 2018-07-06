@@ -29,6 +29,7 @@ void mainMenu();
 void processOption();
 void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump);
 void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, int inputSeed, vector<int>apNumbers);
+void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, string layout_string);
 void printMenu();
 void clearScreen();
 bool fileExists(const std::string& fileName);
@@ -694,24 +695,40 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    bool   tempVersion;
    string firstLine;
    string excep;
+   string str;
 
-   cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+
+   cout << "Seed or layout?" << endl; 
    cout << "> ";
+   getline(cin, str);
 
-   vector<int>apNumbers = getTheExceptions();
+   if(stringParser(str, "SEED")){
 
-   if(apNumbers.size() != 0){
-      if(apNumbers[0] == -1){
+      cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+      cout << "> ";
+
+      vector<int>apNumbers = getTheExceptions();
+
+      if(apNumbers.size() != 0){
+         if(apNumbers[0] == -1){
+            return;
+         }
+      }
+
+      int inputSeed = getASeed();
+      if(inputSeed == -1){
          return;
       }
+
+      manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
+   }
+   else{
+      cout << "\nEnter layout:" << endl;
+      cout << "> ";
+      getline(cin,str);
+      manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, str);
    }
 
-   int inputSeed = getASeed();
-   if(inputSeed == -1){
-      return;
-   }
-
-   manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
    cout << "Press Enter to continue...";
    cin.get();
 }
@@ -740,6 +757,64 @@ void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump
          }
          else{
             checker.CheckFinishHypermodeNew(inputSeed, apNumbers, verbose, noFloatyAllowed, noSpaceJump);
+            if(checker.returnCompletableHypermode()){
+               cout << "Seed is completable";
+               if(noSpaceJump){
+                  cout << " without Space Jump";
+               }
+
+               if(noSpaceJump && noFloatyAllowed){
+                  cout << " and";
+               }
+
+               if(noFloatyAllowed){
+                  cout << " without Floaty";
+               }
+
+               cout << " (Hypermode Difficulty)" << endl;
+            }
+            else{
+               cout << "This seed is NOT completable";
+               if(noSpaceJump){
+                  cout << " without Space Jump";
+               }
+               if(noSpaceJump && noFloatyAllowed){
+                  cout << " and";
+               }
+               if(noFloatyAllowed){
+                  cout << " without Floaty";
+               }
+               cout << " (Easy through Hypermode)" << endl;
+            }
+         }
+      }
+   }
+}
+
+void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, string layout_string){
+   LogChecker checker;
+
+   checker.CheckFinishEasyNew(layout_string, verbose);
+   if(checker.returnCompletableEasy()){
+      cout << "Seed is completable (Easy Difficulty)" << endl;
+   }
+   else{
+      checker.CheckFinishNormalNew(layout_string, verbose);
+      if(checker.returnCompletableNormal()){
+         cout << "Seed is completable (Normal Difficulty)" << endl;
+      }
+
+      else{
+         checker.CheckFinishVeteranNew(layout_string, verbose, noFloatyAllowed);
+         if(checker.returnCompletableVeteran()){
+            cout << "Seed is completable";
+            if(noFloatyAllowed){
+               cout << " without Floaty";
+            }
+            cout << " (Veteran Difficulty)" << endl;
+         }
+         else{
+            checker.CheckFinishHypermodeNew(layout_string, verbose, noFloatyAllowed, noSpaceJump);
             if(checker.returnCompletableHypermode()){
                cout << "Seed is completable";
                if(noSpaceJump){
