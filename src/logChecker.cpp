@@ -4972,15 +4972,18 @@ vector<int> LogChecker::decode_pickup_layout(string layout_string){
 
 vector<string> LogChecker::layoutIntToString(vector<int> intLayout){
    vector<string> stringLayout;
+   int missileCount = 0, etankCount = 0, pbCount = 0;
 
    for(int i : intLayout){
       string item = "";
       switch(i){
          case 0 :
-	    item = "Missile";
+	    item = "Missile " + to_string(missileCount);
+	    missileCount++;
 	    break;
          case 1 :
-	    item = "Energy Tank";
+	    item = "Energy Tanki " + to_string(etankCount);
+	    etankCount++;
 	    break;
          case 2 :
 	    item = "Thermal Visor";
@@ -5010,7 +5013,8 @@ vector<string> LogChecker::layoutIntToString(vector<int> intLayout){
 	    item = "Morph Ball Bomb";
 	    break;
          case 11 :
-	    item = "Power Bomb Expansion";
+	    item = "Power Bomb Expansion " + to_string(pbCount);
+	    pbCount++;
 	    break;
          case 12 :
 	    item = "Power Bomb";
