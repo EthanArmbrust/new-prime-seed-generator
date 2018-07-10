@@ -701,6 +701,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    cout << "Seed or layout?" << endl; 
    cout << "> ";
    getline(cin, str);
+   str = simplifyString(str);
 
    if(stringParser(str, "SEED")){
 
@@ -726,7 +727,13 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
       cout << "\nEnter layout:" << endl;
       cout << "> ";
       getline(cin,str);
-      manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, str);
+
+      if(str.length() != 87){
+         cout << "Layout is incorrect length" << endl;
+      }
+      else{
+         manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, str);
+      }
    }
 
    cout << "Press Enter to continue...";
