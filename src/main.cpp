@@ -202,14 +202,14 @@ void processOption(){
    if(stringParser(option, "TEST")){
       LogChecker layout_check;
       string layout_string = "KQANLRl4OKdINry-iwIywybeqZMJF-JTGFhDA_sr5XwrC8Bp_-B6U8F9Tyza7vvnZXkBDo-8kJoseZRl8YrICiQ";
-      vector<int> layout = layout_check.decode_pickup_layout(layout_string);
+      vector<int> layout = decode_pickup_layout(layout_string);
       cout << "layout test for string: " << layout_string << endl;
       for(auto i : layout){
          cout << i << endl;
       }
       cout << "int to item test" << endl;
 
-      vector<string> stringLayout = layout_check.layoutIntToString(layout);
+      vector<string> stringLayout = layoutIntToString(layout);
 
       for(auto i : stringLayout){
 	  cout << i << endl;

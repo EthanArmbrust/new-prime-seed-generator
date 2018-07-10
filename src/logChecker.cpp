@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "Random.h"
 #include "logChecker.h"
+#include "layoutUtils.h"
 #include "BigInteger/BigUnsigned.hh"
 #include "BigInteger/BigIntegerUtils.hh"
 #include "BigInteger/BigUnsignedInABase.hh"
@@ -4859,7 +4860,7 @@ vector<string>LogChecker::randomize(vector<string>originalList, vector<int>exclu
 
    return(randomizedItems);
 }
-
+/*
 int LogChecker::compute_checksum_2(BigUnsigned layout_number){
    int         s = 0;
    BigUnsigned b(32);
@@ -5093,3 +5094,4 @@ vector<string> LogChecker::layoutIntToString(vector<int> intLayout){
    }
    return stringLayout;
 }
+*/
