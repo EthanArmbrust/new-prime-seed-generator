@@ -99,7 +99,7 @@ vector<int> decode_pickup_layout(string layout_string){
 
    int cs_value = checksum_value.toInt();
 
-   if(cs_value != compute_checksum_2(num)){
+   if(cs_value != compute_checksum(num)){
 	   cout << "Invalid layout: checksum failed" << endl;
    }
 
@@ -120,6 +120,85 @@ vector<int> decode_pickup_layout(string layout_string){
 
 }
 
+string encode_pickup_layout(vector<int>layout){
+   string      TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
+   BigUnsigned num(0);
+
+   for(int i = 0; i < layout.size(); i++){
+      num *= 36;
+      num += layout[i];
+   }
+
+
+   int         checksum = compute_checksum(num);
+   BigUnsigned bigChecksum(checksum);
+   bigChecksum.bitShiftLeft(bigChecksum, 517);
+   num += bigChecksum;
+
+   //here i think?
+   string all_bits = bigUnsignedToString(num, 2);
+
+   //cout << "all_bits: " << all_bits << endl;
+   vector<char>even_bits(0);
+   vector<char>odd_bits(0);
+
+   for(int k = 0; k < all_bits.length(); k++){
+      if(k % 2){
+         odd_bits.push_back(all_bits.at(k));
+      }
+      else{
+         even_bits.push_back(all_bits.at(k));
+      }
+   }
+   odd_bits.shrink_to_fit();
+   even_bits.shrink_to_fit();
+
+   reverse(odd_bits.begin(), odd_bits.end());
+   vector<char>all_bits_array(0);
+
+   for(int z = 0; z < even_bits.size(); z++){
+      if(even_bits[z] == '1' || even_bits[z] == '0'){
+         all_bits_array.push_back(even_bits[z]);
+      }
+      if(odd_bits[z] == '1' || odd_bits[z] == '0'){
+         all_bits_array.push_back(odd_bits[z]);
+      }
+   }
+
+   int invalidCount = 0;
+   for(int badCount = 0; badCount < all_bits_array.size(); badCount++){
+      if(!(all_bits_array[badCount] == '1' || all_bits_array[badCount] == '0')){
+         invalidCount++;
+      }
+   }
+
+   string all_bits_conversion = "";
+
+   for(int t = 0; t < all_bits_array.size(); t++){
+      all_bits_conversion += all_bits_array[t];
+   }
+   const std::string all_bits_const = all_bits_conversion;
+
+   BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
+
+   BigUnsigned Jerry(Lary);                    //converts Lary to base 10 as Jerry
+   //to here?
+   string s = "";
+
+   BigUnsigned b(64);
+   BigUnsigned remainderToBe;
+   for(int countEightySeven = 0; countEightySeven < 87; countEightySeven++){
+      Jerry.divideWithRemainder(b, remainderToBe);        //Jerry becomes remainder
+      BigUnsigned swap;                                   //remainderToBe becomes quotient
+      swap          = remainderToBe;                      //need to swap these
+      remainderToBe = Jerry;
+      Jerry         = swap;
+
+      s = s + TABLE[remainderToBe.toInt()];
+   }
+
+   return(s);
+}
 
 vector<string> layoutIntToString(vector<int> intLayout){
    vector<string> stringLayout;

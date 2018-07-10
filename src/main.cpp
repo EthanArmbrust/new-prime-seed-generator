@@ -14,6 +14,7 @@
 #include "BigInteger/BigIntegerUtils.hh"
 #include "BigInteger/BigUnsignedInABase.hh"
 #include "clip/clip.h"
+#include "layoutUtils.h"
 #ifdef __APPLE__
 #include <sys/syscall.h>
 #elif defined __linux__
@@ -46,8 +47,8 @@ void barebonesSeedGen(vector<int>apNumbers, int difficulty, bool print, bool onl
 string seedListName(int difficulty, bool only);
 bool is_digits(const std::string&str);
 bool stringParser(string input, string option);
-int compute_checksum(BigUnsigned layout_number);
-string encode_pickup_layout(vector<int>layout);
+//int compute_checksum(BigUnsigned layout_number);
+//string encode_pickup_layout(vector<int>layout);
 string convertSeed(vector<int> apNumbers, int seed, bool noSpaceJump);
 void convertSeedMenu(bool noSpaceJump, bool autoCopy, bool autoRun);
 
@@ -1107,7 +1108,7 @@ void createLogFile(){
 bool stringParser(string input, string option){
    return(input.find(option) != string::npos);
 }
-
+/*
 int compute_checksum(BigUnsigned layout_number){
    int         s = 0;
    BigUnsigned b(32);
@@ -1123,8 +1124,8 @@ int compute_checksum(BigUnsigned layout_number){
    }
    return(s);
 }
-
-string encode_pickup_layout(vector<int>layout){
+*/
+/*string encode_pickup_layout(vector<int>layout){
    string      TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
    BigUnsigned num(0);
 
@@ -1203,7 +1204,7 @@ string encode_pickup_layout(vector<int>layout){
 
    return(s);
 }
-
+*/
 void convertSeedMenu(bool noSpaceJump, bool autoCopy, bool autoRun){
    bool validSelection = false;
 

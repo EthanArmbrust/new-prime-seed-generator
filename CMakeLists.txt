@@ -16,6 +16,6 @@ endif()
 
 add_subdirectory(src/clip)
 
-add_executable(SeedGenerator src/main.cpp src/Random.cpp src/logChecker.cpp src/BigInteger/BigUnsigned.cc src/BigInteger/BigInteger.cc src/BigInteger/BigUnsignedInABase.cc src/BigInteger/BigIntegerUtils.cc ${WINDOWS_RESOURCE_PATH})
+add_executable(SeedGenerator src/main.cpp src/Random.cpp src/logChecker.cpp src/layoutUtils.cpp src/BigInteger/BigUnsigned.cc src/BigInteger/BigInteger.cc src/BigInteger/BigUnsignedInABase.cc src/BigInteger/BigIntegerUtils.cc ${WINDOWS_RESOURCE_PATH})
 
 target_link_libraries(SeedGenerator clip)
