@@ -86,6 +86,22 @@ vector<string>LogChecker::generateLog(vector<int>exceptions, int seed){
    return(logline);
 }
 
+vector<string>LogChecker::generateLog(string layout_string){
+
+   vector<string>logline(104, "");
+
+   vector<int> intLayout = decode_pickup_layout(layout_string);
+   vector<string>newItems = layoutIntToString(intLayout);
+
+   vector<string> areaInput = getAreaNames();
+
+   for(int zorro = 2; zorro < logline.size() - 2; zorro++){
+      logline[zorro] = areaInput[zorro - 2] + newItems[zorro - 2];
+   }
+
+   return(logline);
+}
+
 void LogChecker::CheckFinishNormalNew(int seed, vector<int>exceptions, bool verbose){
    vector<string>itemInput = getItemNames();
    vector<string>newItems  = randomize(itemInput, exceptions, seed);
@@ -2640,7 +2656,7 @@ void LogChecker::CheckFinishEasyNew(vector<string>newItems, bool verbose){
             k++;
          }
       }
-      if(hasMissiles && hasMorph && hasBombs && hasGrapple && hasWave && hasSJ && hasCharge && hasSuper && hasThermal){
+      if(hasMissiles && hasMorph && hasGrapple && hasWave && hasSJ && hasSuit){
          if(!isAdded[48]){
             obItems[k]  = items[48];
             isAdded[48] = true;

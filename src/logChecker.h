@@ -85,7 +85,10 @@ private:
 public:
 LogChecker();
 void difficultyCheck(int, int, vector<int>, bool, bool, bool);
+
 vector <string> generateLog(vector<int>, int);
+vector <string> generateLog(string layout_string);
+
 void CheckFinishNormalNew(int seed, vector <int> inExceptions, bool verbose);
 void CheckFinishNormalNew(vector<string> newItems, bool verbose);
 void CheckFinishNormalNew(string layout, bool verbose);
@@ -119,9 +122,6 @@ vector <int> shrinkIntVector(vector <int> inVector);
 vector <int> removeIntElement(vector <int> inVector, int element);
 vector <string> shrinkStringVector(vector <string> inVector);
 vector <string> removeStringElement(vector <string> inVector, int element);
-//int compute_checksum_2(BigUnsigned layout_number);
-//vector<int> decode_pickup_layout(string layout_string);
-//vector<string> layoutIntToString(vector<int> intLayout);
 vector <string> randomize(vector <string> originalList, vector <int> excludedItems, int seed);
 }
 ;

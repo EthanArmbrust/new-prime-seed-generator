@@ -173,10 +173,10 @@ void mainMenu(){
    cout << "3 - Generate a \"Veteran\" difficulty seed\n \n";
    cout << "4 - Generate a \"Hypermode\" difficulty seed\n \n";
    cout << "5 - Create a log file \n \n";
-   cout << "6 - Check a seed \n \n";
+   cout << "6 - Check a seed or layout\n \n";
    cout << "7 - Export seeds to text file \n \n";
    cout << multithreadingState;
-   cout << "9 - Convert Seed to Layout\n \n";
+   cout << "9 - Convert Seed to layout\n \n";
    cout << bottomHelp1 << endl;
    cout << bottomHelp2 << endl;
    cout << "> ";
@@ -705,7 +705,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    getline(cin, str);
    str = simplifyString(str);
 
-   if(stringParser(str, "SEED")){
+   if(stringParser(str, "seed")){
       cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
       cout << "> ";
 
@@ -1015,7 +1015,7 @@ void createLogFile(){
 
    vector<int>apNumbers(0);
    while(!validSelection){
-      cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+      cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions or layout) " << endl;
       cout << "> ";
 
       vector<int>numbers;
@@ -1050,28 +1050,39 @@ void createLogFile(){
 
    int seed = -1;
 
-   cout << "Enter seed number (leave blank for random)" << endl;
+   cout << "Enter seed number or layout (leave blank for random)" << endl;
    cout << "> ";
 
    string str;
 
    getline(cin, str);
 
-   if(simplifyString(str) != ""){
-      stringstream seedString(str);
-      seedString >> seed;
+   vector<string>gameLog;
+   LogChecker    logGen;
+   bool isLayout = false;
+
+   if(str.length() == 87){
+	   cout << "Layout detected!\n" << endl;
+	   gameLog = logGen.generateLog(str);
+	   isLayout = true;
    }
    else{
-      CurrentTime current_time;
-      seed = (int)(current_time.microseconds() % (long)2147483647);
-   }
-   if(simplifyString(str) == "EXIT"){
-      return;
+     if(simplifyString(str) != ""){
+        stringstream seedString(str);
+        seedString >> seed;
+     }
+     else{
+        CurrentTime current_time;
+        seed = (int)(current_time.microseconds() % (long)2147483647);
+     }
+     if(simplifyString(str) == "EXIT"){
+        return;
+     }
+
+     vector<string>gameLog = logGen.generateLog(apNumbers, seed);
    }
 
-   LogChecker    logGen;
-   vector<string>gameLog = logGen.generateLog(apNumbers, seed);
-
+   string seedString = isLayout ? "Layout: " + str : "Seed: " + to_string(seed); 
 
    ofstream   logWriter;
    time_t     t   = time(0);
@@ -1088,17 +1099,19 @@ void createLogFile(){
    logWriter.open(logPath);
 
    logWriter << permHeader1.substr(7, permHeader1.size() - 7) << endl;
-   logWriter << "Seed: " << seed << endl;
-   logWriter << "Excluded pickups: ";
+   logWriter << seedString << endl;
+   if(!isLayout){
+    logWriter << "Excluded pickups: ";
 
-   if(apNumbers.size() == 0){
-      logWriter << "None" << endl;
-   }
-   else{
-      for(int m = 0; m < apNumbers.size(); m++){
-         logWriter << apNumbers[m] << " ";
-      }
-      logWriter << "\n";
+    if(apNumbers.size() == 0){
+       logWriter << "None" << endl;
+    }
+    else{
+       for(int m = 0; m < apNumbers.size(); m++){
+          logWriter << apNumbers[m] << " ";
+       }
+       logWriter << "\n";
+    }
    }
 
    for(int n = 2; n < gameLog.size() - 2; n++){

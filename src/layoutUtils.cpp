@@ -213,7 +213,7 @@ vector<string> layoutIntToString(vector<int> intLayout){
 	    missileCount++;
 	    break;
          case 1 :
-	    item = "Energy Tanki " + to_string(etankCount);
+	    item = "Energy Tank " + to_string(etankCount);
 	    etankCount++;
 	    break;
          case 2 :
