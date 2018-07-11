@@ -13,12 +13,8 @@
 #include "BigInteger/BigUnsigned.hh"
 #include "BigInteger/BigIntegerUtils.hh"
 #include "BigInteger/BigUnsignedInABase.hh"
-<<<<<<< HEAD
 #include "clip/clip.h"
 #include "layoutUtils.h"
-=======
-//platform specific includes
->>>>>>> parent of 8dc28b4... makefile icon compiling not working
 #ifdef __APPLE__
 #include <sys/syscall.h>
 #elif defined __linux__
