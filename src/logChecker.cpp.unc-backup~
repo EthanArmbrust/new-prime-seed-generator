@@ -86,9 +86,10 @@ vector<string>LogChecker::generateLog(vector<int>exceptions, int seed){
    return(logline);
 }
 
-void LogChecker::CheckFinishNormalNew(int seed, vector<int>exceptions, bool verbose){
-   vector<string>itemInput = getItemNames();
-   vector<string>newItems  = randomize(itemInput, exceptions, seed);
+void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool verbose){
+
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
 
    string newSeed = to_string(seed);
    seedString = "Seed: " + newSeed;
@@ -109,18 +110,18 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int>exceptions, bool verb
 
 void LogChecker::CheckFinishNormalNew(string layout, bool verbose){
    try{
-      vector<int>   intLayout    = decode_pickup_layout(layout);
-      vector<string>stringLayout = layoutIntToString(intLayout);
-      seedString     = "Layout : " + layout;
-      seedExceptions = "";
-      CheckFinishNormalNew(stringLayout, verbose);
+     	vector<int> intLayout = decode_pickup_layout(layout);
+  	vector<string> stringLayout = layoutIntToString(intLayout); 
+   	seedString = "Layout : " + layout;
+  	seedExceptions = "";
+   	CheckFinishNormalNew(stringLayout, verbose);
    }
-   catch(const char *msg){
-      cerr << msg << endl;
+   catch(const char* msg){
+	   cerr << msg << endl;
    }
 }
 
-void LogChecker::CheckFinishNormalNew(vector<string>newItems, bool verbose){
+void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
    if(verbose){
       cout << "Item order for Normal difficulty: " << endl;
    }
@@ -984,8 +985,9 @@ void LogChecker::CheckFinishNormalNew(vector<string>newItems, bool verbose){
 }
 
 void LogChecker::CheckFinishVeteranNew(int seed, vector<int>exceptions, bool verbose, bool noFloatyAllowed){
-   vector<string>itemInput = getItemNames();
-   vector<string>newItems  = randomize(itemInput, exceptions, seed);
+
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
 
    string newSeed = to_string(seed);
    seedString = "Seed: " + newSeed;
@@ -1005,19 +1007,19 @@ void LogChecker::CheckFinishVeteranNew(int seed, vector<int>exceptions, bool ver
 }
 
 void LogChecker::CheckFinishVeteranNew(string layout, bool verbose, bool noFloatyAllowed){
-   try{
-      vector<int>   intLayout    = decode_pickup_layout(layout);
-      vector<string>stringLayout = layoutIntToString(intLayout);
-      seedString     = "Layout : " + layout;
+   try{ 
+      vector<int> intLayout = decode_pickup_layout(layout);
+      vector<string> stringLayout = layoutIntToString(intLayout); 
+      seedString = "Layout : " + layout;
       seedExceptions = "";
       CheckFinishVeteranNew(stringLayout, verbose, noFloatyAllowed);
    }
-   catch(const char *msg){
+   catch(const char* msg){
       cerr << msg << endl;
    }
 }
 
-void LogChecker::CheckFinishVeteranNew(vector<string>newItems, bool verbose, bool noFloatyAllowed){
+void LogChecker::CheckFinishVeteranNew(vector<string> newItems, bool verbose, bool noFloatyAllowed){
    if(verbose){
       cout << "Item order for Veteran difficulty: " << endl;
    }
@@ -1122,7 +1124,7 @@ void LogChecker::CheckFinishVeteranNew(vector<string>newItems, bool verbose, boo
 
    for(int i = 2; i < logline.size() - 2; i++){
       logline[i] = areaInput[i - 2] + newItems[i - 2];
-      lineLength = logline[i].size() - 51;
+      lineLength     = logline[i].size() - 51;
       items[i]   = logline[i].substr(51, lineLength);
    }
 
@@ -2207,9 +2209,10 @@ void LogChecker::CheckFinishVeteranNew(vector<string>newItems, bool verbose, boo
    }
 }
 
-void LogChecker::CheckFinishEasyNew(int seed, vector<int>exceptions, bool verbose){
-   vector<string>itemInput = getItemNames();
-   vector<string>newItems  = randomize(itemInput, exceptions, seed);
+void LogChecker::CheckFinishEasyNew(int seed, vector<int> exceptions, bool verbose){
+
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
 
    string newSeed = to_string(seed);
    seedString = "Seed: " + newSeed;
@@ -2230,18 +2233,19 @@ void LogChecker::CheckFinishEasyNew(int seed, vector<int>exceptions, bool verbos
 
 void LogChecker::CheckFinishEasyNew(string layout, bool verbose){
    try{
-      vector<int>   intLayout    = decode_pickup_layout(layout);
-      vector<string>stringLayout = layoutIntToString(intLayout);
-      seedString     = "Layout : " + layout;
-      seedExceptions = "";
-      CheckFinishEasyNew(stringLayout, verbose);
+   vector<int> intLayout = decode_pickup_layout(layout);
+   vector<string> stringLayout = layoutIntToString(intLayout); 
+   seedString = "Layout : " + layout;
+   seedExceptions = "";
+   CheckFinishEasyNew(stringLayout, verbose);
    }
-   catch(const char *msg){
+   catch(const char* msg){
+      //cerr << msg << endl;
       throw msg;
    }
 }
 
-void LogChecker::CheckFinishEasyNew(vector<string>newItems, bool verbose){
+void LogChecker::CheckFinishEasyNew(vector<string> newItems, bool verbose){
    if(verbose){
       cout << "Item order for Easy difficulty: " << endl;
    }
@@ -2505,7 +2509,7 @@ void LogChecker::CheckFinishEasyNew(vector<string>newItems, bool verbose){
          }
       }
       if(hasMorph && hasMissiles){
-         if(items[30] == "Morph Ball Bomb" || (items[29] == "Morph Ball Bomb" && (hasPB || items[30].substr(0, 5) == "Power"))){
+         if(items[30] == "Bombs" || items[30] == "Morph Ball Bomb" || ((items[29] == "Bombs" || items[29] == "Morph Ball Bomb") && (hasPB || items[30].substr(0, 5) == "Power"))){
             if(!isAdded[30]){
                obItems[k]  = items[30];
                isAdded[30] = true;
@@ -3075,9 +3079,9 @@ void LogChecker::CheckFinishEasyNew(vector<string>newItems, bool verbose){
    }
 }
 
-void LogChecker::CheckFinishHypermodeNew(int seed, vector<int>exceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
-   vector<string>itemInput = getItemNames();
-   vector<string>newItems  = randomize(itemInput, exceptions, seed);
+void LogChecker::CheckFinishHypermodeNew(int seed, vector<int> exceptions, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
+   vector<string> itemInput = getItemNames();
+   vector<string>newItems = randomize(itemInput, exceptions, seed);
 
    string newSeed = to_string(seed);
    seedString = "Seed: " + newSeed;
@@ -3098,18 +3102,18 @@ void LogChecker::CheckFinishHypermodeNew(int seed, vector<int>exceptions, bool v
 
 void LogChecker::CheckFinishHypermodeNew(string layout, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    try{
-      vector<int>   intLayout    = decode_pickup_layout(layout);
-      vector<string>stringLayout = layoutIntToString(intLayout);
-      seedString     = "Layout : " + layout;
-      seedExceptions = "";
-      CheckFinishHypermodeNew(stringLayout, verbose, noFloatyAllowed, noSpaceJump);
+	vector<int> intLayout = decode_pickup_layout(layout);
+   	vector<string> stringLayout = layoutIntToString(intLayout); 
+   	seedString = "Layout : " + layout;
+   	seedExceptions = "";
+   	CheckFinishHypermodeNew(stringLayout, verbose, noFloatyAllowed, noSpaceJump);
    }
-   catch(const char *msg){
-      cerr << msg << endl;
+   catch(const char* msg){
+	   cerr << msg << endl;
    }
 }
 
-void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
+void LogChecker::CheckFinishHypermodeNew(vector<string> newItems, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    if(verbose){
       cout << "Item order for Hypermode difficulty: " << endl;
    }
@@ -3511,14 +3515,14 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
             k++;
          }
       }
-      if(hasGrapple || hasSJ || hasFloaty){
+      if(hasGrapple || hasSJ || hasFloaty){   
          if(!isAdded[3]){
             obItems[k] = items[3];
             isAdded[3] = true;
             k++;
          }
       }
-      if(hasMissiles && hasSuper && hasCharge){
+      if(hasMissiles && hasSuper && hasCharge){   
          if(!isAdded[4]){
             obItems[k] = items[4];
             isAdded[4] = true;
@@ -3527,14 +3531,14 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
 
-      if((hasMorph && hasMissiles) || hasSJ){
+      if((hasMorph && hasMissiles) || hasSJ){   
          if(!isAdded[5]){
             obItems[k] = items[5];
             isAdded[5] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && hasBombs && (hasSpider || items[6] == "Spide" || items[6] == "Spider Ball") || hasFloaty){
+      if(hasMissiles && hasMorph && hasBombs && (hasSpider || items[6] == "Spide" || items[6] == "Spider Ball") || hasFloaty){   
          if(!isAdded[6]){
             obItems[k] = items[6];
             isAdded[6] = true;
@@ -3543,7 +3547,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
 
-      if(hasMissiles){
+      if(hasMissiles){   
          if(!isAdded[7]){
             obItems[k] = items[7];
             isAdded[7] = true;
@@ -3551,7 +3555,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph){
+      if(hasMissiles && hasMorph){   
          if(!isAdded[8]){
             obItems[k] = items[8];
             isAdded[8] = true;
@@ -3559,14 +3563,14 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if((hasMorph && hasMissiles && hasBombs) || (hasMissiles && hasMorph && hasPB)){
+      if((hasMorph && hasMissiles && hasBombs) || (hasMissiles && hasMorph && hasPB)){   
          if(!isAdded[9]){
             obItems[k] = items[9];
             isAdded[9] = true;
             k++;
          }
       }
-      if(hasMorph && hasBombs && hasMissiles){
+      if(hasMorph && hasBombs && hasMissiles){   
          if(!isAdded[10]){
             obItems[k]  = items[10];
             isAdded[10] = true;
@@ -3574,21 +3578,21 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if((hasWave && hasMorph && hasSuit && hasGrapple && hasSpider && hasBoost && hasBombs) || (hasWave && hasMorph && hasSJ && (hasSuit || e >= 2) && hasSpider && hasBoost && hasBombs) || (hasMorph && hasBombs && hasSJ && hasBoost && hasSpider) || hasFloaty){
+      if((hasWave && hasMorph && hasSuit && hasGrapple && hasSpider && hasBoost && hasBombs) || (hasWave && hasMorph && hasSJ && (hasSuit || e >= 2) && hasSpider && hasBoost && hasBombs) || (hasMorph && hasBombs && hasSJ && hasBoost && hasSpider) || hasFloaty){   
          if(!isAdded[11]){
             obItems[k]  = items[11];
             isAdded[11] = true;
             k++;
          }
       }
-      if(hasBombs && hasMorph){
+      if(hasBombs && hasMorph){   
          if(!isAdded[12]){
             obItems[k]  = items[12];
             isAdded[12] = true;
             k++;
          }
       }
-      if((hasWave && hasMorph && hasSuit && hasGrapple && hasBombs) || (hasMorph && hasBombs && hasSJ && hasWave) || (hasFloaty && hasWave)){
+      if((hasWave && hasMorph && hasSuit && hasGrapple && hasBombs) || (hasMorph && hasBombs && hasSJ && hasWave) || (hasFloaty && hasWave)){   
          if(!isAdded[13]){
             obItems[k]  = items[13];
             isAdded[13] = true;
@@ -3596,13 +3600,13 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
       if((hasPB && hasMorph && hasSuit && hasGrapple && hasBombs) || (hasPB && hasMorph && hasBombs && hasSJ && (hasSuit || e >= 2)) || (hasMorph && hasBombs && hasSJ && hasWave && hasPB) || (hasFloaty && hasWave && hasPB)){
-         if(!isAdded[14]){
+         if(!isAdded[14]){ 
             obItems[k]  = items[14];
             isAdded[14] = true;
             k++;
          }
       }
-      if(items[15] == "Wave Beam"){
+      if(items[15] == "Wave Beam"){   
          if(hasMissiles && hasMorph && hasBombs){
             if(!isAdded[15]){
                obItems[k]  = items[15];
@@ -3613,7 +3617,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
 
-      if(hasMissiles && hasWave && (hasSJ || (hasMorph && hasBombs))){
+      if(hasMissiles && hasWave && (hasSJ || (hasMorph && hasBombs))){   
          if(!isAdded[15]){
             obItems[k]  = items[15];
             isAdded[15] = true;
@@ -3622,7 +3626,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(items[16] == "Wave Beam"){
-         if(hasMorph && hasBombs && hasBoost && (hasSJ || hasMissiles)){
+         if(hasMorph && hasBombs && hasBoost && (hasSJ || hasMissiles)){ 
             if(!isAdded[16]){
                obItems[k]  = items[16];
                isAdded[16] = true;
@@ -3631,21 +3635,21 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasWave && (hasMorph || hasSJ)){
+      if(hasMissiles && hasWave && (hasMorph || hasSJ)){   
          if(!isAdded[16]){
             obItems[k]  = items[16];
             isAdded[16] = true;
             k++;
          }
       }
-      if(hasMissiles){
+      if(hasMissiles){   
          if(!isAdded[17]){
             obItems[k]  = items[17];
             isAdded[17] = true;
             k++;
          }
       }
-      if(hasMorph && hasBombs){
+      if(hasMorph && hasBombs){   
          if(!isAdded[18]){
             obItems[k]  = items[18];
             isAdded[18] = true;
@@ -3654,70 +3658,70 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
 
-      if(hasMissiles){
+      if(hasMissiles){   
          if(!isAdded[19]){
             obItems[k]  = items[19];
             isAdded[19] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && (hasBombs || (hasPB && hasSJ))){
+      if(hasMissiles && hasMorph && (hasBombs || (hasPB && hasSJ))){   
          if(!isAdded[20]){
             obItems[k]  = items[20];
             isAdded[20] = true;
             k++;
          }
       }
-      if(hasMorph && hasBombs && hasMissiles){
+      if(hasMorph && hasBombs && hasMissiles){   
          if(!isAdded[22]){
             obItems[k]  = items[22];
             isAdded[22] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && hasBombs){
+      if(hasMissiles && hasMorph && hasBombs){   
          if(!isAdded[23]){
             obItems[k]  = items[23];
             isAdded[23] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph){
+      if(hasMissiles && hasMorph){   
          if(!isAdded[24]){
             obItems[k]  = items[24];
             isAdded[24] = true;
             k++;
          }
       }
-      if(hasMorph && hasMissiles){
+      if(hasMorph && hasMissiles){   
          if(!isAdded[25]){
             obItems[k]  = items[25];
             isAdded[25] = true;
             k++;
          }
       }
-      if(hasMorph && hasMissiles){
+      if(hasMorph && hasMissiles){   
          if(!isAdded[26]){
             obItems[k]  = items[26];
             isAdded[26] = true;
             k++;
          }
       }
-      if(hasMorph && hasMissiles && (hasBombs || hasPB)){
+      if(hasMorph && hasMissiles && (hasBombs || hasPB)){   
          if(!isAdded[27]){
             obItems[k]  = items[27];
             isAdded[27] = true;
             k++;
          }
       }
-      if((hasMorph && hasMissiles && hasSpider && (hasBombs || hasPB)) || hasFloaty){
+      if((hasMorph && hasMissiles && hasSpider && (hasBombs || hasPB)) || hasFloaty){   
          if(!isAdded[28]){
             obItems[k]  = items[28];
             isAdded[28] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && (hasBombs || (hasPB && (items[29] == "Bombs" || items[30] == "Bombs" || items[29] == "Morph Ball Bomb" || items[30] == "Morph Ball Bomb")))){
+      if(hasMissiles && hasMorph && (hasBombs || (hasPB && (items[29] == "Bombs" || items[30] == "Bombs" || items[29] == "Morph Ball Bomb" || items[30] == "Morph Ball Bomb")))){   
          if(!isAdded[29]){
             obItems[k]  = items[29];
             isAdded[29] = true;
@@ -3725,7 +3729,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && (hasBombs || items[30] == "Bombs" || items[30] == "Morph Ball Bomb")){
+      if(hasMissiles && hasMorph && (hasBombs || items[30] == "Bombs" || items[30] == "Morph Ball Bomb")){   
          if(!isAdded[30]){
             obItems[k]  = items[30];
             isAdded[30] = true;
@@ -3733,49 +3737,49 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if((hasMissiles && hasMorph && hasBombs && (hasSJ || (hasPB && hasBoost && hasSpider))) || hasFloaty){
+      if((hasMissiles && hasMorph && hasBombs && (hasSJ || (hasPB && hasBoost && hasSpider))) || hasFloaty){   
          if(!isAdded[31]){
             obItems[k]  = items[31];
             isAdded[31] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && hasBombs){
+      if(hasMissiles && hasMorph && hasBombs){   
          if(!isAdded[32]){
             obItems[k]  = items[32];
             isAdded[32] = true;
             k++;
          }
       }
-      if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasIce)){
+      if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasIce)){   
          if(!isAdded[33]){
             obItems[k]  = items[33];
             isAdded[33] = true;
             k++;
          }
       }
-      if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasBoost && hasCharge && hasSuper && hasSpider && (hasWave || hasIce)) || hasFloaty){
+      if((hasMissiles && hasMorph && hasBombs && hasSJ) || (hasMissiles && hasMorph && hasBombs && hasBoost && hasCharge && hasSuper && hasSpider && (hasWave || hasIce)) || hasFloaty){   
          if(!isAdded[34]){
             obItems[k]  = items[34];
             isAdded[34] = true;
             k++;
          }
       }
-      if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma) || (hasMorph && hasBombs && hasMissiles && hasBoost && (hasSJ || hasFloaty))){
+      if((hasMissiles && hasMorph && hasBombs && hasIce && hasPlasma) || (hasMorph && hasBombs && hasMissiles && hasBoost && (hasSJ || hasFloaty))){   
          if(!isAdded[35]){
             obItems[k]  = items[35];
             isAdded[35] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && hasBombs){
+      if(hasMissiles && hasMorph && hasBombs){   
          if(!isAdded[36]){
             obItems[k]  = items[36];
             isAdded[36] = true;
             k++;
          }
       }
-      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && ((hasBoost && hasBombs) || hasPlasma)){
+      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && ((hasBoost && hasBombs) || hasPlasma)){   
          if(!isAdded[37]){
             obItems[k]  = items[37];
             isAdded[37] = true;
@@ -3785,14 +3789,14 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
 
 
-      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && (hasSuper && hasCharge && hasSpider)){
+      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && (hasSuper && hasCharge && hasSpider)){   
          if(!isAdded[38]){
             obItems[k]  = items[38];
             isAdded[38] = true;
             k++;
          }
       }
-      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider && hasBombs))) && ((hasBoost && hasBombs) || hasPlasma)){
+      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider && hasBombs))) && ((hasBoost && hasBombs) || hasPlasma)){   
          if(!isAdded[39]){
             obItems[k]  = items[39];
             isAdded[39] = true;
@@ -3800,16 +3804,16 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || (hasSpider && hasBombs)))) && (hasPlasma)){
-         if(!isAdded[40]){
+      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || (hasSpider && hasBombs)))) && (hasPlasma)){ 
+         if(!isAdded[40]){                                                                                                                                                                                                                          
             obItems[k]  = items[40];
             isAdded[40] = true;
             k++;
          }
       }
 
-      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && ((hasBoost && hasBombs) || hasPlasma)){
-         if(!isAdded[41]){
+      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && ((hasBoost && hasBombs) || hasPlasma)){ 
+         if(!isAdded[41]){                                                                                                                                                                                                                                      
             obItems[k]  = items[41];
             isAdded[41] = true;
             k++;
@@ -3817,15 +3821,15 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
 
-      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider))) && (hasBombs || hasSpider)){
-         if(!isAdded[42]){
+      if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider))) && (hasBombs || hasSpider)){ 
+         if(!isAdded[42]){                                                                                                                                                                                                                                    
             obItems[k]  = items[42];
             isAdded[42] = true;
             k++;
          }
       }
       if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasBombs && hasWave && (hasSJ || hasSpider))) && ((hasWave && hasSJ) || (items[43] == "Wave " && hasSJ) || hasBombs || (hasPB && hasSJ))){
-         if(!isAdded[43]){
+         if(!isAdded[43]){ 
             obItems[k]  = items[43];
             isAdded[43] = true;
             k++;
@@ -3833,7 +3837,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))) && (hasWave)){
-         if(!isAdded[44]){
+         if(!isAdded[44]){ 
             obItems[k]  = items[44];
             isAdded[44] = true;
             k++;
@@ -3841,7 +3845,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if((hasMissiles && hasMorph && hasBombs && hasSuit) || (hasMissiles && hasMorph && hasBombs && ((e >= 4 && (hasSJ || hasCharge) || e >= 5))) || (hasMissiles && hasMorph && hasWave && (hasSJ || hasSpider))){
-         if(!isAdded[45]){
+         if(!isAdded[45]){ 
             obItems[k]  = items[45];
             isAdded[45] = true;
             k++;
@@ -3850,7 +3854,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
       if(items[46].substr(0, 5) == "Space" || items[46].substr(0, 5) == "Spide" || items[46].substr(0, 5) == "Grapp"){
          if(hasMissiles && hasMorph && hasWave){
-            if(!isAdded[46]){
+            if(!isAdded[46]){ 
                obItems[k]  = items[46];
                isAdded[46] = true;
                k++;
@@ -3859,7 +3863,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasWave && (hasSJ || hasGrapple || hasSpider)){
-         if(!isAdded[46]){
+         if(!isAdded[46]){ 
             obItems[k]  = items[46];
             isAdded[46] = true;
             k++;
@@ -3869,7 +3873,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
       //approaching from West Magmoor																																										//approaching from Magmoor South
       if(((hasMissiles && hasMorph && hasBombs && hasWave && (hasSuit || ((e >= 4 && (hasSJ || hasCharge)) || e >= 5))) || (hasMissiles && hasMorph && hasWave && hasIce && (hasSJ || hasSpider))) && (hasCharge && hasSuper)){
-         if(!isAdded[47]){
+         if(!isAdded[47]){ 
             obItems[k]  = items[47];
             isAdded[47] = true;
             k++;
@@ -3878,7 +3882,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
 
       if(hasMissiles && hasMorph && hasWave && (hasSJ || hasGrapple)){
-         if(!isAdded[48]){
+         if(!isAdded[48]){ 
             obItems[k]  = items[48];
             isAdded[48] = true;
             k++;
@@ -3886,7 +3890,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if((hasMissiles && hasMorph && hasWave && hasSJ) || (hasMissiles && hasMorph && hasWave && hasIce && hasBombs)){
-         if(!isAdded[49]){
+         if(!isAdded[49]){ 
             obItems[k]  = items[49];
             isAdded[49] = true;
             k++;
@@ -3894,7 +3898,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasWave && hasIce && hasPlasma && (hasBombs || hasSJ || hasSpider)){
-         if(!isAdded[50]){
+         if(!isAdded[50]){ 
             obItems[k]  = items[50];
             isAdded[50] = true;
             k++;
@@ -3902,7 +3906,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if((hasMissiles && hasMorph && hasWave && hasSJ) || (hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSpider) && hasPlasma)){
-         if(!isAdded[51]){
+         if(!isAdded[51]){ 
             obItems[k]  = items[51];
             isAdded[51] = true;
             k++;
@@ -3910,13 +3914,13 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if((hasMissiles && hasMorph && hasWave && hasSJ) || (hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSpider))){
-         if(!isAdded[52]){
+         if(!isAdded[52]){ 
             obItems[k]  = items[52];
             isAdded[52] = true;
             k++;
          }
       }
-      if(hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSpider || hasSJ) && (hasSJ || items[53].substr(0, 5) == "Space" || hasGravity || items[53].substr(0, 5) == "Gravi") && deepPhenEscape){
+      if(hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSpider || hasSJ) && (hasSJ || items[53].substr(0, 5) == "Space" || hasGravity || items[53].substr(0, 5) == "Gravi") && deepPhenEscape){ 
          if(!isAdded[53]){
             obItems[k]  = items[53];
             isAdded[53] = true;
@@ -3926,7 +3930,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
 
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasPhazon || (e >= 5 && hasBoost && hasGravity) || (e >= 9)) && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && (hasPhazon || (e >= 5 && hasBoost && hasGravity) || (e >= 9)) && deepMinesEscape){   
          if(!isAdded[90]){
             obItems[k]  = items[90];
             isAdded[90] = true;
@@ -3934,7 +3938,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && deepMinesEscape){   
          if(!isAdded[89]){
             obItems[k]  = items[89];
             isAdded[89] = true;
@@ -3942,7 +3946,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPB && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPB && deepMinesEscape){   
          if(!isAdded[88]){
             obItems[k]  = items[88];
             isAdded[88] = true;
@@ -3959,7 +3963,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape){   
          if(!isAdded[86]){
             obItems[k]  = items[86];
             isAdded[86] = true;
@@ -3969,7 +3973,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
 
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape && hasPlasma && hasPB && (hasXray || (hasBoost && hasSJ))){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape && hasPlasma && hasPB && (hasXray || (hasBoost && hasSJ))){   
          if(!isAdded[85]){
             obItems[k]  = items[85];
             isAdded[85] = true;
@@ -3977,7 +3981,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape && hasPlasma && hasPB && (hasXray || (hasBoost && hasSJ))){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && deepMinesEscape && hasPlasma && hasPB && (hasXray || (hasBoost && hasSJ))){   
          if(!isAdded[84]){
             obItems[k]  = items[84];
             isAdded[84] = true;
@@ -3985,7 +3989,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){   
          if(!isAdded[83]){
             obItems[k]  = items[83];
             isAdded[83] = true;
@@ -3993,7 +3997,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && deepMinesEscape){   
          if(!isAdded[82]){
             obItems[k]  = items[82];
             isAdded[82] = true;
@@ -4001,7 +4005,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){   
          if(!isAdded[81]){
             obItems[k]  = items[81];
             isAdded[81] = true;
@@ -4009,7 +4013,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){   
          if(!isAdded[80]){
             obItems[k]  = items[80];
             isAdded[80] = true;
@@ -4017,7 +4021,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(isAdded[86]){
+      if(isAdded[86]){   
          if(!isAdded[79]){
             obItems[k]  = items[79];
             isAdded[79] = true;
@@ -4025,7 +4029,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && hasPlasma && earlyMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && hasPlasma && earlyMinesEscape){   
          if(!isAdded[78]){
             obItems[k]  = items[78];
             isAdded[78] = true;
@@ -4033,7 +4037,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){   
          if(!isAdded[77]){
             obItems[k]  = items[77];
             isAdded[77] = true;
@@ -4041,7 +4045,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && earlyMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && hasPB && earlyMinesEscape){   
          if(!isAdded[76]){
             obItems[k]  = items[76];
             isAdded[76] = true;
@@ -4049,7 +4053,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasWave && hasIce && earlyMinesEscape){   
          if(!isAdded[75]){
             obItems[k]  = items[75];
             isAdded[75] = true;
@@ -4057,7 +4061,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && (hasPB || hasBoost)){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && (hasPB || hasBoost)){   
          if(!isAdded[74]){
             obItems[k]  = items[74];
             isAdded[74] = true;
@@ -4065,7 +4069,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && (hasPB || hasBoost)){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && (hasPB || hasBoost)){   
          if(!isAdded[73]){
             obItems[k]  = items[73];
             isAdded[73] = true;
@@ -4073,7 +4077,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && (hasPB || hasBoost)){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && (hasPB || hasBoost)){   
          if(!isAdded[72]){
             obItems[k]  = items[72];
             isAdded[72] = true;
@@ -4081,7 +4085,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce){
+      if(hasMissiles && hasMorph && hasBombs && hasIce){   
          if(!isAdded[71]){
             obItems[k]  = items[71];
             isAdded[71] = true;
@@ -4090,7 +4094,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if((hasMissiles && hasMorph && hasBombs && hasWave && hasIce && (hasBoost || items[70].substr(0, 5) == "Boost" || items[70].substr(0, 5) == "Gravi")) || (hasMissiles && hasMorph && hasBombs && hasIce && hasGravity)){
-         if(!isAdded[70]){
+         if(!isAdded[70]){        
             obItems[k]  = items[70];
             isAdded[70] = true;
             k++;
@@ -4099,7 +4103,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
       if(items[69].substr(0, 5) == "Wave "){
          if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity || items[68] == "Boost" || items[68] == "Gravi")){
-            if(!isAdded[69]){
+            if(!isAdded[69]){     
                obItems[k]  = items[69];
                isAdded[69] = true;
                k++;
@@ -4109,7 +4113,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
       if(items[68].substr(0, 5) == "Wave "){
          if(hasMissiles && hasMorph && hasBombs && hasIce && hasCharge && hasSuper && (hasBoost || hasGravity)){
-            if(!isAdded[69]){
+            if(!isAdded[69]){     
                obItems[k]  = items[69];
                isAdded[69] = true;
                k++;
@@ -4118,7 +4122,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasCharge && hasSuper && (hasBoost || hasGravity || hasSJ)){
-         if(!isAdded[69]){
+         if(!isAdded[69]){        
             obItems[k]  = items[69];
             isAdded[69] = true;
             k++;
@@ -4128,7 +4132,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
 
       if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && (hasBoost || hasGravity || hasSJ)){
-         if(!isAdded[68]){
+         if(!isAdded[68]){ 
             obItems[k]  = items[68];
             isAdded[68] = true;
             k++;
@@ -4138,7 +4142,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 
       if(items[68].substr(0, 5) == "Gravi" || items[68].substr(0, 5) == "Space" || items[68].substr(0, 5) == "Boost"){
          if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave){
-            if(!isAdded[68]){
+            if(!isAdded[68]){     
                obItems[k]  = items[68];
                isAdded[68] = true;
                k++;
@@ -4147,7 +4151,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
 
-      if(items[68] == "Wave "){
+      if(items[68] == "Wave "){   
          if(hasMissiles && hasMorph && hasBombs && hasIce && (hasBoost || (items[69].substr(0, 5) == "Boost" && hasSuper && hasCharge) || ((hasGravity || (items[69].substr(0, 5) == "Gravi" && hasSuper && hasCharge)) && (hasSJ || (items[69].substr(0, 5) == "Space" && hasCharge && hasSuper))))){
             if(!isAdded[68]){
                obItems[k]  = items[68];
@@ -4156,7 +4160,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
             }
          }
       }
-      if(hasMissiles && hasSJ){
+      if(hasMissiles && hasSJ){   
          if(!isAdded[67]){
             obItems[k]  = items[67];
             isAdded[67] = true;
@@ -4164,7 +4168,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles){
+      if(hasMissiles){   
          if(!isAdded[66]){
             obItems[k]  = items[66];
             isAdded[66] = true;
@@ -4172,7 +4176,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles){
+      if(hasMissiles){   
          if(!isAdded[65]){
             obItems[k]  = items[65];
             isAdded[65] = true;
@@ -4180,7 +4184,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasSJ){
+      if(hasMissiles && hasSJ){   
          if(!isAdded[64]){
             obItems[k]  = items[64];
             isAdded[64] = true;
@@ -4188,7 +4192,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph && (hasBombs || hasSJ) && hasIce){
+      if(hasMissiles && hasMorph && (hasBombs || hasSJ) && hasIce){   
          if(!isAdded[63]){
             obItems[k]  = items[63];
             isAdded[63] = true;
@@ -4196,7 +4200,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMissiles && hasMorph){
+      if(hasMissiles && hasMorph){   
          if(!isAdded[62]){
             obItems[k]  = items[62];
             isAdded[62] = true;
@@ -4204,7 +4208,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
 
-      if(hasMorph || hasSJ){
+      if(hasMorph || hasSJ){   
          if(!isAdded[60]){
             obItems[k]  = items[60];
             isAdded[60] = true;
@@ -4212,7 +4216,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
          }
       }
       if(hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSJ || hasGrapple) && deepPhenEscape){
-         if(!isAdded[59]){
+         if(!isAdded[59]){        
             obItems[k]  = items[59];
             isAdded[59] = true;
             k++;
@@ -4220,7 +4224,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSJ || hasGrapple) && hasPlasma && hasPB && deepPhenEscape){
-         if(!isAdded[58]){
+         if(!isAdded[58]){        
             obItems[k]  = items[58];
             isAdded[58] = true;
             k++;
@@ -4228,14 +4232,14 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasWave && hasBombs && hasIce && ((isAdded[77] && hasPlasma && hasGrapple) || hasSJ)){
-         if(!isAdded[57]){
+         if(!isAdded[57]){        
             obItems[k]  = items[57];
             isAdded[57] = true;
             k++;
          }
       }
 
-      if(hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSpider || hasSJ) && (hasSJ || items[56].substr(0, 5) == "Space" || hasGravity || items[56].substr(0, 5) == "Gravi") && deepPhenEscape){
+      if(hasMissiles && hasMorph && hasWave && hasIce && (hasBombs || hasSpider || hasSJ) && (hasSJ || items[56].substr(0, 5) == "Space" || hasGravity || items[56].substr(0, 5) == "Gravi") && deepPhenEscape){ 
          if(!isAdded[56]){
             obItems[k]  = items[56];
             isAdded[56] = true;
@@ -4244,7 +4248,7 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasWave && (hasSJ || hasIce)){
-         if(!isAdded[55]){
+         if(!isAdded[55]){        
             obItems[k]  = items[55];
             isAdded[55] = true;
             k++;
@@ -4252,14 +4256,14 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
       }
 
       if(hasMissiles && hasMorph && hasWave && (hasSJ || hasIce)){
-         if(!isAdded[54]){
+         if(!isAdded[54]){        
             obItems[k]  = items[54];
             isAdded[54] = true;
             k++;
          }
       }
 
-      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && deepMinesEscape){
+      if(hasMissiles && hasMorph && hasBombs && hasIce && hasWave && hasPlasma && hasPB && deepMinesEscape){   
          if(!isAdded[91]){
             obItems[k]  = items[91];
             isAdded[91] = true;
@@ -4363,10 +4367,10 @@ void LogChecker::CheckFinishHypermodeNew(vector<string>newItems, bool verbose, b
 bool LogChecker::checkObtainedItems(bool verbose, vector<string>logs, bool noSpaceJump){
    int prevEtankCount = e;
    int prevArt        = art;
-   int q = 0;
+   int q              = 0;
 
    art = 0;
-   e   = 0;
+   e = 0;
    bool foundItems = false;
 
    while(q < obItems.size()){
@@ -4531,7 +4535,6 @@ bool LogChecker::checkObtainedItems(bool verbose, vector<string>logs, bool noSpa
 
 string LogChecker::getItemLocation(vector<string>logLines, string item, int eTankCount){
    int n = 2;
-
    while(logLines[n].substr(51, logLines[n].length() - 51) != item){
       n++;
    }
@@ -4660,7 +4663,7 @@ void LogChecker::countArtifacts(){
    while(d < 200){
       //need to add a substring thingy when I add the full name
       if(obItems[d] == "Artif" || obItems[d].substr(0, 8) == "Artifact"){
-         a++;
+	 a++;
       }
       d++;
    }

@@ -11,8 +11,12 @@ bin/
 
 *.swp
 
+*.swo
+
 *.res
 
 SeedGenLogs/
 
 build/
+
+clangBuild/

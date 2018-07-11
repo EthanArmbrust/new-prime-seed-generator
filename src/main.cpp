@@ -47,7 +47,7 @@ void barebonesSeedGen(vector<int>apNumbers, int difficulty, bool print, bool onl
 string seedListName(int difficulty, bool only);
 bool is_digits(const std::string&str);
 bool stringParser(string input, string option);
-string convertSeed(vector<int> apNumbers, int seed, bool noSpaceJump);
+string convertSeed(vector<int>apNumbers, int seed, bool noSpaceJump);
 void convertSeedMenu(bool noSpaceJump, bool autoCopy, bool autoRun);
 
 
@@ -199,25 +199,27 @@ void processOption(){
 
    if(stringParser(option, "TEST")){
       LogChecker layout_check;
-      string layout_string = "KQANLRl4OKdINry-iwIywybeqZMJF-JTGFhDA_sr5XwrC8Bp_-B6U8F9Tyza7vvnZXkBDo-8kJoseZRl8YrICiQ";
-      vector<int> layout = decode_pickup_layout(layout_string);
+      string     layout_string = "KQANLRl4OKdINry-iwIywybeqZMJF-JTGFhDA_sr5XwrC8Bp_-B6U8F9Tyza7vvnZXkBDo-8kJoseZRl8YrICiQ";
+      vector<int>layout        = decode_pickup_layout(layout_string);
       cout << "layout test for string: " << layout_string << endl;
       for(auto i : layout){
          cout << i << endl;
       }
       cout << "int to item test" << endl;
 
-      vector<string> stringLayout = layoutIntToString(layout);
+      vector<string>stringLayout = layoutIntToString(layout);
 
       for(auto i : stringLayout){
-	  cout << i << endl;
+         cout << i << endl;
       }
 
       layout_check.CheckFinishNormalNew(layout_string, true);
       if(layout_check.returnCompletableNormal()){
          cout << "Seed is completable (Normal Difficulty)" << endl;
       }
-      else cout << "Seed not found completable" << endl;
+      else{
+         cout << "Seed not found completable" << endl;
+      }
 
       cout << "END TEST" << endl;
       cin.get();
@@ -336,6 +338,7 @@ string seedListName(int difficulty, bool only){
          return("." + dirSeparator + "CompletableSeeds" + dirSeparator + "Hypermode_Seed_List.txt");
       }
    }
+   else return "";
 }
 
 void barebonesSeedGen(vector<int>apNumbers, int difficulty, bool print, bool only, bool noFloatyAllowed, bool noSpaceJump, bool autoConvert, std::ofstream& seedList){
@@ -371,7 +374,7 @@ void barebonesSeedGen(vector<int>apNumbers, int difficulty, bool print, bool onl
       }
       if(!mainThreadDone){
          newThreadDone = true;
-         header1    = autoConvert ? convertSeed(apNumbers, randoSeed, noSpaceJump) : checker2.returnSeed();
+         header1       = autoConvert ? convertSeed(apNumbers, randoSeed, noSpaceJump) : checker2.returnSeed();
          scriptSeed    = randoSeed;
       }
       newThreadSeedCount = seedCounter;
@@ -408,7 +411,7 @@ void barebonesSeedGen(vector<int>apNumbers, int difficulty, bool print, bool onl
          }
       }
    }
- }
+}
 
 void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed, bool noSpaceJump, bool autoConvert, bool autoCopy){
    bool validSelection = false;
@@ -549,14 +552,14 @@ void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed
          newThreadDone      = false;
          newThreadSeedCount = 0;
 
-	 if(autoCopy){
-	    if(autoConvert){
-		clip::set_text(header1);
-	    }
-	    else{
-		clip::set_text(to_string(scriptSeed));
-	    }
-	 }
+         if(autoCopy){
+            if(autoConvert){
+               clip::set_text(header1);
+            }
+            else{
+               clip::set_text(to_string(scriptSeed));
+            }
+         }
 
          if(fileExists("." + dirSeparator + "Metroid Prime Randomizer.bat") && !autoConvert){
             clearScreen();
@@ -697,13 +700,12 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    string str;
 
 
-   cout << "Seed or layout?" << endl; 
+   cout << "Seed or layout?" << endl;
    cout << "> ";
    getline(cin, str);
    str = simplifyString(str);
 
    if(stringParser(str, "SEED")){
-
       cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
       cout << "> ";
 
@@ -725,7 +727,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    else{
       cout << "\nEnter layout:" << endl;
       cout << "> ";
-      getline(cin,str);
+      getline(cin, str);
 
       if(str.length() != 87){
          cout << "Layout is incorrect length" << endl;
@@ -800,58 +802,63 @@ void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump
 void manualCheckerBarebones(bool verbose, bool noFloatyAllowed, bool noSpaceJump, string layout_string){
    LogChecker checker;
 
-   checker.CheckFinishEasyNew(layout_string, verbose);
-   if(checker.returnCompletableEasy()){
-      cout << "Seed is completable (Easy Difficulty)" << endl;
-   }
-   else{
-      checker.CheckFinishNormalNew(layout_string, verbose);
-      if(checker.returnCompletableNormal()){
-         cout << "Seed is completable (Normal Difficulty)" << endl;
+   try{
+      checker.CheckFinishEasyNew(layout_string, verbose);
+      if(checker.returnCompletableEasy()){
+         cout << "Seed is completable (Easy Difficulty)" << endl;
       }
-
       else{
-         checker.CheckFinishVeteranNew(layout_string, verbose, noFloatyAllowed);
-         if(checker.returnCompletableVeteran()){
-            cout << "Seed is completable";
-            if(noFloatyAllowed){
-               cout << " without Floaty";
-            }
-            cout << " (Veteran Difficulty)" << endl;
+         checker.CheckFinishNormalNew(layout_string, verbose);
+         if(checker.returnCompletableNormal()){
+            cout << "Seed is completable (Normal Difficulty)" << endl;
          }
+
          else{
-            checker.CheckFinishHypermodeNew(layout_string, verbose, noFloatyAllowed, noSpaceJump);
-            if(checker.returnCompletableHypermode()){
+            checker.CheckFinishVeteranNew(layout_string, verbose, noFloatyAllowed);
+            if(checker.returnCompletableVeteran()){
                cout << "Seed is completable";
-               if(noSpaceJump){
-                  cout << " without Space Jump";
-               }
-
-               if(noSpaceJump && noFloatyAllowed){
-                  cout << " and";
-               }
-
                if(noFloatyAllowed){
                   cout << " without Floaty";
                }
-
-               cout << " (Hypermode Difficulty)" << endl;
+               cout << " (Veteran Difficulty)" << endl;
             }
             else{
-               cout << "This seed is NOT completable";
-               if(noSpaceJump){
-                  cout << " without Space Jump";
+               checker.CheckFinishHypermodeNew(layout_string, verbose, noFloatyAllowed, noSpaceJump);
+               if(checker.returnCompletableHypermode()){
+                  cout << "Seed is completable";
+                  if(noSpaceJump){
+                     cout << " without Space Jump";
+                  }
+
+                  if(noSpaceJump && noFloatyAllowed){
+                     cout << " and";
+                  }
+
+                  if(noFloatyAllowed){
+                     cout << " without Floaty";
+                  }
+
+                  cout << " (Hypermode Difficulty)" << endl;
                }
-               if(noSpaceJump && noFloatyAllowed){
-                  cout << " and";
+               else{
+                  cout << "This seed is NOT completable";
+                  if(noSpaceJump){
+                     cout << " without Space Jump";
+                  }
+                  if(noSpaceJump && noFloatyAllowed){
+                     cout << " and";
+                  }
+                  if(noFloatyAllowed){
+                     cout << " without Floaty";
+                  }
+                  cout << " (Easy through Hypermode)" << endl;
                }
-               if(noFloatyAllowed){
-                  cout << " without Floaty";
-               }
-               cout << " (Easy through Hypermode)" << endl;
             }
          }
       }
+   }
+   catch(const char *msg){
+      cerr << msg << endl;
    }
 }
 
@@ -1182,9 +1189,9 @@ void convertSeedMenu(bool noSpaceJump, bool autoCopy, bool autoRun){
    cin.get();
 }
 
-string convertSeed(vector<int> apNumbers, int seed, bool noSpaceJump){
+string convertSeed(vector<int>apNumbers, int seed, bool noSpaceJump){
+   LogChecker logGen;
 
-   LogChecker    logGen;
    vector<string>gameLog = logGen.generateLog(apNumbers, seed);
 
    vector<int>logLayout(100, -1);
@@ -1297,5 +1304,5 @@ string convertSeed(vector<int> apNumbers, int seed, bool noSpaceJump){
       }
    }
 
-   return encode_pickup_layout(logLayout);
+   return(encode_pickup_layout(logLayout));
 }
