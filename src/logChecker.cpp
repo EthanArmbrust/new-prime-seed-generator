@@ -109,11 +109,16 @@ void LogChecker::CheckFinishNormalNew(int seed, vector<int> exceptions, bool ver
 }
 
 void LogChecker::CheckFinishNormalNew(string layout, bool verbose){
-   vector<int> intLayout = decode_pickup_layout(layout);
-   vector<string> stringLayout = layoutIntToString(intLayout); 
-   seedString = "Layout : " + layout;
-   seedExceptions = "";
-   CheckFinishNormalNew(stringLayout, verbose);
+   try{
+     	vector<int> intLayout = decode_pickup_layout(layout);
+  	vector<string> stringLayout = layoutIntToString(intLayout); 
+   	seedString = "Layout : " + layout;
+  	seedExceptions = "";
+   	CheckFinishNormalNew(stringLayout, verbose);
+   }
+   catch(const char* msg){
+	   cerr << msg << endl;
+   }
 }
 
 void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
@@ -177,14 +182,6 @@ void LogChecker::CheckFinishNormalNew(vector<string> newItems, bool verbose){
 
 
    areaInput = getAreaNames();
-
-   
-/*  cout << "Printing newItems" << endl;
-*   for(string item : newItems){
-*	   cout << item << endl;
-*   }
-*/
-
 
    for(int zorro = 2; zorro < logline.size() - 2; zorro++){
       logline[zorro] = areaInput[zorro - 2] + newItems[zorro - 2];
@@ -1010,11 +1007,16 @@ void LogChecker::CheckFinishVeteranNew(int seed, vector<int>exceptions, bool ver
 }
 
 void LogChecker::CheckFinishVeteranNew(string layout, bool verbose, bool noFloatyAllowed){
-   vector<int> intLayout = decode_pickup_layout(layout);
-   vector<string> stringLayout = layoutIntToString(intLayout); 
-   seedString = "Layout : " + layout;
-   seedExceptions = "";
-   CheckFinishVeteranNew(stringLayout, verbose, noFloatyAllowed);
+   try{ 
+      vector<int> intLayout = decode_pickup_layout(layout);
+      vector<string> stringLayout = layoutIntToString(intLayout); 
+      seedString = "Layout : " + layout;
+      seedExceptions = "";
+      CheckFinishVeteranNew(stringLayout, verbose, noFloatyAllowed);
+   }
+   catch(const char* msg){
+      cerr << msg << endl;
+   }
 }
 
 void LogChecker::CheckFinishVeteranNew(vector<string> newItems, bool verbose, bool noFloatyAllowed){
@@ -2230,11 +2232,16 @@ void LogChecker::CheckFinishEasyNew(int seed, vector<int> exceptions, bool verbo
 }
 
 void LogChecker::CheckFinishEasyNew(string layout, bool verbose){
+   try{
    vector<int> intLayout = decode_pickup_layout(layout);
    vector<string> stringLayout = layoutIntToString(intLayout); 
    seedString = "Layout : " + layout;
    seedExceptions = "";
    CheckFinishEasyNew(stringLayout, verbose);
+   }
+   catch(const char* msg){
+      cerr << msg << endl;
+   }
 }
 
 void LogChecker::CheckFinishEasyNew(vector<string> newItems, bool verbose){
@@ -3093,11 +3100,16 @@ void LogChecker::CheckFinishHypermodeNew(int seed, vector<int> exceptions, bool 
 }
 
 void LogChecker::CheckFinishHypermodeNew(string layout, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
-   vector<int> intLayout = decode_pickup_layout(layout);
-   vector<string> stringLayout = layoutIntToString(intLayout); 
-   seedString = "Layout : " + layout;
-   seedExceptions = "";
-   CheckFinishHypermodeNew(stringLayout, verbose, noFloatyAllowed, noSpaceJump);
+   try{
+	vector<int> intLayout = decode_pickup_layout(layout);
+   	vector<string> stringLayout = layoutIntToString(intLayout); 
+   	seedString = "Layout : " + layout;
+   	seedExceptions = "";
+   	CheckFinishHypermodeNew(stringLayout, verbose, noFloatyAllowed, noSpaceJump);
+   }
+   catch(const char* msg){
+	   cerr << msg << endl;
+   }
 }
 
 void LogChecker::CheckFinishHypermodeNew(vector<string> newItems, bool verbose, bool noFloatyAllowed, bool noSpaceJump){
@@ -4860,238 +4872,3 @@ vector<string>LogChecker::randomize(vector<string>originalList, vector<int>exclu
 
    return(randomizedItems);
 }
-/*
-int LogChecker::compute_checksum_2(BigUnsigned layout_number){
-   int         s = 0;
-   BigUnsigned b(32);
-   BigUnsigned remainderToBe;
-
-   while(layout_number > 0){
-      layout_number.divideWithRemainder(b, remainderToBe); //layout_number becomes remainder
-      BigUnsigned swap;                                    //remainderToBe becomes quotient
-      swap          = remainderToBe;                       //need to swap these
-      remainderToBe = layout_number;
-      layout_number = swap;
-      s             = (s + remainderToBe.toInt()) % 32;
-   }
-   return(s);
-}
-
-vector<int> LogChecker::decode_pickup_layout(string layout_string){
-
-   string TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
-   std::map<char,int> REV_TABLE;
-   for(int i = 0; i < TABLE.length(); i++){
-      REV_TABLE.insert(pair<char,int>(TABLE[i], i));
-   }
-
-   BigUnsigned num(0);
-   
-   for(int i = layout_string.length() - 1; i >= 0; i--){
-      num.bitShiftLeft(num,6);
-      num += REV_TABLE.find(layout_string[i])->second;
-   }
-
-   string all_bits = bigUnsignedToString(num, 2);
-
-   //cout << "all_bits: " << all_bits << endl;
-   vector<char>even_bits(0);
-   vector<char>odd_bits(0);
-
-   for(int k = 0; k < all_bits.length(); k++){
-      if(k % 2){
-         odd_bits.push_back(all_bits.at(k));
-      }
-      else{
-         even_bits.push_back(all_bits.at(k));
-      }
-   }
-   odd_bits.shrink_to_fit();
-   even_bits.shrink_to_fit();
-
-   reverse(odd_bits.begin(), odd_bits.end());
-   vector<char>all_bits_array(0);
-
-   for(int z = 0; z < even_bits.size(); z++){
-      if(even_bits[z] == '1' || even_bits[z] == '0'){
-         all_bits_array.push_back(even_bits[z]);
-      }
-      if(odd_bits[z] == '1' || odd_bits[z] == '0'){
-         all_bits_array.push_back(odd_bits[z]);
-      }
-   }
-
-   int invalidCount = 0;
-   for(int badCount = 0; badCount < all_bits_array.size(); badCount++){
-      if(!(all_bits_array[badCount] == '1' || all_bits_array[badCount] == '0')){
-         invalidCount++;
-      }
-   }
-
-   string all_bits_conversion = "";
-
-   for(int t = 0; t < all_bits_array.size(); t++){
-      all_bits_conversion += all_bits_array[t];
-   }
-   const std::string all_bits_const = all_bits_conversion;
-
-   BigUnsignedInABase Lary(all_bits_const, 2); //creates bigUnsigned in base 2
-   BigUnsigned Jerry(Lary);    //converts Lary to base 10 as Jerry
-   
-   num = Jerry;
-
-   BigUnsigned checksum_value(num);
-   checksum_value.bitShiftRight(checksum_value, 517);
-
-   BigUnsigned temp(checksum_value);
-   temp.bitShiftLeft(temp, 517);
-
-   num -= temp;
-
-   int cs_value = checksum_value.toInt();
-
-   if(cs_value != compute_checksum_2(num)){
-	   cout << "Invalid layout: checksum failed" << endl;
-   }
-
-   vector<int> layout;
-   BigUnsigned b(36);
-   BigUnsigned remainderToBe;
-   for(int i = 0; i < 100; i++){ 
-      num.divideWithRemainder(b, remainderToBe);     //num becomes remainder
-      BigUnsigned swap;                              //remainderToBe becomes quotient
-      swap          = remainderToBe;                 //need to swap these
-      remainderToBe = num;
-      num           = swap;
-     
-      layout.push_back(remainderToBe.toInt());
-   }
-   reverse(layout.begin(), layout.end());
-   return layout;
-
-}
-
-vector<string> LogChecker::layoutIntToString(vector<int> intLayout){
-   vector<string> stringLayout;
-   int missileCount = 0, etankCount = 0, pbCount = 0;
-
-   for(int i : intLayout){
-      string item = "";
-      switch(i){
-         case 0 :
-	    item = "Missile " + to_string(missileCount);
-	    missileCount++;
-	    break;
-         case 1 :
-	    item = "Energy Tanki " + to_string(etankCount);
-	    etankCount++;
-	    break;
-         case 2 :
-	    item = "Thermal Visor";
-	    break;
-         case 3 :
-	    item = "X-Ray Visor";
-	    break;
-         case 4 :
-	    item = "Varia Suit";
-	    break;
-         case 5 :
-	    item = "Gravity Suit";
-	    break;
-         case 6 :
-	    item = "Phazon Suit";
-	    break;
-         case 7 :
-	    item = "Morph Ball";
-	    break;
-         case 8 :
-	    item = "Boost Ball";
-	    break;
-         case 9 :
-	    item = "Spider Ball";
-	    break;
-         case 10 :
-	    item = "Morph Ball Bomb";
-	    break;
-         case 11 :
-	    item = "Power Bomb Expansion " + to_string(pbCount);
-	    pbCount++;
-	    break;
-         case 12 :
-	    item = "Power Bomb";
-	    break;
-         case 13 :
-	    item = "Charge Beam";
-	    break;
-         case 14 :
-	    item = "Space Jump Boots";
-	    break;
-         case 15 :
-	    item = "Grapple Beam";
-	    break;
-         case 16 :
-	    item = "Super Missile";
-	    break;
-         case 17 :
-	    item = "Wavebuster";
-	    break;
-         case 18 :
-	    item = "Ice Spreader";
-	    break;
-         case 19 :
-	    item = "Flamethrower";
-	    break;
-         case 20 :
-	    item = "Wave Beam";
-	    break;
-         case 21 :
-	    item = "Ice Beam";
-	    break;
-         case 22 :
-	    item = "Plasma Beam";
-	    break;
-         case 23 :
-	    item = "Artifact of Lifegiver";
-	    break;
-         case 24 :
-	    item = "Artifact of Wild";
-	    break;
-         case 25 :
-	    item = "Artifact of World";
-	    break;
-         case 26 :
-	    item = "Artifact of Sun";
-	    break;
-         case 27 :
-	    item = "Artifact of Elder";
-	    break;
-         case 28 :
-	    item = "Artifact of Spirit";
-	    break;
-         case 29 :
-	    item = "Artifact of Truth";
-	    break;
-         case 30 :
-	    item = "Artifact of Chozo";
-	    break;
-         case 31 :
-	    item = "Artifact of Warrior";
-	    break;
-         case 32 :
-	    item = "Artifact of Newborn";
-	    break;
-         case 33 :
-	    item = "Artifact of Nature";
-	    break;
-         case 34 :
-	    item = "Artifact of Strength";
-	    break;
-         case 35 :
-	    item = "Nothing";
-	    break;
-      }
-      stringLayout.push_back(item);   
-   }
-   return stringLayout;
-}
-*/

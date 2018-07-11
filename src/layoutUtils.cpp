@@ -100,7 +100,7 @@ vector<int> decode_pickup_layout(string layout_string){
    int cs_value = checksum_value.toInt();
 
    if(cs_value != compute_checksum(num)){
-	   cout << "Invalid layout: checksum failed" << endl;
+	   throw "Invalid layout: checksum failed";
    }
 
    vector<int> layout;
@@ -119,6 +119,7 @@ vector<int> decode_pickup_layout(string layout_string){
    return layout;
 
 }
+
 
 string encode_pickup_layout(vector<int>layout){
    string      TABLE = "ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnopqrstuwvxyz0123456789-_";
