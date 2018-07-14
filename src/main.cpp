@@ -35,7 +35,7 @@ void printMenu();
 void clearScreen();
 bool fileExists(const std::string& fileName);
 void getTimeAndSeedCount(double, int);
-int getASeed();
+string getASeed();
 void createLogFile();
 
 vector<int>getTheExceptions();
@@ -634,31 +634,33 @@ void multithreadTest(bool print, int difficulty, bool only, bool noFloatyAllowed
    }
 }
 
-int getASeed(){
+string getASeed(){
    int    inputSeed = -1;
    string str;
 
-   cout << "Please enter the seed:" << endl;
+   cout << "Please enter the seed or layout:" << endl;
    cout << "> ";
    getline(cin, str);
 
-   str = simplifyString(str);
 
-   while(str == ""){
+   string emptyTest = simplifyString(str);
+
+   bool containsNonNumber = str.find_first_not_of("0123456789") != string::npos;
+
+   int possibleSeed = containsNonNumber ? -1 : abs(stoi(emptyTest,nullptr));
+
+   while(emptyTest != "EXIT" && str.length() != 87 && !(possibleSeed >= 0 && possibleSeed <= 2147482647)){
       clearScreen();
-      cout << "Error. Please enter a seed from 0 to 2147482647 or EXIT to return to the menu" << endl;
+      cout << "Error. Please enter:\n";
+      cout << "  - a seed from 0 to 2147482647\n";
+      cout << "  - a layout\n";
+      cout << "  - EXIT to return to the menu\n" << endl;
       cout << "> ";
       getline(cin, str);
-      str = simplifyString(str);
+      emptyTest = simplifyString(str);
    }
-
-   if(stringParser(str, "EXIT")){
-      return(-1);
-   }
-
-   inputSeed = abs(stoi(str, nullptr));
-
-   return(inputSeed);
+ 
+   return str;
 }
 
 vector<int>getTheExceptions(){
@@ -700,13 +702,7 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
    string str;
 
 
-   cout << "Seed or layout?" << endl;
-   cout << "> ";
-   getline(cin, str);
-   str = simplifyString(str);
-
-   if(stringParser(str, "seed")){
-      cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions) " << endl;
+      cout << "Enter exception numbers seperated by spaces (leave blank for no exceptions or layout) " << endl;
       cout << "> ";
 
       vector<int>apNumbers = getTheExceptions();
@@ -717,25 +713,17 @@ void manualChecker(bool verbose, bool noFloatyAllowed, bool noSpaceJump){
          }
       }
 
-      int inputSeed = getASeed();
-      if(inputSeed == -1){
+      string inSeedOrLayout = getASeed();
+      if(simplifyString(inSeedOrLayout) == "EXIT"){
          return;
       }
-
-      manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
-   }
-   else{
-      cout << "\nEnter layout:" << endl;
-      cout << "> ";
-      getline(cin, str);
-
-      if(str.length() != 87){
-         cout << "Layout is incorrect length" << endl;
+      if(inSeedOrLayout.length() == 87){
+         manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inSeedOrLayout);
       }
       else{
-         manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, str);
+	 int inputSeed = abs(stoi(simplifyString(inSeedOrLayout),nullptr));
+         manualCheckerBarebones(verbose, noFloatyAllowed, noSpaceJump, inputSeed, apNumbers);
       }
-   }
 
    cout << "Press Enter to continue...";
    cin.get();
