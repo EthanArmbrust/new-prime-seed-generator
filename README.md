@@ -81,7 +81,7 @@ cmake --build . --config Release
 Binary will be found in build\Release\  
 
 --------------
-# Compiling Instructions (Linux)
+# Compiling Instructions (macOS/Linux)
 
 Requires cmake and a c++ compiler
 
