@@ -1056,8 +1056,7 @@ void createLogFile(){
    }
    else{
      if(simplifyString(str) != ""){
-        stringstream seedString(str);
-        seedString >> seed;
+	seed = abs(stoi(str, nullptr));
      }
      else{
         CurrentTime current_time;
@@ -1067,7 +1066,7 @@ void createLogFile(){
         return;
      }
 
-     vector<string>gameLog = logGen.generateLog(apNumbers, seed);
+     gameLog = logGen.generateLog(apNumbers, seed);
    }
 
    string seedString = isLayout ? "Layout: " + str : "Seed: " + to_string(seed); 
